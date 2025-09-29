@@ -3,9 +3,18 @@ import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import type { NextAuthOptions, Session, Account, User } from "next-auth";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 interface BackendToken {
   accessToken: string;
+}
+
+interface DecodedBackendToken {
+  user_id: number;
+  role: string;
+  onboarding_completed: boolean;
+  exp: number;
+  iat: number;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -16,14 +25,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt(
-      { token, user, account }: {
-        token: JWT;
-        user?: User | null;
-        account?: Account | null;
-      }
-    ) {
-      // `user` and `account` are only passed on initial sign-in.
+    async jwt({ token, user, account }) {
       if (account && user) {
         try {
           const response = await axios.post(
@@ -36,7 +38,10 @@ export const authOptions: NextAuthOptions = {
           );
 
           const backendToken = response.data as BackendToken;
+          const decodedToken = jwtDecode<DecodedBackendToken>(backendToken.accessToken);
+
           token.backendToken = backendToken.accessToken;
+          token.onboardingCompleted = decodedToken.onboarding_completed;
           return token;
 
         } catch (error) {
@@ -45,23 +50,16 @@ export const authOptions: NextAuthOptions = {
           return token;
         }
       }
-
       return token;
     },
-    async session(
-      { session, token }: {
-        session: Session;
-        token: JWT;
-      }
-    ) {
-      // Pass the backend token and any errors to the client-side session.
+    async session({ session, token }) {
       if (token.backendToken) {
-        session.accessToken = token.backendToken as string;
+        session.accessToken = token.backendToken;
       }
       if (token.error) {
         session.error = token.error as string;
       }
-
+      session.onboardingCompleted = token.onboardingCompleted;
       return session;
     },
   },
