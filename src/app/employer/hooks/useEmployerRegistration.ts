@@ -6,6 +6,14 @@ interface EmployerRegistrationData {
   company_name: string;
   email: string;
   password: string;
+  phone_number?: string;
+  country?: string;
+  foundation_date?: string; // YYYY-MM-DD format
+  industry?: string;
+  size?: string;
+  description?: string;
+  address?: string;
+  website?: string;
 }
 
 interface EmployerRegistrationResponse {
