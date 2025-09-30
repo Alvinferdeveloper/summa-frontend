@@ -6,9 +6,17 @@ declare module 'next-auth' {
    * Extends the built-in session model to include our custom properties.
    */
   interface Session {
-    accessToken?: string; // The custom JWT from our Go backend
-    onboardingCompleted?: boolean;
+    accessToken?: string;
     error?: string;
+    role?: string;
+    userId?: string;
+    employerId?: string;
+    onboardingCompleted?: boolean;
+  }
+  interface User {
+    id: string;
+    role?: string;
+    backendToken?: string;
   }
 }
 
