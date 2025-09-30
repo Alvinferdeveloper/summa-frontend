@@ -3,18 +3,30 @@ import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import type { NextAuthOptions, Session, Account, User } from "next-auth";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+
+// Extend the NextAuth interfaces to include our custom properties
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string;
+    error?: string;
+    onboardingCompleted?: boolean;
+  }
+  interface User {
+    id: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    backendToken?: string;
+    error?: string;
+    onboardingCompleted?: boolean;
+  }
+}
 
 interface BackendToken {
   accessToken: string;
-}
-
-interface DecodedBackendToken {
-  user_id: number;
-  role: string;
   onboarding_completed: boolean;
-  exp: number;
-  iat: number;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -25,10 +37,23 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({
+      token,
+      user,
+      account,
+      trigger,
+      session,
+    }: {
+      token: JWT;
+      user?: User | null;
+      account?: Account | null;
+      trigger?: "signIn" | "signUp" | "update";
+      session?: any;
+    }) {
+      // Initial sign-in: fetch backend token and onboarding status
       if (account && user) {
         try {
-          const response = await axios.post(
+          const response = await axios.post<BackendToken>(
             `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/google/callback`,
             {
               provider: account.provider,
@@ -36,30 +61,43 @@ export const authOptions: NextAuthOptions = {
               email: user.email,
             }
           );
-
-          const backendToken = response.data as BackendToken;
-          const decodedToken = jwtDecode<DecodedBackendToken>(backendToken.accessToken);
-
-          token.backendToken = backendToken.accessToken;
-          token.onboardingCompleted = decodedToken.onboarding_completed;
+          
+          token.backendToken = response.data.accessToken;
+          token.onboardingCompleted = response.data.onboarding_completed;
           return token;
-
         } catch (error) {
           console.error("Error during backend token exchange:", error);
           token.error = "SignInError";
           return token;
         }
       }
+
+      if (trigger === "update" && session) {
+        if (session.onboardingCompleted !== undefined) {
+          token.onboardingCompleted = session.onboardingCompleted;
+        }
+        return token;
+      }
+
       return token;
     },
-    async session({ session, token }) {
+    async session({
+      session,
+      token,
+    }: {
+      session: Session;
+      token: JWT;
+    }) {
       if (token.backendToken) {
-        session.accessToken = token.backendToken;
+        session.accessToken = token.backendToken as string;
+      }
+      if (token.onboardingCompleted !== undefined) {
+        session.onboardingCompleted = token.onboardingCompleted;
       }
       if (token.error) {
         session.error = token.error as string;
       }
-      session.onboardingCompleted = token.onboardingCompleted;
+
       return session;
     },
   },
