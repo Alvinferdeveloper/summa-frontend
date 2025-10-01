@@ -10,7 +10,7 @@ export default function EmployerDashboardPage() {
 
   useEffect(() => {
     if (status === 'authenticated' && session?.role === 'employer') {
-      setEmployerInfo({ message: `Welcome, Employer ${session.employerId}!` });
+      setEmployerInfo({ message: `¡Bienvenido, Empleador ${session.employerId}!` });
       setLoading(false);
     } else if (status === 'unauthenticated') {
       setLoading(false);
@@ -22,19 +22,19 @@ export default function EmployerDashboardPage() {
   };
 
   if (status === 'loading' || loading) {
-    return <div style={{ padding: '2rem' }}>Loading employer dashboard...</div>;
+    return <div style={{ padding: '2rem' }}>Cargando panel de empleador...</div>;
   }
 
   if (status === 'authenticated' && session?.role === 'employer') {
     return (
       <div style={{ padding: '2rem' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Employer Dashboard</h1>
+        <h1 style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Panel de Empleador</h1>
         {employerInfo && <p>{employerInfo.message}</p>}
         <button
           onClick={handleLogout}
           style={{ marginTop: '2rem', padding: '0.5rem 1rem', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
         >
-          Logout
+          Cerrar Sesión
         </button>
       </div>
     );

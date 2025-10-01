@@ -106,9 +106,9 @@ export default function EmployerRegister() {
                                 </div>
                             </div>
                         </div>
-                        <h1 className="mb-4 text-xl font-bold tracking-tight text-balance md:text-2xl">Join Our Platform</h1>
+                        <h1 className="mb-4 text-xl font-bold tracking-tight text-balance md:text-2xl">Únete a Nuestra Plataforma</h1>
                         <p className="mx-auto max-w-xl text-lg text-muted-foreground text-pretty md:text-xl">
-                            Connect with top talent and build your dream team. Registration takes less than 2 minutes.
+                            Conecta con el mejor talento y construye el equipo de tus sueños. El registro toma menos de 2 minutos.
                         </p>
                     </div>
 
@@ -123,8 +123,8 @@ export default function EmployerRegister() {
                                             <Sparkles className="h-5 w-5 text-primary" />
                                         </div>
                                         <div>
-                                            <h2 className="text-2xl font-bold">Essential Information</h2>
-                                            <p className="text-sm text-muted-foreground">Let's start with the basics</p>
+                                            <h2 className="text-2xl font-bold">Información Esencial</h2>
+                                            <p className="text-sm text-muted-foreground">Empecemos con lo básico</p>
                                         </div>
                                     </div>
 
@@ -133,7 +133,7 @@ export default function EmployerRegister() {
                                         <div className="space-y-2 md:col-span-2">
                                             <Label htmlFor="companyName" className="flex items-center gap-2 text-base font-medium">
                                                 <Building2 className="h-4 w-4 text-primary" />
-                                                Company Name <span className="text-secondary">*</span>
+                                                Nombre de la Empresa <span className="text-secondary">*</span>
                                             </Label>
                                             <Input
                                                 id="companyName"
@@ -150,12 +150,12 @@ export default function EmployerRegister() {
                                         <div className="space-y-2">
                                             <Label htmlFor="email" className="flex items-center gap-2 text-base font-medium">
                                                 <Mail className="h-4 w-4 text-primary" />
-                                                Email Address <span className="text-secondary">*</span>
+                                                Correo Electrónico <span className="text-secondary">*</span>
                                             </Label>
                                             <Input
                                                 id="email"
                                                 type="email"
-                                                placeholder="hello@company.com"
+                                                placeholder="hola@empresa.com"
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 required
@@ -167,12 +167,12 @@ export default function EmployerRegister() {
                                         <div className="space-y-2">
                                             <Label htmlFor="password" className="flex items-center gap-2 text-base font-medium">
                                                 <Lock className="h-4 w-4 text-primary" />
-                                                Password <span className="text-secondary">*</span>
+                                                Contraseña <span className="text-secondary">*</span>
                                             </Label>
                                             <Input
                                                 id="password"
                                                 type="password"
-                                                placeholder="Create a strong password"
+                                                placeholder="Crea una contraseña segura"
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 required
@@ -189,7 +189,7 @@ export default function EmployerRegister() {
                                     </div>
                                     <div className="relative flex justify-center">
                                         <span className="bg-card px-4 text-sm font-medium text-muted-foreground">
-                                            Additional Details (Optional)
+                                            Detalles Adicionales (Opcional)
                                         </span>
                                     </div>
                                 </div>
@@ -201,8 +201,8 @@ export default function EmployerRegister() {
                                             <Briefcase className="h-5 w-5 text-secondary" />
                                         </div>
                                         <div>
-                                            <h2 className="text-2xl font-bold">Company Details</h2>
-                                            <p className="text-sm text-muted-foreground">Help candidates learn more about you</p>
+                                            <h2 className="text-2xl font-bold">Detalles de la Empresa</h2>
+                                            <p className="text-sm text-muted-foreground">Ayuda a los candidatos a conocerte mejor</p>
                                         </div>
                                     </div>
 
@@ -211,7 +211,7 @@ export default function EmployerRegister() {
                                         <div className="space-y-2">
                                             <Label htmlFor="phoneNumber" className="flex items-center gap-2 text-base font-medium">
                                                 <Phone className="h-4 w-4 text-secondary" />
-                                                Phone Number
+                                                Número de Teléfono
                                             </Label>
                                             <Input
                                                 id="phoneNumber"
@@ -227,12 +227,12 @@ export default function EmployerRegister() {
                                         <div className="space-y-2">
                                             <Label htmlFor="country" className="flex items-center gap-2 text-base font-medium">
                                                 <Globe className="h-4 w-4 text-secondary" />
-                                                Country
+                                                País
                                             </Label>
                                             <Input
                                                 id="country"
                                                 type="text"
-                                                placeholder="United States"
+                                                placeholder="Estados Unidos"
                                                 value={country}
                                                 onChange={(e) => setCountry(e.target.value)}
                                                 className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
@@ -243,7 +243,7 @@ export default function EmployerRegister() {
                                         <div className="space-y-2">
                                             <Label htmlFor="foundationDate" className="flex items-center gap-2 text-base font-medium">
                                                 <Calendar className="h-4 w-4 text-secondary" />
-                                                Founded
+                                                Fundada en
                                             </Label>
                                             <Input
                                                 id="foundationDate"
@@ -258,12 +258,12 @@ export default function EmployerRegister() {
                                         <div className="space-y-2">
                                             <Label htmlFor="industry" className="flex items-center gap-2 text-base font-medium">
                                                 <Briefcase className="h-4 w-4 text-secondary" />
-                                                Industry
+                                                Industria
                                             </Label>
                                             <Input
                                                 id="industry"
                                                 type="text"
-                                                placeholder="Technology, Healthcare, etc."
+                                                placeholder="Tecnología, Salud, etc."
                                                 value={industry}
                                                 onChange={(e) => setIndustry(e.target.value)}
                                                 className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
@@ -274,7 +274,7 @@ export default function EmployerRegister() {
                                         <div className="space-y-2">
                                             <Label htmlFor="size" className="flex items-center gap-2 text-base font-medium">
                                                 <Users className="h-4 w-4 text-secondary" />
-                                                Company Size
+                                                Tamaño de la Empresa
                                             </Label>
                                             <Input
                                                 id="size"
@@ -290,12 +290,12 @@ export default function EmployerRegister() {
                                         <div className="space-y-2">
                                             <Label htmlFor="website" className="flex items-center gap-2 text-base font-medium">
                                                 <Globe className="h-4 w-4 text-secondary" />
-                                                Website
+                                                Sitio Web
                                             </Label>
                                             <Input
                                                 id="website"
                                                 type="url"
-                                                placeholder="https://yourcompany.com"
+                                                placeholder="https://tuempresa.com"
                                                 value={website}
                                                 onChange={(e) => setWebsite(e.target.value)}
                                                 className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
@@ -306,12 +306,12 @@ export default function EmployerRegister() {
                                         <div className="space-y-2 md:col-span-3">
                                             <Label htmlFor="address" className="flex items-center gap-2 text-base font-medium">
                                                 <MapPin className="h-4 w-4 text-secondary" />
-                                                Address
+                                                Dirección
                                             </Label>
                                             <Input
                                                 id="address"
                                                 type="text"
-                                                placeholder="123 Business Street, City, State, ZIP"
+                                                placeholder="123 Calle Principal, Ciudad, Estado, C.P."
                                                 value={address}
                                                 onChange={(e) => setAddress(e.target.value)}
                                                 className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
@@ -322,11 +322,11 @@ export default function EmployerRegister() {
                                         <div className="space-y-2 md:col-span-3">
                                             <Label htmlFor="description" className="flex items-center gap-2 text-base font-medium">
                                                 <FileText className="h-4 w-4 text-secondary" />
-                                                Company Description
+                                                Descripción de la Empresa
                                             </Label>
                                             <Textarea
                                                 id="description"
-                                                placeholder="Tell us about your company's mission, culture, and what makes you unique..."
+                                                placeholder="Cuéntanos sobre la misión, cultura y qué hace única a tu empresa..."
                                                 value={description}
                                                 onChange={(e) => setDescription(e.target.value)}
                                                 rows={4}
@@ -354,23 +354,23 @@ export default function EmployerRegister() {
                                         {isPending ? (
                                             <>
                                                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                                Creating your account...
+                                                Creando tu cuenta...
                                             </>
                                         ) : (
                                             <>
                                                 <Sparkles className="mr-2 h-5 w-5" />
-                                                Create My Account
+                                                Crear Mi Cuenta
                                             </>
                                         )}
                                     </Button>
 
                                     <p className="text-center text-sm text-muted-foreground">
-                                        Already have an account?{" "}
+                                        ¿Ya tienes una cuenta?{" "}
                                         <Link
                                             href="/employer/login"
                                             className="font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline"
                                         >
-                                            Sign in here
+                                            Inicia sesión aquí
                                         </Link>
                                     </p>
                                 </div>
@@ -381,7 +381,7 @@ export default function EmployerRegister() {
                     {/* Trust Badge */}
                     <div className="mt-8 text-center">
                         <p className="text-sm text-muted-foreground">
-                            🔒 Your information is secure and will never be shared with third parties
+                            🔒 Tu información está segura y nunca será compartida con terceros
                         </p>
                     </div>
                 </div>

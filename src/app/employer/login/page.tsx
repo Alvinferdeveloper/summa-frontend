@@ -43,11 +43,11 @@ export default function EmployerLoginPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '2rem' }}>
-      <h1 style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Employer Login</h1>
+      <h1 style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Inicio de Sesión para Empresas</h1>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%', maxWidth: '400px' }}>
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Correo Electrónico"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -55,7 +55,7 @@ export default function EmployerLoginPage() {
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -63,10 +63,10 @@ export default function EmployerLoginPage() {
         />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit" disabled={loading} style={{ padding: '0.8rem', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-          {loading ? 'Logging in...' : 'Login'}
+          {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
         </button>
       </form>
-      <p style={{ marginTop: '1rem' }}>Don't have an account? <a href="/employer/register" style={{ color: '#007bff' }}>Register here</a></p>
+      <p style={{ marginTop: '1rem' }}>¿No tienes una cuenta? <a href="/employer/register" style={{ color: '#007bff' }}>Regístrate aquí</a></p>
     </div>
   );
 }
