@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { motion, Variants } from "framer-motion";
 import { Heart, Users, Zap } from "lucide-react";
+import Image from "next/image";
 
 interface WelcomeModalProps {
   isOpen: boolean;
@@ -48,8 +49,13 @@ export default function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
       <DialogContent className="sm:max-w-[525px] p-8">
         <motion.div initial="hidden" animate="visible" variants={containerVariants}>
           <DialogHeader className="text-center">
-            <motion.div variants={itemVariants} className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <Heart className="h-6 w-6 text-primary" />
+            <motion.div variants={itemVariants} className="mx-auto flex h-16 w items-center justify-center rounded-full bg-primary/10">
+              <Image
+                src="/logo3.png"
+                alt="logo"
+                width={300}
+                height={300}
+              />
             </motion.div>
             <motion.div variants={itemVariants}>
               <DialogTitle className="text-2xl font-bold mt-4">Bienvenido a una Plataforma de Contratación Inclusiva</DialogTitle>
