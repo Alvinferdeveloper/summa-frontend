@@ -1,32 +1,19 @@
 
 import { useMutation } from '@tanstack/react-query';
 import api from '@/lib/api';
-
-interface EmployerRegistrationData {
-  company_name: string;
-  email: string;
-  password: string;
-  phone_number?: string;
-  country?: string;
-  foundation_date?: string; // YYYY-MM-DD format
-  industry?: string;
-  size?: string;
-  description?: string;
-  address?: string;
-  website?: string;
-}
+import type { EmployerRegisterSchema } from '../register/validation';
 
 interface EmployerRegistrationResponse {
   message: string;
 }
 
-const registerEmployer = async (data: EmployerRegistrationData): Promise<EmployerRegistrationResponse> => {
-  const response = await api.post<EmployerRegistrationResponse>('api/v1/employer/register', data);
+const registerEmployer = async (data: EmployerRegisterSchema): Promise<EmployerRegistrationResponse> => {
+  const response = await api.post<EmployerRegistrationResponse>('/v1/employer/register', data);
   return response.data;
 };
 
 export const useEmployerRegistration = () => {
-  return useMutation<EmployerRegistrationResponse, Error, EmployerRegistrationData>({
+  return useMutation<EmployerRegistrationResponse, Error, EmployerRegisterSchema>({
     mutationFn: registerEmployer,
   });
 };
