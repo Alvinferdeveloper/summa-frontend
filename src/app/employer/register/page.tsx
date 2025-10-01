@@ -17,7 +17,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import WelcomeModal from "../components/WelcomeModal"
-
+import Image from "next/image"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useSession, signIn } from "next-auth/react"
@@ -89,23 +89,21 @@ export default function EmployerRegister() {
     }
 
     return (
-        <>
+        <div className="min-h-screen lg:grid lg:grid-cols-[70%_30%]">
             <WelcomeModal isOpen={showWelcomeModal} onClose={() => setShowWelcomeModal(false)} />
             <div className="min-h-screen p-4 py-12 md:p-8 md:py-16">
                 <div className="mx-auto w-full max-w-6xl">
                     <div className="mb-12 text-center">
                         <div className="mb-6 flex justify-center">
                             <div className="relative">
-                                <div className="absolute -inset-2 animate-pulse rounded-3xl bg-primary/20 blur-xl" />
-                                <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-primary shadow-lg">
-                                    <Building2 className="h-10 w-10 text-primary-foreground" />
-                                </div>
+                                <Image
+                                    src="/logo3.png"
+                                    alt="logo"
+                                    width={300}
+                                    height={300}
+                                />
                             </div>
                         </div>
-                        <h1 className="mb-4 2text-xl font-bold tracking-tight text-balance md:text-3xl">Unete a nuestra plataforma</h1>
-                        <p className="mx-auto max-w-2xl text-lg text-muted-foreground text-pretty md:text-xl">
-                            Conecta con el mejor talento y construye tu sueño. El proceso de registro toma menos de 2 minutos.
-                        </p>
                     </div>
 
                     {/* Main Form Card */}
@@ -358,6 +356,42 @@ export default function EmployerRegister() {
                     </div>
                 </div>
             </div>
-        </>
+            <div className="relative hidden lg:block">
+                <div className="sticky top-0 h-screen overflow-hidden">
+                    {/* Gradient Overlay Effect */}
+                    <div className="absolute inset-0 z-10 bg-gradient-to-br from-primary/20 via-secondary/20 to-primary/30 mix-blend-overlay" />
+
+                    {/* Animated Gradient Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-primary animate-gradient-shift" />
+
+                    {/* Decorative Shapes */}
+                    <div className="absolute inset-0 z-20">
+                        <div className="absolute left-1/4 top-1/4 h-64 w-64 animate-float rounded-full bg-white/10 blur-3xl" />
+                        <div className="absolute bottom-1/4 right-1/4 h-80 w-80 animate-float-delayed rounded-full bg-white/10 blur-3xl" />
+                    </div>
+
+                    {/* Main Illustration */}
+                    <div className="relative z-30 flex h-full items-center justify-center p-12">
+                        <div className="text-center">
+                            <h2 className="mb-4 text-4xl font-bold text-white text-balance">Unete a nuestra plataforma</h2>
+                            <div className="mb-8 flex justify-center">
+                                <div className="relative">
+                                    <div className="absolute -inset-4 animate-pulse rounded-full bg-white/20 blur-2xl" />
+                                    <img
+                                        src="/carnival.svg"
+                                        alt="Team Collaboration"
+                                        className="relative h-96 w-96 rounded-3xl object-cover shadow-2xl"
+                                    />
+                                </div>
+                            </div>
+                            <h3 className="mb-4 text-3xl font-bold text-white text-balance">Arma el equipo de tus sueños</h3>
+                            <p className="text-md text-white/90 text-pretty">
+                                Encuentra talento excepcional para construir una fuerza laboral diversa e inclusiva.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
