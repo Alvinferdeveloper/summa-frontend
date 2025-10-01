@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         try {
           const response = await axios.post<BackendTokenResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/v1/employer/login`,
+            `${process.env.NEXT_PUBLIC_API_URL}/v1/employer/login`,
             {
               email: credentials?.email,
               password: credentials?.password,
@@ -93,7 +93,7 @@ export const authOptions: NextAuthOptions = {
         if (account.provider === "google") {
           try {
             const response = await axios.post<BackendTokenResponse>(
-              `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/google/callback`,
+              `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/google/callback`,
               {
                 provider: account.provider,
                 provider_id: user.id,

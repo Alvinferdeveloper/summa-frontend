@@ -8,7 +8,7 @@ interface EmployerRegistrationResponse {
 }
 
 const registerEmployer = async (data: EmployerRegisterSchema): Promise<EmployerRegistrationResponse> => {
-  const response = await api.post<EmployerRegistrationResponse>('/v1/employer/register', data);
+  const response = await api.post<EmployerRegistrationResponse>('v1/employer/register', data);
   return response.data;
 };
 

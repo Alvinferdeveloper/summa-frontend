@@ -9,7 +9,7 @@ interface JobPostResponse {
 }
 
 const createJobPost = async (data: JobPostSchema): Promise<JobPostResponse> => {
-  const response = await api.post<JobPostResponse>('api/v1/jobs', data);
+  const response = await api.post<JobPostResponse>('v1/jobs', data);
   return response.data;
 };
 
