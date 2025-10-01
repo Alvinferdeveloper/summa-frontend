@@ -11,11 +11,6 @@ export default function ProfilePage() {
     return <div>Loading...</div>;
   }
 
-  if (status === 'unauthenticated') {
-    return <div>Access Denied. Please sign in.</div>;
-  }
-
-
   if (session && !session.onboardingCompleted) {
     return <OnboardingForm />;
   }

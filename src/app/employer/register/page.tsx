@@ -29,15 +29,9 @@ export default function EmployerRegister() {
   const [website, setWebsite] = useState("")
 
   const router = useRouter()
-  const { data: session, status } = useSession()
+  const { status } = useSession()
 
   const { mutate, isPending, isSuccess, error } = useEmployerRegistration()
-
-  useEffect(() => {
-    if (status === "authenticated" && session?.role === "employer") {
-      router.push("/employer/dashboard")
-    }
-  }, [session, status, router])
 
   useEffect(() => {
     if (isSuccess) {

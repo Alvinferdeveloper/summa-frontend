@@ -7,15 +7,6 @@ export default function EmployerDashboardPage() {
   const { data: session, status } = useSession();
   const [employerInfo, setEmployerInfo] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const router = useRouter();
-
-  useEffect(() => {
-    if (status === 'unauthenticated' || (status === 'authenticated' && session?.role !== 'employer')) {
-      router.push('/employer/login');
-    }
-  }, [session, status, router]);
-
 
   useEffect(() => {
     if (status === 'authenticated' && session?.role === 'employer') {
@@ -32,10 +23,6 @@ export default function EmployerDashboardPage() {
 
   if (status === 'loading' || loading) {
     return <div style={{ padding: '2rem' }}>Loading employer dashboard...</div>;
-  }
-
-  if (error) {
-    return <div style={{ padding: '2rem', color: 'red' }}>{error}</div>;
   }
 
   if (status === 'authenticated' && session?.role === 'employer') {

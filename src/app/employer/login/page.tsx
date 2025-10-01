@@ -13,13 +13,6 @@ export default function EmployerLoginPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-
-  useEffect(() => {
-    if (status === 'authenticated' && session?.role === 'employer') {
-      router.push('/employer/dashboard');
-    }
-  }, [session, status, router]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
