@@ -10,303 +10,382 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Building2, Loader2 } from "lucide-react"
+import {
+    Building2,
+    Loader2,
+    Mail,
+    Lock,
+    Phone,
+    Globe,
+    Calendar,
+    Briefcase,
+    Users,
+    MapPin,
+    FileText,
+    Sparkles,
+} from "lucide-react"
 import Link from "next/link"
+import WelcomeModal from "../components/WelcomeModal"
 
 export default function EmployerRegister() {
-  const [companyName, setCompanyName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [country, setCountry] = useState("")
-  const [foundationDate, setFoundationDate] = useState("")
-  const [industry, setIndustry] = useState("")
-  const [size, setSize] = useState("")
-  const [description, setDescription] = useState("")
-  const [address, setAddress] = useState("")
-  const [website, setWebsite] = useState("")
+    const [companyName, setCompanyName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
+    const [country, setCountry] = useState("")
+    const [foundationDate, setFoundationDate] = useState("")
+    const [industry, setIndustry] = useState("")
+    const [size, setSize] = useState("")
+    const [description, setDescription] = useState("")
+    const [address, setAddress] = useState("")
+    const [website, setWebsite] = useState("");
+    const [showWelcomeModal, setShowWelcomeModal] = useState(true);
 
-  const router = useRouter()
-  const { status } = useSession()
+    const router = useRouter()
+    const { data: session, status } = useSession()
 
-  const { mutate, isPending, isSuccess, error } = useEmployerRegistration()
+    const { mutate, isPending, isSuccess, error } = useEmployerRegistration()
 
-  useEffect(() => {
-    if (isSuccess) {
-      signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      }).then((result) => {
-        if (result?.error) {
-          console.error("Auto-login after registration failed:", result.error)
-          router.push("/employer/login?error=AutoLoginFailed")
-        } else if (result?.ok) {
-          console.log("Auto-login after registration successful.")
+    useEffect(() => {
+        if (isSuccess) {
+            signIn("credentials", {
+                email,
+                password,
+                redirect: false,
+            }).then((result) => {
+                if (result?.error) {
+                    console.error("Auto-login after registration failed:", result.error)
+                    router.push("/employer/login?error=AutoLoginFailed")
+                } else if (result?.ok) {
+                    console.log("Auto-login after registration successful.")
+                    router.push("/employer/dashboard")
+                }
+            })
         }
-      })
+    }, [isSuccess, email, password, router])
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        mutate({
+            company_name: companyName,
+            email,
+            password,
+            phone_number: phoneNumber,
+            country,
+            foundation_date: foundationDate,
+            industry,
+            size,
+            description,
+            address,
+            website,
+        })
     }
-  }, [isSuccess, email, password, router])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    mutate({
-      company_name: companyName,
-      email,
-      password,
-      phone_number: phoneNumber,
-      country,
-      foundation_date: foundationDate,
-      industry,
-      size,
-      description,
-      address,
-      website,
-    })
-  }
-
-  if (status === "loading") {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-      </div>
-    )
-  }
-
-  return (
-    <div className="flex min-h-screen items-center justify-center p-4 md:p-8">
-      <div className="w-full max-w-5xl">
-        {/* Header */}
-        <div className="mb-8 text-center">
-          <div className="mb-4 flex justify-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-primary">
-              <Building2 className="h-7 w-7 text-primary-foreground" />
+    if (status === "loading") {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
-          </div>
-          <h1 className="mb-2 text-3xl font-semibold tracking-tight text-balance">Create your employer account</h1>
-          <p className="text-muted-foreground text-pretty">
-            Join our platform to find the best talent for your company
-          </p>
-        </div>
+        )
+    }
 
-        {/* Form Card */}
-        <Card className="border-border shadow-sm">
-          <CardHeader className="space-y-1 pb-6">
-            <CardTitle className="text-xl">Company Information</CardTitle>
-            <CardDescription>
-              Fields marked with <span className="text-destructive">*</span> are required
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Required Fields Section */}
-              <div className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-3">
-                  <div className="space-y-2 md:col-span-3">
-                    <Label htmlFor="companyName" className="text-sm font-medium">
-                      Company Name <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="companyName"
-                      type="text"
-                      placeholder="Acme Corporation"
-                      value={companyName}
-                      onChange={(e) => setCompanyName(e.target.value)}
-                      required
-                      className="h-11"
-                    />
-                  </div>
+    return (
+        <>
+            <WelcomeModal isOpen={showWelcomeModal} onClose={() => setShowWelcomeModal(false)} />
+            <div className="min-h-screen p-4 py-12 md:p-8 md:py-16">
+                <div className="mx-auto w-full max-w-6xl">
+                    {/* Hero Header */}
+                    <div className="mb-12 text-center">
+                        <div className="mb-6 flex justify-center">
+                            <div className="relative">
+                                <div className="absolute -inset-2 animate-pulse rounded-3xl bg-primary/20 blur-xl" />
+                                <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-primary shadow-lg">
+                                    <Building2 className="h-8 w-8 text-primary-foreground" />
+                                </div>
+                            </div>
+                        </div>
+                        <h1 className="mb-4 text-xl font-bold tracking-tight text-balance md:text-2xl">Join Our Platform</h1>
+                        <p className="mx-auto max-w-xl text-lg text-muted-foreground text-pretty md:text-xl">
+                            Connect with top talent and build your dream team. Registration takes less than 2 minutes.
+                        </p>
+                    </div>
 
-                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="email" className="text-sm font-medium">
-                      Email Address <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="contact@company.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="h-11"
-                    />
-                  </div>
+                    {/* Main Form Card */}
+                    <Card className="overflow-hidden border-2 border-border shadow-xl">
+                        <CardContent className="p-6 md:p-10">
+                            <form onSubmit={handleSubmit} className="space-y-10">
+                                {/* Essential Information Section */}
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+                                            <Sparkles className="h-5 w-5 text-primary" />
+                                        </div>
+                                        <div>
+                                            <h2 className="text-2xl font-bold">Essential Information</h2>
+                                            <p className="text-sm text-muted-foreground">Let's start with the basics</p>
+                                        </div>
+                                    </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="password" className="text-sm font-medium">
-                      Password <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="h-11"
-                    />
-                  </div>
+                                    <div className="grid gap-6 md:grid-cols-2">
+                                        {/* Company Name */}
+                                        <div className="space-y-2 md:col-span-2">
+                                            <Label htmlFor="companyName" className="flex items-center gap-2 text-base font-medium">
+                                                <Building2 className="h-4 w-4 text-primary" />
+                                                Company Name <span className="text-secondary">*</span>
+                                            </Label>
+                                            <Input
+                                                id="companyName"
+                                                type="text"
+                                                placeholder="Acme Corporation"
+                                                value={companyName}
+                                                onChange={(e) => setCompanyName(e.target.value)}
+                                                required
+                                                className="h-12 border-2 text-base transition-all focus:border-primary focus:ring-4 focus:ring-primary/20"
+                                            />
+                                        </div>
+
+                                        {/* Email */}
+                                        <div className="space-y-2">
+                                            <Label htmlFor="email" className="flex items-center gap-2 text-base font-medium">
+                                                <Mail className="h-4 w-4 text-primary" />
+                                                Email Address <span className="text-secondary">*</span>
+                                            </Label>
+                                            <Input
+                                                id="email"
+                                                type="email"
+                                                placeholder="hello@company.com"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                required
+                                                className="h-12 border-2 text-base transition-all focus:border-primary focus:ring-4 focus:ring-primary/20"
+                                            />
+                                        </div>
+
+                                        {/* Password */}
+                                        <div className="space-y-2">
+                                            <Label htmlFor="password" className="flex items-center gap-2 text-base font-medium">
+                                                <Lock className="h-4 w-4 text-primary" />
+                                                Password <span className="text-secondary">*</span>
+                                            </Label>
+                                            <Input
+                                                id="password"
+                                                type="password"
+                                                placeholder="Create a strong password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                required
+                                                className="h-12 border-2 text-base transition-all focus:border-primary focus:ring-4 focus:ring-primary/20"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Decorative Divider */}
+                                <div className="relative py-4">
+                                    <div className="absolute inset-0 flex items-center">
+                                        <div className="w-full border-t-2 border-dashed border-border" />
+                                    </div>
+                                    <div className="relative flex justify-center">
+                                        <span className="bg-card px-4 text-sm font-medium text-muted-foreground">
+                                            Additional Details (Optional)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Company Details Section */}
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/10">
+                                            <Briefcase className="h-5 w-5 text-secondary" />
+                                        </div>
+                                        <div>
+                                            <h2 className="text-2xl font-bold">Company Details</h2>
+                                            <p className="text-sm text-muted-foreground">Help candidates learn more about you</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid gap-6 md:grid-cols-3">
+                                        {/* Phone */}
+                                        <div className="space-y-2">
+                                            <Label htmlFor="phoneNumber" className="flex items-center gap-2 text-base font-medium">
+                                                <Phone className="h-4 w-4 text-secondary" />
+                                                Phone Number
+                                            </Label>
+                                            <Input
+                                                id="phoneNumber"
+                                                type="tel"
+                                                placeholder="+1 (555) 000-0000"
+                                                value={phoneNumber}
+                                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                                className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
+                                            />
+                                        </div>
+
+                                        {/* Country */}
+                                        <div className="space-y-2">
+                                            <Label htmlFor="country" className="flex items-center gap-2 text-base font-medium">
+                                                <Globe className="h-4 w-4 text-secondary" />
+                                                Country
+                                            </Label>
+                                            <Input
+                                                id="country"
+                                                type="text"
+                                                placeholder="United States"
+                                                value={country}
+                                                onChange={(e) => setCountry(e.target.value)}
+                                                className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
+                                            />
+                                        </div>
+
+                                        {/* Foundation Date */}
+                                        <div className="space-y-2">
+                                            <Label htmlFor="foundationDate" className="flex items-center gap-2 text-base font-medium">
+                                                <Calendar className="h-4 w-4 text-secondary" />
+                                                Founded
+                                            </Label>
+                                            <Input
+                                                id="foundationDate"
+                                                type="date"
+                                                value={foundationDate}
+                                                onChange={(e) => setFoundationDate(e.target.value)}
+                                                className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
+                                            />
+                                        </div>
+
+                                        {/* Industry */}
+                                        <div className="space-y-2">
+                                            <Label htmlFor="industry" className="flex items-center gap-2 text-base font-medium">
+                                                <Briefcase className="h-4 w-4 text-secondary" />
+                                                Industry
+                                            </Label>
+                                            <Input
+                                                id="industry"
+                                                type="text"
+                                                placeholder="Technology, Healthcare, etc."
+                                                value={industry}
+                                                onChange={(e) => setIndustry(e.target.value)}
+                                                className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
+                                            />
+                                        </div>
+
+                                        {/* Size */}
+                                        <div className="space-y-2">
+                                            <Label htmlFor="size" className="flex items-center gap-2 text-base font-medium">
+                                                <Users className="h-4 w-4 text-secondary" />
+                                                Company Size
+                                            </Label>
+                                            <Input
+                                                id="size"
+                                                type="text"
+                                                placeholder="1-10, 11-50, 51-200..."
+                                                value={size}
+                                                onChange={(e) => setSize(e.target.value)}
+                                                className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
+                                            />
+                                        </div>
+
+                                        {/* Website */}
+                                        <div className="space-y-2">
+                                            <Label htmlFor="website" className="flex items-center gap-2 text-base font-medium">
+                                                <Globe className="h-4 w-4 text-secondary" />
+                                                Website
+                                            </Label>
+                                            <Input
+                                                id="website"
+                                                type="url"
+                                                placeholder="https://yourcompany.com"
+                                                value={website}
+                                                onChange={(e) => setWebsite(e.target.value)}
+                                                className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
+                                            />
+                                        </div>
+
+                                        {/* Address */}
+                                        <div className="space-y-2 md:col-span-3">
+                                            <Label htmlFor="address" className="flex items-center gap-2 text-base font-medium">
+                                                <MapPin className="h-4 w-4 text-secondary" />
+                                                Address
+                                            </Label>
+                                            <Input
+                                                id="address"
+                                                type="text"
+                                                placeholder="123 Business Street, City, State, ZIP"
+                                                value={address}
+                                                onChange={(e) => setAddress(e.target.value)}
+                                                className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
+                                            />
+                                        </div>
+
+                                        {/* Description */}
+                                        <div className="space-y-2 md:col-span-3">
+                                            <Label htmlFor="description" className="flex items-center gap-2 text-base font-medium">
+                                                <FileText className="h-4 w-4 text-secondary" />
+                                                Company Description
+                                            </Label>
+                                            <Textarea
+                                                id="description"
+                                                placeholder="Tell us about your company's mission, culture, and what makes you unique..."
+                                                value={description}
+                                                onChange={(e) => setDescription(e.target.value)}
+                                                rows={4}
+                                                className="resize-none border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Error Message */}
+                                {error && (
+                                    <Alert variant="destructive" className="border-2">
+                                        <AlertDescription className="text-base">{error.message}</AlertDescription>
+                                    </Alert>
+                                )}
+
+                                {/* Submit Button */}
+                                <div className="space-y-4 pt-4">
+                                    <Button
+                                        type="submit"
+                                        disabled={isPending}
+                                        className="h-12 w-full text-lg font-semibold shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl"
+                                        size="lg"
+                                    >
+                                        {isPending ? (
+                                            <>
+                                                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                                Creating your account...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Sparkles className="mr-2 h-5 w-5" />
+                                                Create My Account
+                                            </>
+                                        )}
+                                    </Button>
+
+                                    <p className="text-center text-sm text-muted-foreground">
+                                        Already have an account?{" "}
+                                        <Link
+                                            href="/employer/login"
+                                            className="font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline"
+                                        >
+                                            Sign in here
+                                        </Link>
+                                    </p>
+                                </div>
+                            </form>
+                        </CardContent>
+                    </Card>
+
+                    {/* Trust Badge */}
+                    <div className="mt-8 text-center">
+                        <p className="text-sm text-muted-foreground">
+                            🔒 Your information is secure and will never be shared with third parties
+                        </p>
+                    </div>
                 </div>
-              </div>
-
-              {/* Divider */}
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-border" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground">Optional Information</span>
-                </div>
-              </div>
-
-              {/* Optional Fields Section */}
-              <div className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-3">
-                  <div className="space-y-2">
-                    <Label htmlFor="phoneNumber" className="text-sm font-medium">
-                      Phone Number
-                    </Label>
-                    <Input
-                      id="phoneNumber"
-                      type="tel"
-                      placeholder="+1 (555) 000-0000"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      className="h-11"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="country" className="text-sm font-medium">
-                      Country
-                    </Label>
-                    <Input
-                      id="country"
-                      type="text"
-                      placeholder="United States"
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                      className="h-11"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="foundationDate" className="text-sm font-medium">
-                      Foundation Date
-                    </Label>
-                    <Input
-                      id="foundationDate"
-                      type="date"
-                      value={foundationDate}
-                      onChange={(e) => setFoundationDate(e.target.value)}
-                      className="h-11"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="industry" className="text-sm font-medium">
-                      Industry
-                    </Label>
-                    <Input
-                      id="industry"
-                      type="text"
-                      placeholder="Technology"
-                      value={industry}
-                      onChange={(e) => setIndustry(e.target.value)}
-                      className="h-11"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="size" className="text-sm font-medium">
-                      Company Size
-                    </Label>
-                    <Input
-                      id="size"
-                      type="text"
-                      placeholder="1-10, 11-50, 51-200, etc."
-                      value={size}
-                      onChange={(e) => setSize(e.target.value)}
-                      className="h-11"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="website" className="text-sm font-medium">
-                      Website
-                    </Label>
-                    <Input
-                      id="website"
-                      type="url"
-                      placeholder="https://company.com"
-                      value={website}
-                      onChange={(e) => setWebsite(e.target.value)}
-                      className="h-11"
-                    />
-                  </div>
-
-                  <div className="space-y-2 md:col-span-3">
-                    <Label htmlFor="address" className="text-sm font-medium">
-                      Address
-                    </Label>
-                    <Input
-                      id="address"
-                      type="text"
-                      placeholder="123 Business St, City, State, ZIP"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      className="h-11"
-                    />
-                  </div>
-
-                  <div className="space-y-2 md:col-span-3">
-                    <Label htmlFor="description" className="text-sm font-medium">
-                      Company Description
-                    </Label>
-                    <Textarea
-                      id="description"
-                      placeholder="Tell us about your company, mission, and culture..."
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      rows={3}
-                      className="resize-none"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Error Message */}
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error.message}</AlertDescription>
-                </Alert>
-              )}
-
-              {/* Submit Button */}
-              <Button type="submit" disabled={isPending} className="h-11 w-full text-base font-medium" size="lg">
-                {isPending ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Creating account...
-                  </>
-                ) : (
-                  "Create Account"
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-
-        {/* Footer */}
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          Already have an account?{" "}
-          <Link href="/employer/login" className="font-medium text-primary underline-offset-4 hover:underline">
-            Sign in
-          </Link>
-        </p>
-      </div>
-    </div>
-  )
+            </div>
+        </>
+    )
 }
