@@ -15,6 +15,7 @@ export interface Experience {
   start_date: string;
   end_date: string | null;
   employer: Employer;
+  new_employer: Employer;
 }
 
 export interface University {
@@ -40,6 +41,7 @@ export interface Skill {
 interface DisabilityType {
   ID: number;
   name: string;
+  description: string;
 }
 
 interface AccessibilityNeed {
@@ -65,11 +67,11 @@ export interface ProfileData {
   disability_info_consent: boolean;
   detailed_accommodations?: string;
   
-  Experiences: Experience[];
-  Educations: Education[];
-  Skills: Skill[];
-  DisabilityTypes: DisabilityType[];
-  AccessibilityNeeds: AccessibilityNeed[];
+  experiences: Experience[];
+  educations: Education[];
+  skills: Skill[];
+  disability_types: DisabilityType[];
+  accessibility_needs: AccessibilityNeed[];
 }
 
 const fetchMyProfile = async (): Promise<ProfileData> => {

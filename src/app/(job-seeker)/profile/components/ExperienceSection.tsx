@@ -39,7 +39,7 @@ export default function ExperienceSection({ experiences }: ExperienceSectionProp
                 {new Date(exp.start_date).getFullYear()} - {exp.end_date ? new Date(exp.end_date).getFullYear() : 'Presente'}
               </p>
               <h3 className="font-bold text-lg">{exp.job_title}</h3>
-              <p className="font-semibold text-md text-gray-700">{exp.employer.company_name}</p>
+              <p className="font-semibold text-md text-gray-700">{exp.employer?.company_name}</p>
               <p className="mt-2 text-sm text-muted-foreground">{exp.description}</p>
             </div>
           ))

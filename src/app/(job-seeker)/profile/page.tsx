@@ -18,15 +18,14 @@ import {
   Heart,
   UserCircle2,
   PlusCircle,
-  Mail,
 } from "lucide-react"
 import OnboardingForm from "./components/OnboardingForm"
 import { Badge } from "@/components/ui/badge"
 
 export default function ProfilePage() {
   const { data: session, status: sessionStatus } = useSession()
-  const { data: profile, status: profileStatus, error } = useMyProfile()
-
+  const { data: profile, status: profileStatus, error } = useMyProfile();
+ 
   if (sessionStatus === "loading" || profileStatus === "pending") {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
@@ -52,103 +51,97 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto space-y-6">
-        <Card className="border-2 border-border/60 shadow-md hover:shadow-lg transition-all duration-300">
-          <CardContent className="pt-8 pb-8">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-              <div className="flex items-start gap-6 w-full sm:w-auto">
-                {profile?.profile_picture ? (
-                  <img
-                    src={profile.profile_picture || "/placeholder.svg"}
-                    alt="Profile"
-                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover ring-4 ring-primary/20 shadow-xl border-2 border-background"
-                  />
-                ) : (
-                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center ring-4 ring-primary/20 shadow-xl border-2 border-background">
-                    <UserCircle2 className="w-16 h-16 sm:w-20 sm:h-20 text-primary/60" />
-                  </div>
-                )}
-                <div className="flex-1 min-w-0">
-                  <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-balance mb-2">
-                    {profile?.first_name} {profile?.last_name}
-                  </h1>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Mail className="h-4 w-4 flex-shrink-0" />
-                    <p className="text-sm sm:text-base truncate">{session?.user?.email}</p>
-                  </div>
+    <div className="min-h-screen bg-background">
+      <div className="relative">
+        <div className="h-48 sm:h-60 flex justify-center rounded-md rounded-tr-lg border-b border-border">
+          <img
+            src="https://media.licdn.com/dms/image/v2/D5616AQFdem9Vr7zxyQ/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1732840373751?e=1762387200&v=beta&t=QAJr3O7gKxFVEk5k9ZyofGKFtkTApG20T-do9qc2sFI" width={350} height={1400} alt="Profile"
+            className="w-full sm:w-5/6 h-full object-cover rounded-tr-lg rounded-tl-lg" />
+        </div>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative -mt-20 sm:-mt-24 pb-6">
+            <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-end">
+              {profile?.profile_picture || session?.user?.image ? (
+                <img
+                  src={profile?.profile_picture || session?.user?.image || "/placeholder.svg"}
+                  alt="Profile"
+                  className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover ring-4 ring-background border-4 border-background shadow-xl"
+                />
+              ) : (
+                <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-card flex items-center justify-center ring-4 ring-background border-4 border-background shadow-xl">
+                  <UserCircle2 className="w-20 h-20 sm:w-24 sm:h-24 text-muted-foreground" />
                 </div>
+              )}
+
+              <div className="flex-1 min-w-0">
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-1">
+                  {profile?.first_name} {profile?.last_name}
+                </h1>
+                <p className="text-base text-muted-foreground">{session?.user?.email}</p>
               </div>
-              <Link href="/profile/edit" className="w-full sm:w-auto">
+
+              <Link href="/profile/edit" className="sm:pb-2">
                 <Button
                   variant="outline"
-                  className="w-full sm:w-auto font-medium hover:bg-primary hover:text-primary-foreground transition-colors bg-transparent border-2"
+                  className="font-medium border-2 hover:bg-accent/5 hover:border-primary bg-transparent"
                 >
                   Editar Perfil
                 </Button>
               </Link>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+      </div>
 
-        <Card className="border-2 border-border/60 shadow-md hover:shadow-lg transition-all duration-300">
-          <CardHeader className="pb-4 border-b border-border/50">
-            <CardTitle className="text-xl font-semibold">Información de Contacto</CardTitle>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 space-y-4">
+        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl font-semibold text-foreground">Información de Contacto</CardTitle>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent>
             {profile?.phone_number || profile?.address || profile?.city || profile?.linked_in || profile?.resume_url ? (
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 {profile?.phone_number && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border border-border/40">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-                      <Phone className="h-4 w-4 text-primary" />
-                    </div>
-                    <span className="text-sm font-medium">{profile.phone_number}</span>
+                  <div className="flex items-center gap-3 text-sm">
+                    <Phone className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <span className="text-foreground">{profile.phone_number}</span>
                   </div>
                 )}
                 {profile?.address && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border border-border/40">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-                      <MapPin className="h-4 w-4 text-primary" />
-                    </div>
-                    <span className="text-sm font-medium">{profile.address}</span>
+                  <div className="flex items-center gap-3 text-sm">
+                    <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <span className="text-foreground">{profile.address}</span>
                   </div>
                 )}
                 {profile?.city && profile?.country && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border border-border/40">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-                      <Globe className="h-4 w-4 text-primary" />
-                    </div>
-                    <span className="text-sm font-medium">
+                  <div className="flex items-center gap-3 text-sm">
+                    <Globe className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <span className="text-foreground">
                       {profile.city}, {profile.country}
                     </span>
                   </div>
                 )}
                 {profile?.linked_in && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border border-border/40">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-                      <Linkedin className="h-4 w-4 text-primary" />
-                    </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <Linkedin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                     <a
                       href={profile.linked_in}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-medium hover:text-primary transition-colors underline-offset-4 hover:underline"
+                      className="text-primary hover:underline font-medium"
                     >
                       Ver LinkedIn
                     </a>
                   </div>
                 )}
                 {profile?.resume_url && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border border-border/40">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-                      <FileText className="h-4 w-4 text-primary" />
-                    </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <FileText className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                     <a
                       href={profile.resume_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-medium hover:text-primary transition-colors underline-offset-4 hover:underline"
+                      className="text-primary hover:underline font-medium"
                     >
                       Ver Currículum
                     </a>
@@ -156,17 +149,15 @@ export default function ProfilePage() {
                 )}
               </div>
             ) : (
-              <div className="text-center py-12 px-4">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-                  <Phone className="h-8 w-8 text-muted-foreground" />
-                </div>
-                <p className="text-muted-foreground mb-4 text-balance">
+              <div className="text-center py-8">
+                <Phone className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
+                <p className="text-muted-foreground text-sm mb-3">
                   No tienes información de contacto adicional registrada.
                 </p>
                 <Link href="/profile/edit#contact">
-                  <Button variant="outline" className="gap-2 bg-transparent">
+                  <Button variant="outline" size="sm" className="gap-2 bg-transparent">
                     <PlusCircle className="h-4 w-4" />
-                    Añadir Información de Contacto
+                    Añadir Información
                   </Button>
                 </Link>
               </div>
@@ -174,21 +165,19 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
-        <Card className="border-2 border-border/60 shadow-md hover:shadow-lg transition-all duration-300">
-          <CardHeader className="pb-4 border-b border-border/50">
-            <CardTitle className="text-xl font-semibold">Sobre Mí</CardTitle>
+        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl font-semibold text-foreground">Sobre Mí</CardTitle>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent>
             {profile?.description ? (
-              <p className="text-muted-foreground leading-relaxed text-pretty">{profile.description}</p>
+              <p className="text-foreground leading-relaxed text-pretty">{profile.description}</p>
             ) : (
-              <div className="text-center py-12 px-4">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-                  <UserCircle2 className="h-8 w-8 text-muted-foreground" />
-                </div>
-                <p className="text-muted-foreground mb-4 text-balance">Aún no has escrito una descripción sobre ti.</p>
+              <div className="text-center py-8">
+                <UserCircle2 className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
+                <p className="text-muted-foreground text-sm mb-3">Aún no has escrito una descripción sobre ti.</p>
                 <Link href="/profile/edit#about">
-                  <Button variant="outline" className="gap-2 bg-transparent">
+                  <Button variant="outline" size="sm" className="gap-2 bg-transparent">
                     <PlusCircle className="h-4 w-4" />
                     Añadir Descripción
                   </Button>
@@ -198,48 +187,42 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
-        <Card className="border-2 border-border/60 shadow-md hover:shadow-lg transition-all duration-300 hover:border-accent/30">
-          <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-border/50">
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center border border-accent/20">
-                <Accessibility className="h-5 w-5 text-accent" />
-              </div>
+        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="flex flex-row items-center justify-between pb-4">
+            <CardTitle className="flex items-center gap-2 text-xl font-semibold text-foreground">
+              <Accessibility className="h-5 w-5 text-primary" />
               Tipos de Discapacidad
             </CardTitle>
             <Link href="/profile/edit#disability-types">
-              <Button variant="ghost" size="sm" className="gap-1 hover:bg-accent/10 hover:text-accent">
-                <PlusCircle className="h-4 w-4" /> Añadir
+              <Button variant="ghost" size="sm" className="gap-1 text-muted-foreground hover:text-foreground">
+                <PlusCircle className="h-4 w-4" />
               </Button>
             </Link>
           </CardHeader>
-          <CardContent className="pt-6">
-            {profile?.DisabilityTypes && profile.DisabilityTypes.length > 0 ? (
+          <CardContent>
+            {profile?.disability_types && profile.disability_types.length > 0 ? (
               <div className="flex flex-wrap gap-2">
-                {profile.DisabilityTypes.map((dt) => (
+                {profile.disability_types.map((dt) => (
                   <Badge
                     key={dt.ID}
                     variant="secondary"
-                    className="px-4 py-2 text-sm font-medium bg-accent/10 text-accent-foreground hover:bg-accent/20 transition-colors border-2 border-accent/30"
+                    className="px-3 py-1 text-sm font-normal bg-secondary text-secondary-foreground border border-border"
                   >
                     {dt.name}
                   </Badge>
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12 px-4">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-                  <Accessibility className="h-8 w-8 text-muted-foreground" />
-                </div>
-                <p className="text-muted-foreground mb-2 font-medium text-balance">
-                  No has especificado tus tipos de discapacidad.
-                </p>
-                <p className="text-sm text-muted-foreground/80 mb-4 text-balance">
+              <div className="text-center py-8">
+                <Accessibility className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
+                <p className="text-muted-foreground text-sm mb-1">No has especificado tus tipos de discapacidad.</p>
+                <p className="text-xs text-muted-foreground/70 mb-3">
                   Esta información es opcional y nos ayuda a mejorar el matching.
                 </p>
                 <Link href="/profile/edit#disability-types">
-                  <Button variant="outline" className="gap-2 bg-transparent">
+                  <Button variant="outline" size="sm" className="gap-2 bg-transparent">
                     <PlusCircle className="h-4 w-4" />
-                    Añadir Tipos de Discapacidad
+                    Añadir
                   </Button>
                 </Link>
               </div>
@@ -247,48 +230,44 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
-        <Card className="border-2 border-border/60 shadow-md hover:shadow-lg transition-all duration-300 hover:border-primary/30">
-          <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-border/50">
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center border border-primary/20">
-                <Heart className="h-5 w-5 text-primary" />
-              </div>
+        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="flex flex-row items-center justify-between pb-4">
+            <CardTitle className="flex items-center gap-2 text-xl font-semibold text-foreground">
+              <Heart className="h-5 w-5 text-primary" />
               Necesidades de Accesibilidad
             </CardTitle>
             <Link href="/profile/edit#accessibility-needs">
-              <Button variant="ghost" size="sm" className="gap-1 hover:bg-primary/10 hover:text-primary">
-                <PlusCircle className="h-4 w-4" /> Añadir
+              <Button variant="ghost" size="sm" className="gap-1 text-muted-foreground hover:text-foreground">
+                <PlusCircle className="h-4 w-4" />
               </Button>
             </Link>
           </CardHeader>
-          <CardContent className="pt-6">
-            {profile?.AccessibilityNeeds && profile.AccessibilityNeeds.length > 0 ? (
+          <CardContent>
+            {profile?.accessibility_needs && profile.accessibility_needs.length > 0 ? (
               <div className="flex flex-wrap gap-2">
-                {profile.AccessibilityNeeds.map((an) => (
+                {profile.accessibility_needs.map((an) => (
                   <Badge
                     key={an.ID}
                     variant="secondary"
-                    className="px-4 py-2 text-sm font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border-2 border-primary/30"
+                    className="px-3 py-1 text-sm font-normal bg-secondary text-secondary-foreground border border-border"
                   >
                     {an.name}
                   </Badge>
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12 px-4">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-                  <Heart className="h-8 w-8 text-muted-foreground" />
-                </div>
-                <p className="text-muted-foreground mb-2 font-medium text-balance">
+              <div className="text-center py-8">
+                <Heart className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
+                <p className="text-muted-foreground text-sm mb-1">
                   No has especificado tus necesidades de accesibilidad.
                 </p>
-                <p className="text-sm text-muted-foreground/80 mb-4 text-balance">
+                <p className="text-xs text-muted-foreground/70 mb-3">
                   ¡Ayúdanos a encontrar empleos que se adapten a ti!
                 </p>
                 <Link href="/profile/edit#accessibility-needs">
-                  <Button variant="outline" className="gap-2 bg-transparent">
+                  <Button variant="outline" size="sm" className="gap-2 bg-transparent">
                     <PlusCircle className="h-4 w-4" />
-                    Añadir Necesidades de Accesibilidad
+                    Añadir
                   </Button>
                 </Link>
               </div>
@@ -296,9 +275,9 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
-        <ExperienceSection experiences={profile?.Experiences} />
-        <EducationSection educations={profile?.Educations} />
-        <SkillsSection skills={profile?.Skills} />
+        <ExperienceSection experiences={profile?.experiences} />
+        <EducationSection educations={profile?.educations} />
+        <SkillsSection skills={profile?.skills} />
       </div>
     </div>
   )
