@@ -47,7 +47,7 @@ export default function EducationSection({ educations }: EducationSectionProps) 
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-foreground mb-1 text-balance">{edu.degree}</h3>
                       {edu.field_of_study && <p className="text-sm text-muted-foreground mb-2">{edu.field_of_study}</p>}
-                      <p className="text-base font-medium text-accent">{edu.university.name}</p>
+                      <p className="text-base font-medium text-accent">{edu.university?.name}</p>
                     </div>
                   </div>
 
@@ -59,7 +59,7 @@ export default function EducationSection({ educations }: EducationSectionProps) 
                         {edu.end_date ? formatDate(edu.end_date) : "N/A"}
                       </span>
                     </div>
-                    {edu.university.address && (
+                    {edu.university?.address && (
                       <div className="flex items-center gap-1.5">
                         <MapPin className="h-4 w-4" />
                         <span>{edu.university.address}</span>
