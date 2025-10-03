@@ -90,7 +90,7 @@ export default function CreateJobPage() {
       </div>
 
       {/* Form Content */}
-      <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+      <div className="bg-white p-8 rounded-sm shadow-lg border border-gray-200">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <AnimatePresence mode="wait">

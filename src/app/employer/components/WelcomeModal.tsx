@@ -46,7 +46,7 @@ const points = [
 export default function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[525px] p-8">
+      <DialogContent className="sm:max-w-[525px] p-8 bg-white">
         <motion.div initial="hidden" animate="visible" variants={containerVariants}>
           <DialogHeader className="text-center">
             <motion.div variants={itemVariants} className="mx-auto flex h-16 w items-center justify-center rounded-full bg-primary/10">

@@ -54,7 +54,7 @@ export default function EmployerLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex flex-col">
+    <div className="min-h-screen">
       <div className="absolute top-6 left-6 flex items-center gap-2">
         <div className={`bg-blue-600 text-white px-2 text-2xl py-1 rounded-sm ${changaOne.className}`}>SUMMA</div>
         <Image
@@ -67,7 +67,7 @@ export default function EmployerLoginPage() {
 
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
-          <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
+          <div className="bg-white rounded-sm shadow-xl p-8 space-y-6">
             <div className="text-center space-y-2">
               <div className="inline-flex items-center justify-center h-16 bg-blue-100 rounded-full mb-4">
                 <Image

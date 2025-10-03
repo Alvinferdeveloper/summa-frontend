@@ -107,7 +107,7 @@ export default function EmployerRegister() {
                     </div>
 
                     {/* Main Form Card */}
-                    <Card className="overflow-hidden border-2 border-border shadow-xl">
+                    <Card className="overflow-hidden border-2 border-border shadow-xl rounded-sm">
                         <CardContent className="p-6 md:p-10">
                             <Form {...form}>
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
