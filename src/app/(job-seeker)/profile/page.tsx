@@ -5,7 +5,6 @@ import SkillsSection from "./components/SkillsSection"
 import { useSession } from "next-auth/react"
 import { useMyProfile } from "./hooks/useMyProfile"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {
   Loader2,
@@ -25,7 +24,7 @@ import { Badge } from "@/components/ui/badge"
 export default function ProfilePage() {
   const { data: session, status: sessionStatus } = useSession()
   const { data: profile, status: profileStatus, error } = useMyProfile();
- 
+
   if (sessionStatus === "loading" || profileStatus === "pending") {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
@@ -79,23 +78,16 @@ export default function ProfilePage() {
                 </h1>
                 <p className="text-base text-muted-foreground">{session?.user?.email}</p>
               </div>
-
-              <Link href="/profile/edit" className="sm:pb-2">
-                <Button
-                  variant="outline"
-                  className="font-medium border-2 hover:bg-accent/5 hover:border-primary bg-transparent"
-                >
-                  Editar Perfil
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 space-y-4">
-        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="pb-4">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 space-y-2">
+
+        {/* Contact Info Section */}
+        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
+          <CardHeader>
             <CardTitle className="text-xl font-semibold text-foreground">Información de Contacto</CardTitle>
           </CardHeader>
           <CardContent>
@@ -149,129 +141,80 @@ export default function ProfilePage() {
                 )}
               </div>
             ) : (
-              <div className="text-center py-8">
-                <Phone className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
-                <p className="text-muted-foreground text-sm mb-3">
-                  No tienes información de contacto adicional registrada.
-                </p>
-                <Link href="/profile/edit#contact">
-                  <Button variant="outline" size="sm" className="gap-2 bg-transparent">
-                    <PlusCircle className="h-4 w-4" />
-                    Añadir Información
-                  </Button>
-                </Link>
-              </div>
+              <p className="text-center py-4 text-muted-foreground">No tienes información de contacto adicional registrada.</p>
             )}
+            <Link href="/profile/edit#contact" className="inline-flex mx-auto items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+              <PlusCircle className="h-4 w-4" />
+              Añadir Información de Contacto
+            </Link>
           </CardContent>
         </Card>
 
-        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="pb-4">
+        {/* About Me Section */}
+        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
+          <CardHeader>
             <CardTitle className="text-xl font-semibold text-foreground">Sobre Mí</CardTitle>
           </CardHeader>
           <CardContent>
             {profile?.description ? (
               <p className="text-foreground leading-relaxed text-pretty">{profile.description}</p>
             ) : (
-              <div className="text-center py-8">
-                <UserCircle2 className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
-                <p className="text-muted-foreground text-sm mb-3">Aún no has escrito una descripción sobre ti.</p>
-                <Link href="/profile/edit#about">
-                  <Button variant="outline" size="sm" className="gap-2 bg-transparent">
-                    <PlusCircle className="h-4 w-4" />
-                    Añadir Descripción
-                  </Button>
-                </Link>
-              </div>
+              <p className="text-center py-4 text-muted-foreground">Aún no has escrito una descripción sobre ti.</p>
             )}
+            <Link href="/profile/edit#about" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+              <PlusCircle className="h-4 w-4" />
+              Añadir Descripción
+            </Link>
           </CardContent>
         </Card>
 
-        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="flex flex-row items-center justify-between pb-4">
+        {/* Disability Types Section */}
+        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
+          <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl font-semibold text-foreground">
               <Accessibility className="h-5 w-5 text-primary" />
               Tipos de Discapacidad
             </CardTitle>
-            <Link href="/profile/edit#disability-types">
-              <Button variant="ghost" size="sm" className="gap-1 text-muted-foreground hover:text-foreground">
-                <PlusCircle className="h-4 w-4" />
-              </Button>
-            </Link>
           </CardHeader>
           <CardContent>
             {profile?.disability_types && profile.disability_types.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {profile.disability_types.map((dt) => (
-                  <Badge
-                    key={dt.ID}
-                    variant="secondary"
-                    className="px-3 py-1 text-sm font-normal bg-secondary text-secondary-foreground border border-border"
-                  >
-                    {dt.name}
-                  </Badge>
+                  <Badge key={dt.ID} variant="secondary" className="px-3 py-1 text-sm font-normal">{dt.name}</Badge>
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8">
-                <Accessibility className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
-                <p className="text-muted-foreground text-sm mb-1">No has especificado tus tipos de discapacidad.</p>
-                <p className="text-xs text-muted-foreground/70 mb-3">
-                  Esta información es opcional y nos ayuda a mejorar el matching.
-                </p>
-                <Link href="/profile/edit#disability-types">
-                  <Button variant="outline" size="sm" className="gap-2 bg-transparent">
-                    <PlusCircle className="h-4 w-4" />
-                    Añadir
-                  </Button>
-                </Link>
-              </div>
+              <p className="text-center py-4 text-muted-foreground">No has especificado tus tipos de discapacidad.</p>
             )}
+            <Link href="/profile/edit#disability-types" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+              <PlusCircle className="h-4 w-4" />
+              Añadir Tipos de Discapacidad
+            </Link>
           </CardContent>
         </Card>
 
-        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="flex flex-row items-center justify-between pb-4">
+        {/* Accessibility Needs Section */}
+        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
+          <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl font-semibold text-foreground">
               <Heart className="h-5 w-5 text-primary" />
               Necesidades de Accesibilidad
             </CardTitle>
-            <Link href="/profile/edit#accessibility-needs">
-              <Button variant="ghost" size="sm" className="gap-1 text-muted-foreground hover:text-foreground">
-                <PlusCircle className="h-4 w-4" />
-              </Button>
-            </Link>
           </CardHeader>
           <CardContent>
             {profile?.accessibility_needs && profile.accessibility_needs.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {profile.accessibility_needs.map((an) => (
-                  <Badge
-                    key={an.ID}
-                    variant="secondary"
-                    className="px-3 py-1 text-sm font-normal bg-secondary text-secondary-foreground border border-border"
-                  >
-                    {an.name}
-                  </Badge>
+                  <Badge key={an.ID} variant="secondary" className="px-3 py-1 text-sm font-normal">{an.name}</Badge>
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8">
-                <Heart className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
-                <p className="text-muted-foreground text-sm mb-1">
-                  No has especificado tus necesidades de accesibilidad.
-                </p>
-                <p className="text-xs text-muted-foreground/70 mb-3">
-                  ¡Ayúdanos a encontrar empleos que se adapten a ti!
-                </p>
-                <Link href="/profile/edit#accessibility-needs">
-                  <Button variant="outline" size="sm" className="gap-2 bg-transparent">
-                    <PlusCircle className="h-4 w-4" />
-                    Añadir
-                  </Button>
-                </Link>
-              </div>
+              <p className="text-center py-4 text-muted-foreground">No has especificado tus necesidades de accesibilidad.</p>
             )}
+            <Link href="/profile/edit#accessibility-needs" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+              <PlusCircle className="h-4 w-4" />
+              Añadir Necesidades
+            </Link>
           </CardContent>
         </Card>
 

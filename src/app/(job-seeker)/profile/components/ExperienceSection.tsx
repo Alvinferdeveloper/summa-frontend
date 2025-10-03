@@ -2,7 +2,6 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Briefcase, PlusCircle } from "lucide-react";
 import Link from 'next/link';
 import { Experience } from '../hooks/useMyProfile';
@@ -13,17 +12,12 @@ interface ExperienceSectionProps {
 
 export default function ExperienceSection({ experiences }: ExperienceSectionProps) {
   return (
-    <Card>
+    <Card className="border-2 border-border/60 shadow-md hover:shadow-lg transition-all duration-300 hover:border-accent/30 rounded-sm">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <Briefcase className="h-5 w-5" />
           Experiencia Laboral
         </CardTitle>
-        <Link href="/profile/edit#experience">
-          <Button variant="outline" size="sm" className="gap-1">
-            <PlusCircle className="h-4 w-4" /> Añadir
-          </Button>
-        </Link>
       </CardHeader>
       <CardContent className="space-y-6">
         {(!experiences || experiences.length === 0) ? (
@@ -44,6 +38,10 @@ export default function ExperienceSection({ experiences }: ExperienceSectionProp
             </div>
           ))
         )}
+        <Link href="/profile/edit#experience" className="inline-flex mx-auto items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+          <PlusCircle className="h-4 w-4" />
+          Añadir Experiencia Laboral
+        </Link>
       </CardContent>
     </Card>
   );

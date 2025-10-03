@@ -17,7 +17,7 @@ export default function EducationSection({ educations }: EducationSectionProps) 
     return date.toLocaleDateString("es-ES", { month: "short", year: "numeric" })
   }
   return (
-    <Card className="border-2 border-border/60 shadow-md hover:shadow-lg transition-all duration-300 hover:border-accent/30">
+    <Card className="border-2 border-border/60 shadow-md hover:shadow-lg transition-all duration-300 hover:border-accent/30 rounded-sm">
       <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-border/50">
         <CardTitle className="flex items-center gap-3 text-xl font-semibold">
           <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center border border-accent/20">
@@ -25,11 +25,6 @@ export default function EducationSection({ educations }: EducationSectionProps) 
           </div>
           Educación
         </CardTitle>
-        <Link href="/profile/edit#education">
-          <Button variant="ghost" size="sm" className="gap-1 hover:bg-accent/10 hover:text-accent">
-            <PlusCircle className="h-4 w-4" /> Añadir
-          </Button>
-        </Link>
       </CardHeader>
       <CardContent className="pt-6">
         {educations && educations.length > 0 ? (
@@ -90,6 +85,10 @@ export default function EducationSection({ educations }: EducationSectionProps) 
             </Link>
           </div>
         )}
+        <Link href="/profile/edit#education" className="inline-flex mx-auto items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+          <PlusCircle className="h-4 w-4" />
+          Añadir Educación
+        </Link>
       </CardContent>
     </Card>
   );
