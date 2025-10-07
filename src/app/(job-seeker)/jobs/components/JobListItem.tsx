@@ -1,14 +1,12 @@
 
 'use client';
 
-import { Building2, MapPin } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-
+import { Home } from "lucide-react";
 interface Employer {
   company_name: string;
   logo_url: string;
   industry: string;
-  email:string
+  email: string
 }
 
 export interface Job {
@@ -50,33 +48,32 @@ const timeAgo = (dateString: string) => {
 
 export default function JobListItem({ job, isActive, onClick }: JobListItemProps) {
   return (
-    <div
+    <button
       onClick={onClick}
-      className={`p-4 border-b border-gray-200 cursor-pointer transition-colors duration-200 ${isActive ? 'bg-blue-50' : 'hover:bg-gray-100'}`}
+      className={`w-full text-left p-5 rounded-lg mb-2 border transition-all bg-white hover:shadow-md relative ${isActive ? "border-primary bg-primary/5 shadow-sm" : "border-red-900"
+        }`}
     >
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
-          {job.employer.logo_url ? (
-            <img src={job.employer.logo_url} alt={job.employer.company_name} className="w-full h-full object-contain rounded-md" />
-          ) : (
-            <Building2 className="w-6 h-6 text-gray-400" />
-          )}
-        </div>
-        <div className="flex-grow">
-          <p className="text-sm font-semibold text-blue-600">{job.employer.company_name}</p>
-          <h3 className="font-bold text-lg">{job.title}</h3>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-            <MapPin className="h-4 w-4" />
-            <span>{job.location}</span>
-          </div>
-          <div className="flex items-center gap-2 mt-2">
-            <Badge variant="secondary">{job.work_model}</Badge>
-          </div>
-        </div>
-        <div className="flex-shrink-0 text-xs text-muted-foreground">
-          {timeAgo(job.created_at)}
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">Se precisa Urgente</span>
+          <span className="text-xs font-medium text-amber-700 bg-amber-50 px-2 py-1 rounded">Empleo destacado</span>
         </div>
       </div>
-    </div>
+
+      <h3 className="font-bold text-lg text-foreground mb-2 leading-tight">{job.title}</h3>
+
+      <p className="text-base text-foreground mb-2 font-medium">{job.employer.company_name}</p>
+
+      <p className="text-sm text-muted-foreground mb-3">{job.location}</p>
+
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5 text-sm text-primary">
+          <Home className="h-4 w-4" />
+          <span className="font-medium">Remoto</span>
+        </div>
+
+        <span className="text-xs text-muted-foreground">Hace {timeAgo(job.created_at)} días</span>
+      </div>
+    </button>
   );
 }
