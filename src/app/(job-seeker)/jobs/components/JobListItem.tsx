@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 interface Employer {
   company_name: string;
   logo_url: string;
+  industry: string;
+  email:string
 }
 
 export interface Job {
@@ -14,7 +16,7 @@ export interface Job {
   title: string;
   location: string;
   work_model: string;
-  CreatedAt: string;
+  created_at: string;
   employer: Employer;
   accessibility_features: string;
   description: string;
@@ -72,7 +74,7 @@ export default function JobListItem({ job, isActive, onClick }: JobListItemProps
           </div>
         </div>
         <div className="flex-shrink-0 text-xs text-muted-foreground">
-          {timeAgo(job.CreatedAt)}
+          {timeAgo(job.created_at)}
         </div>
       </div>
     </div>
