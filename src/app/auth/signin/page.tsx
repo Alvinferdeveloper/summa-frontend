@@ -12,7 +12,7 @@ export default function SignInPage() {
   return (
     <div className="flex items-center h-screen w-screen">
       <div className="w-full max-w-md mx-auto">
-        <Card className="border-border/50 shadow-lg">
+        <Card className="border-border/50 shadow-lg rounded-sm">
           <CardHeader className="text-center space-y-4">
             <div className="mx-auto w-16 h-16 bg-primary rounded-full flex items-center justify-center">
               <Logo />
@@ -29,7 +29,7 @@ export default function SignInPage() {
               <Button
                 onClick={() => signIn('google', { callbackUrl: '/profile' })}
                 variant="outline"
-                className="w-full h-12 text-left justify-start gap-3 border-border transition-colors hover:bg-muted/50 hover:text-primary"
+                className="w-full h-12 text-left justify-start gap-3 border-border bg-inherit transition-colors hover:bg-muted/50 hover:text-primary"
               >
                 <Google />
                 <span className="font-medium">{"Continuar con Google"}</span>
@@ -37,7 +37,7 @@ export default function SignInPage() {
 
               <Button
                 variant="outline"
-                className="w-full h-12 text-left justify-start gap-3 border-border transition-colors hover:bg-muted/50 hover:text-primary"
+                className="w-full h-12 text-left justify-start gap-3 bg-inherit border-border transition-colors hover:bg-muted/50 hover:text-primary"
               >
                 <Facebook />
                 <span className="font-medium">{"Continuar con Facebook"}</span>
@@ -45,7 +45,7 @@ export default function SignInPage() {
 
               <Button
                 variant="outline"
-                className="w-full h-12 text-left justify-start gap-3 border-border transition-colors hover:bg-muted/50 hover:text-primary"
+                className="w-full h-12 text-left justify-start gap-3 bg-inherit border-border transition-colors hover:bg-muted/50 hover:text-primary"
               >
                 <Apple />
                 <span className="font-medium">{"Continuar con Apple"}</span>
