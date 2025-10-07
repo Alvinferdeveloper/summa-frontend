@@ -4,7 +4,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Briefcase, UserCircle, Heart } from 'lucide-react';
+import { Briefcase, UserCircle, Heart, LogOut } from 'lucide-react';
+import { signOut } from 'next-auth/react';
 
 const navItems = [
   { name: 'Empleos', href: '/jobs', icon: <Briefcase className="h-5 w-5" /> },
@@ -45,6 +46,14 @@ export default function FloatingNav() {
             </Link>
           );
         })}
+        {/* Botón de Cerrar Sesión */}
+        <button
+          onClick={() => signOut({ callbackUrl: '/' })}
+          className="flex items-center cursor-pointer gap-2 rounded-full px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50 transition-colors duration-200"
+        >
+          <LogOut className="h-5 w-5" />
+          <span className="hidden sm:inline">Salir</span>
+        </button>
       </nav>
     </motion.div>
   );

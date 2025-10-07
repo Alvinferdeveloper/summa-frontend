@@ -4,7 +4,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, PlusCircle, Users, UserCircle } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, Users, UserCircle, LogOut } from 'lucide-react';
+import { signOut } from 'next-auth/react';
 
 const navItems = [
   { name: 'Dashboard', href: '/employer/dashboard', icon: <LayoutDashboard className="h-5 w-5" /> },
@@ -35,7 +36,7 @@ export default function FloatingNav() {
             >
               {isActive && (
                 <motion.span
-                  layoutId="active-pill"
+                  layoutId="active-pill-employer"
                   className="absolute inset-0 rounded-full bg-primary"
                   style={{ borderRadius: 9999 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -46,6 +47,14 @@ export default function FloatingNav() {
             </Link>
           );
         })}
+        {/* Botón de Cerrar Sesión */}
+        <button
+          onClick={() => signOut({ callbackUrl: '/' })}
+          className="flex items-center cursor-pointer gap-2 rounded-full px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50 transition-colors duration-200"
+        >
+          <LogOut className="h-5 w-5" />
+          <span className="hidden sm:inline">Salir</span>
+        </button>
       </nav>
     </motion.div>
   );
