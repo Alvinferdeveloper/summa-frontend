@@ -4,16 +4,16 @@ import Link from "next/link"
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden py-20 md:py-32">
+    <section className="relative overflow-hidden py-10 md:py-10 mx-6">
       <div className="container">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-8 z h-full">
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-1.5 text-sm w-fit">
               <span className="text-accent font-semibold">✨ Nuevo</span>
               <span className="text-muted-foreground">Más de 500 empresas inclusivas</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
               Conectamos talento con <span className="text-primary">oportunidades</span> reales
             </h1>
 
@@ -29,7 +29,7 @@ export function HeroSection() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="text-base bg-transparent" asChild>
+              <Button size="lg" variant="outline" className="text-base bg-transparent text-white" asChild>
                 <Link href="/employer/register">Soy empleador</Link>
               </Button>
             </div>
@@ -38,14 +38,14 @@ export function HeroSection() {
               <div className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-primary" />
                 <div>
-                  <p className="text-2xl font-bold text-foreground">12,000+</p>
+                  <p className="text-2xl font-bold text-white">12,000+</p>
                   <p className="text-sm text-muted-foreground">Candidatos</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <Briefcase className="h-5 w-5 text-accent" />
                 <div>
-                  <p className="text-2xl font-bold text-foreground">500+</p>
+                  <p className="text-2xl font-bold text-white">500+</p>
                   <p className="text-sm text-muted-foreground">Empresas</p>
                 </div>
               </div>
@@ -53,12 +53,12 @@ export function HeroSection() {
           </div>
 
           <div className="relative">
-            <div className="relative aspect-square rounded-2xl bg-gradient-to-br from-primary/20 via-accent/20 to-primary/10 p-8">
-              <div className="absolute inset-0 rounded-2xl bg-grid-pattern opacity-10" />
+            <div className="relative md:h-[600px] mx-7 aspect-square rounded-2xl bg-gradient-to-br from-primary/20 via-accent/20 to-primary/10 p-8">
+              <div className="absolute inset-0 rounded-2xl bg-grid-pattern opacity-10 " />
               <img
                 src="/diverse-team-of-professionals-working-together-in-.png"
                 alt="Equipo diverso trabajando juntos"
-                className="relative z-10 h-full w-full rounded-xl object-cover shadow-2xl"
+                className="relative z-10 h-full  w-full rounded-xl object-cover shadow-2xl"
               />
             </div>
           </div>

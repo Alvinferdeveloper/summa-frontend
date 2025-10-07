@@ -28,10 +28,10 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="como-funciona" className="py-20 md:py-32 bg-muted/30">
+    <section id="como-funciona" className="py-10 md:py-20 bg-primary/30 px-6">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-balance">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-muted">
             ¿Cómo funciona Summa?
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">

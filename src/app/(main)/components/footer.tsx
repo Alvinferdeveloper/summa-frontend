@@ -3,7 +3,7 @@ import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-muted/30">
+    <footer className="border-t border-border bg-primary/30 px-6">
       <div className="container py-12 md:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
@@ -11,7 +11,7 @@ export function Footer() {
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
                 <span className="text-xl font-bold text-primary-foreground">S</span>
               </div>
-              <span className="text-xl font-bold text-foreground">Summa</span>
+              <span className="text-xl font-bold text-muted">Summa</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
               Conectando talento con oportunidades para construir un futuro laboral más inclusivo.
@@ -49,7 +49,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-bold text-foreground mb-4">Para candidatos</h3>
+            <h3 className="font-bold text-muted mb-4">Para candidatos</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -87,7 +87,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-bold text-foreground mb-4">Para empresas</h3>
+            <h3 className="font-bold text-muted mb-4">Para empresas</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -122,7 +122,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-bold text-foreground mb-4">Compañía</h3>
+            <h3 className="font-bold text-muted mb-4">Compañía</h3>
             <ul className="space-y-3">
               <li>
                 <Link

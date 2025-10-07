@@ -4,7 +4,7 @@ import Link from "next/link"
 
 export function CTASection() {
   return (
-    <section className="py-20 md:py-32">
+    <section className="py-20 md:py-32 px-6">
       <div className="container">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary/90 to-accent p-12 md:p-16 lg:p-20">
           <div className="absolute inset-0 bg-grid-pattern opacity-10" />

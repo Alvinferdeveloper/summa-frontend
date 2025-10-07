@@ -36,10 +36,10 @@ const benefits = [
 
 export function BenefitsSection() {
   return (
-    <section id="beneficios" className="py-20 md:py-32">
+    <section id="beneficios" className="py-20 md:py-32 px-6">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-balance">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-muted">
             ¿Por qué elegir Summa?
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">

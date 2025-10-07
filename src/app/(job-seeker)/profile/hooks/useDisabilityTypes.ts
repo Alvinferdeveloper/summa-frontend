@@ -11,7 +11,7 @@ interface DisabilityType {
 }
 
 const fetchDisabilityTypes = async (): Promise<DisabilityType[]> => {
-  const { data } = await apiClient.get('/api/v1/disability-types');
+  const { data } = await apiClient.get('/v1/disability-types');
   return data;
 };
 

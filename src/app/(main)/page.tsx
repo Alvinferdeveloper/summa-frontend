@@ -8,16 +8,16 @@ import { CTASection } from "@/app/(main)/components/cta-section"
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col px-6">
-      <Header />
-      <main className="flex-1">
+    <div className="flex min-h-screen flex-col">
+      <main className="flex-1 bg-[#010826]">
+        <Header />
         <HeroSection />
         <HowItWorks />
         <BenefitsSection />
         <TestimonialsSection />
         <CTASection />
+        <Footer />
       </main>
-      <Footer />
     </div>
   )
 }

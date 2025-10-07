@@ -11,7 +11,7 @@ interface OnboardingData {
 }
 
 const completeOnboarding = async (data: OnboardingData) => {
-  const response = await apiClient.put('/api/v1/profile', data);
+  const response = await apiClient.put('/v1/profile', data);
   return response.data;
 };
 
