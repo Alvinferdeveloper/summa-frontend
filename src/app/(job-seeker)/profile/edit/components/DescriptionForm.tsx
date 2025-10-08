@@ -9,41 +9,26 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProfileData } from '../../hooks/useMyProfile';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
+import { useUpdateDescription } from '../hooks/useUpdateDescription';
 import { Loader2, Save } from 'lucide-react';
-import { toast } from 'sonner';
 
 const descriptionSchema = z.object({
   description: z.string().optional(),
 });
 
-type DescriptionFormValues = z.infer<typeof descriptionSchema>;
+export type DescriptionFormValues = z.infer<typeof descriptionSchema>;
 
 interface DescriptionFormProps {
   profile: ProfileData;
 }
 
 export default function DescriptionForm({ profile }: DescriptionFormProps) {
-  const queryClient = useQueryClient();
-
+  const updateDescriptionMutation = useUpdateDescription();
+  
   const form = useForm<DescriptionFormValues>({
     resolver: zodResolver(descriptionSchema),
     defaultValues: {
       description: profile.description || '',
-    },
-  });
-
-  const updateDescriptionMutation = useMutation({
-    mutationFn: async (data: DescriptionFormValues) => {
-      await api.put('/v1/profile/description', data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-      toast.success("Descripción actualizada.", { description: "Tus cambios han sido guardados." });
-    },
-    onError: (error: any) => {
-      toast.error("Error al actualizar la descripción.", { description: error.response?.data?.error || "Ha ocurrido un error." });
     },
   });
 

@@ -7,8 +7,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useQuery } from '@tanstack/react-query';
-import api from '@/lib/api';
+import { useSearchUniversities } from '../hooks/useSearchUniversities';
 
 export interface UniversityOption {
   id: number;
@@ -23,23 +22,10 @@ interface UniversityComboboxProps {
   onAddNew: () => void;
 }
 
-const useSearchUniversities = (query: string) => {
-  return useQuery<UniversityOption[], Error>({
-    queryKey: ['universities', query],
-    queryFn: async () => {
-      const { data } = await api.get(`/v1/universities/search?q=${query}`);
-      return data;
-    },
-    enabled: query.length > 1,
-  });
-};
-
 export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: UniversityComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
   const { data: universities, isLoading } = useSearchUniversities(searchQuery);
-
-  console.log(universities);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

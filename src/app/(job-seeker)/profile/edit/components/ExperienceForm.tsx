@@ -5,8 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
+import { useCreateExperience } from '../hooks/useCreateExperience';
 
 import { EmployerCombobox, EmployerOption } from './EmployerCombobox';
 import AddNewEmployerModal from './AddNewEmployerModal';
@@ -32,21 +31,11 @@ interface CreateExperiencePayload {
   new_employer_id?: number;
 }
 
-const createExperience = async (data: CreateExperiencePayload) => {
-  const response = await api.post('/v1/profile/experience', {
-    ...data,
-    start_date: new Date(data.start_date).toISOString(),
-    end_date: data.end_date ? new Date(data.end_date).toISOString() : null,
-  });
-  return response.data;
-};
-
 interface ExperienceFormProps {
   onSuccess: () => void;
 }
 
 export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
-  const queryClient = useQueryClient();
   const [selectedEmployer, setSelectedEmployer] = useState<EmployerOption | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -55,16 +44,10 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
     defaultValues: { job_title: '', start_date: '', end_date: '', description: '' },
   });
 
-  const mutation = useMutation({
-    mutationFn: createExperience,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-      onSuccess();
-    }
-  });
+  const { mutate, isPending } = useCreateExperience();
 
   const handleNewEmployerSuccess = (newEmployer: { id: number; company_name: string }) => {
-    setSelectedEmployer({ ID: newEmployer.id, company_name: newEmployer.company_name, isNew: true });
+    setSelectedEmployer({ ...newEmployer, isNew: true });
   };
 
   function onSubmit(values: ExperienceSchema) {
@@ -75,11 +58,12 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
 
     const payload: CreateExperiencePayload = { ...values };
     if (selectedEmployer.isNew) {
-      payload.new_employer_id = selectedEmployer.ID;
-    } else {
-      payload.employer_id = selectedEmployer.ID;
+      payload.new_employer_id = selectedEmployer.id;
     }
-    mutation.mutate(payload);
+    else {
+      payload.employer_id = selectedEmployer.id;
+    }
+    mutate(payload, { onSuccess });
   }
 
   return (
@@ -152,8 +136,8 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
 
           <div className="flex justify-end gap-2">
             <Button type="button" variant="ghost" onClick={onSuccess}>Cancelar</Button>
-            <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending ? 'Guardando...' : 'Guardar Experiencia'}
+            <Button type="submit" disabled={isPending}>
+              {isPending ? 'Guardando...' : 'Guardar Experiencia'}
             </Button>
           </div>
         </form>

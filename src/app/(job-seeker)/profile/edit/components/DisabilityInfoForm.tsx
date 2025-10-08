@@ -10,10 +10,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProfileData } from '../../hooks/useMyProfile';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Loader2, Save } from 'lucide-react';
-import { toast } from 'sonner';
+import { useDisabilityNeeds } from '../hooks/useDisabilityNeeds';
+import { useDisabilityTypes } from '../hooks/useDisabilityTypes';
+import { useUpdateDisabilityInfo } from '../hooks/useUpdateDisabilityInfo';
 
 const disabilityInfoSchema = z.object({
   disability_info_consent: z.boolean(),
@@ -22,14 +23,16 @@ const disabilityInfoSchema = z.object({
   accessibility_need_ids: z.array(z.number()).optional(),
 });
 
-type DisabilityInfoFormValues = z.infer<typeof disabilityInfoSchema>;
+export type DisabilityInfoFormValues = z.infer<typeof disabilityInfoSchema>;
 
 interface DisabilityInfoFormProps {
   profile: ProfileData;
 }
 
 export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps) {
-  const queryClient = useQueryClient();
+  const { accessibilityNeedsData } = useDisabilityNeeds();
+  const { disabilityTypesData } = useDisabilityTypes();
+  const updateDisabilityInfoMutation = useUpdateDisabilityInfo();
 
   const form = useForm<z.input<typeof disabilityInfoSchema>, z.output<typeof disabilityInfoSchema>>({
     resolver: zodResolver(disabilityInfoSchema),
@@ -41,34 +44,6 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
     },
   });
 
-  const { data: disabilityTypesData } = useQuery({
-    queryKey: ['disabilityTypes'],
-    queryFn: async () => {
-      const { data } = await api.get('/v1/disability-types');
-      return data;
-    },
-  });
-
-  const { data: accessibilityNeedsData } = useQuery({
-    queryKey: ['accessibilityNeeds'],
-    queryFn: async () => {
-      const { data } = await api.get('/v1/accessibility-needs');
-      return data;
-    },
-  });
-
-  const updateDisabilityInfoMutation = useMutation({
-    mutationFn: async (data: DisabilityInfoFormValues) => {
-      await api.put('/v1/profile/disability-info', data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-      toast.success("Información de discapacidad actualizada.", { description: "Tus cambios han sido guardados." });
-    },
-    onError: (error: any) => {
-      toast.error("Error al actualizar la información de discapacidad.", { description: error.response?.data?.error || "Ha ocurrido un error." });
-    },
-  });
 
   function onSubmit(values: DisabilityInfoFormValues) {
     updateDisabilityInfoMutation.mutate(values);
@@ -127,16 +102,16 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
                   name="disability_type_ids"
                   render={({ field }) => {
                     return (
-                      <FormItem key={dt.ID} className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormItem key={dt.id} className="flex flex-row items-start space-x-3 space-y-0">
                         <FormControl>
                           <Checkbox
-                            checked={field.value?.includes(dt.ID)}
+                            checked={field.value?.includes(dt.id)}
                             onCheckedChange={(checked) => {
                               return checked
-                                ? field.onChange([...(field.value || []), dt.ID])
+                                ? field.onChange([...(field.value || []), dt.id])
                                 : field.onChange(
                                   field.value?.filter(
-                                    (value) => value !== dt.ID
+                                    (value) => value !== dt.id
                                   )
                                 );
                             }}
@@ -158,21 +133,21 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {accessibilityNeedsData?.map((an: any) => (
                 <FormField
-                  key={an.ID}
+                  key={an.id}
                   control={form.control}
                   name="accessibility_need_ids"
                   render={({ field }) => {
                     return (
-                      <FormItem key={an.ID} className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormItem key={an.id} className="flex flex-row items-start space-x-3 space-y-0">
                         <FormControl>
                           <Checkbox
-                            checked={field.value?.includes(an.ID)}
+                            checked={field.value?.includes(an.id)}
                             onCheckedChange={(checked) => {
                               return checked
-                                ? field.onChange([...(field.value || []), an.ID])
+                                ? field.onChange([...(field.value || []), an.id])
                                 : field.onChange(
                                   field.value?.filter(
-                                    (value) => value !== an.ID
+                                    (value) => value !== an.id
                                   )
                                 );
                             }}

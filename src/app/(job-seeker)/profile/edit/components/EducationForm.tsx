@@ -1,20 +1,17 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
-
-import { UniversityCombobox, UniversityOption } from './UniversityCombobox';
+import { UniversityCombobox } from './UniversityCombobox';
 import AddNewUniversityModal from './AddNewUniversityModal';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useCreateEducation } from '../hooks/useCreateEducation';
 
-// Esquema actualizado para incluir un campo virtual para la universidad
 const educationSchema = z.object({
   degree: z.string().min(3, "El título es requerido."),
   field_of_study: z.string().min(3, "El campo de estudio es requerido."),
@@ -30,7 +27,7 @@ const educationSchema = z.object({
 });
 type EducationSchema = z.infer<typeof educationSchema>;
 
-interface CreateEducationPayload {
+export interface CreateEducationPayload {
   degree: string;
   field_of_study: string;
   start_date: string;
@@ -39,36 +36,19 @@ interface CreateEducationPayload {
   university_suggestion_id?: number;
 }
 
-const createEducation = async (data: CreateEducationPayload) => {
-  console.log(data);
-  const response = await api.post('/v1/profile/educations',{
-    ...data,
-    start_date: new Date(data.start_date).toISOString(),
-    end_date: data.end_date ? new Date(data.end_date).toISOString() : null,
-  });
-  return response.data;
-};
-
 interface EducationFormProps {
   onSuccess: () => void;
 }
 
 export default function EducationForm({ onSuccess }: EducationFormProps) {
-  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const createEducationMutation = useCreateEducation();
 
   const form = useForm<EducationSchema>({
     resolver: zodResolver(educationSchema),
     defaultValues: { degree: '', field_of_study: '', start_date: '', end_date: '', university: null },
   });
 
-  const mutation = useMutation({ 
-    mutationFn: createEducation,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-      onSuccess();
-    }
-  });
 
   const handleNewUniversitySuccess = (newUniversity: { id: number; name: string }) => {
     form.setValue('university', { ...newUniversity, isNew: true });
@@ -93,15 +73,19 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
     } else {
       payload.university_id = values.university.id;
     }
-    mutation.mutate(payload);
+    createEducationMutation.mutate(payload, {
+      onSuccess: () => {
+        onSuccess();
+      }
+    });
   }
 
   return (
     <>
-      <AddNewUniversityModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        onSuccess={handleNewUniversitySuccess} 
+      <AddNewUniversityModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={handleNewUniversitySuccess}
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-4 border rounded-lg">
@@ -112,7 +96,7 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Universidad</FormLabel>
-                <UniversityCombobox 
+                <UniversityCombobox
                   selectedUniversity={field.value}
                   onSelect={(university) => {
                     field.onChange(university);
@@ -176,8 +160,8 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
 
           <div className="flex justify-end gap-2">
             <Button type="button" variant="ghost" onClick={onSuccess}>Cancelar</Button>
-            <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending ? 'Guardando...' : 'Guardar Formación'}
+            <Button type="submit" disabled={createEducationMutation.isPending}>
+              {createEducationMutation.isPending ? 'Guardando...' : 'Guardar Formación'}
             </Button>
           </div>
         </form>

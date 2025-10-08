@@ -12,23 +12,22 @@ import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
-import { toast } from 'sonner';
+import { useUpdateSkills } from '../hooks/useUpdateSkills';
 
 const skillsSchema = z.object({
   skill_names: z.array(z.string().min(1, "El nombre de la habilidad no puede estar vacío.")).min(1, "Debes añadir al menos una habilidad."),
 });
 
-type SkillsFormValues = z.infer<typeof skillsSchema>;
+export type SkillsFormValues = z.infer<typeof skillsSchema>;
 
 interface SkillsListProps {
   profile: ProfileData;
 }
 
 export default function SkillsList({ profile }: SkillsListProps) {
-  const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
+
+  const updateSkillsMutation = useUpdateSkills();
 
   const form = useForm<SkillsFormValues>({
     resolver: zodResolver(skillsSchema),
@@ -37,22 +36,13 @@ export default function SkillsList({ profile }: SkillsListProps) {
     },
   });
 
-  const updateSkillsMutation = useMutation({
-    mutationFn: async (data: SkillsFormValues) => {
-      await api.put('/v1/profile/skills', data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-      toast("Habilidades actualizadas.");
-      setIsEditing(false);
-    },
-    onError: (error: any) => {
-      toast(error.response?.data?.error || "Error al actualizar habilidades.");
-    },
-  });
 
   function onSubmit(values: SkillsFormValues) {
-    updateSkillsMutation.mutate(values);
+    updateSkillsMutation.mutate(values, {
+      onSuccess: () => {
+        setIsEditing(false);
+      },
+    });
   }
 
   return (
@@ -76,7 +66,7 @@ export default function SkillsList({ profile }: SkillsListProps) {
         ) : (
           <div className="flex flex-wrap gap-2">
             {profile.skills.map((skill) => (
-              <Badge key={skill.ID} variant="secondary">{skill.name}</Badge>
+              <Badge key={skill.id} variant="secondary">{skill.name}</Badge>
             ))}
           </div>
         )}

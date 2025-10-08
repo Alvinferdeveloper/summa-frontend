@@ -6,8 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useMutation } from '@tanstack/react-query';
-import api from '@/lib/api';
+import { useCreateNewEmployer } from '../hooks/useCreateNewEmployer';
 
 interface AddNewEmployerModalProps {
   isOpen: boolean;
@@ -15,25 +14,18 @@ interface AddNewEmployerModalProps {
   onSuccess: (newEmployer: { id: number; company_name: string }) => void;
 }
 
-const createNewEmployer = async (data: { company_name: string; website?: string }) => {
-  const response = await api.post('/v1/new-employers', data);
-  return response.data;
-};
-
 export default function AddNewEmployerModal({ isOpen, onClose, onSuccess }: AddNewEmployerModalProps) {
   const [companyName, setCompanyName] = useState('');
   const [website, setWebsite] = useState('');
-
-  const mutation = useMutation({ 
-    mutationFn: createNewEmployer,
-    onSuccess: (data) => {
-      onSuccess({ id: data.ID, company_name: data.CompanyName });
-      onClose();
-    }
-  });
+  const mutation = useCreateNewEmployer();
 
   const handleSubmit = () => {
-    mutation.mutate({ company_name: companyName, website });
+    mutation.mutate({ company_name: companyName, website }, {
+      onSuccess: (data) => {
+        onSuccess({ id: data.ID, company_name: data.CompanyName });
+        onClose();
+      }
+    });
   };
 
   return (

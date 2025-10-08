@@ -7,15 +7,14 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useQuery } from '@tanstack/react-query';
-import api from '@/lib/api';
+import { useSearchEmployers } from "../hooks/useSearchEmployers";
 
 export interface EmployerOption {
   id: number;
   company_name: string;
-  logo_url: string;
-  industry: string;
-  isNew?: boolean; // Para diferenciar una empresa nueva de una existente
+  logo_url?: string;
+  industry?: string;
+  isNew?: boolean;
 }
 
 interface EmployerComboboxProps {
@@ -24,16 +23,6 @@ interface EmployerComboboxProps {
   onAddNew: () => void;
 }
 
-const useSearchEmployers = (query: string) => {
-  return useQuery<EmployerOption[], Error>({
-    queryKey: ['employers', query],
-    queryFn: async () => {
-      const { data } = await api.get(`/v1/employers/search?q=${query}`);
-      return data;
-    },
-    enabled: query.length > 1,
-  });
-};
 
 export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: EmployerComboboxProps) {
   const [open, setOpen] = React.useState(false);

@@ -6,31 +6,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, PlusCircle, Edit, Trash2 } from "lucide-react";
 import { ProfileData } from '../../hooks/useMyProfile';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
-import { toast } from 'sonner';
 import EducationForm from './EducationForm';
+import { useDeleteEducation } from '../hooks/useDeleteEducation';
 
 interface EducationListProps {
   profile: ProfileData;
 }
 
 export default function EducationList({ profile }: EducationListProps) {
-  const queryClient = useQueryClient();
   const [isAdding, setIsAdding] = useState(false);
-
-  const deleteEducationMutation = useMutation({
-    mutationFn: async (id: number) => {
-      await api.delete(`/v1/profile/educations/${id}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-      toast.success("Formación eliminada.");
-    },
-    onError: (error: any) => {
-      toast.error("Error al eliminar la formación.", { description: error.response?.data?.error || "Ha ocurrido un error." });
-    },
-  });
+  const deleteEducationMutation = useDeleteEducation();
 
   const handleDelete = (id: number) => {
     if (confirm("¿Estás seguro de que quieres eliminar esta formación?")) {

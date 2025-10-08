@@ -9,25 +9,22 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProfileData } from '../../hooks/useMyProfile';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
+import { useUpdatePersonalInfo } from '../hooks/useUpdatePersonalInfo';
 import { Loader2, Save } from 'lucide-react';
-import { toast } from 'sonner'; // Import toast from sonner
 
 const personalInfoSchema = z.object({
   first_name: z.string().min(1, "El nombre es requerido."),
   last_name: z.string().min(1, "El apellido es requerido."),
 });
 
-type PersonalInfoFormValues = z.infer<typeof personalInfoSchema>;
+export type PersonalInfoFormValues = z.infer<typeof personalInfoSchema>;
 
 interface PersonalInfoFormProps {
   profile: ProfileData;
 }
 
 export default function PersonalInfoForm({ profile }: PersonalInfoFormProps) {
-  const queryClient = useQueryClient();
-
+  const updatePersonalInfoMutation = useUpdatePersonalInfo();
   const form = useForm<z.input<typeof personalInfoSchema>, z.output<typeof personalInfoSchema>>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
@@ -36,18 +33,6 @@ export default function PersonalInfoForm({ profile }: PersonalInfoFormProps) {
     },
   });
 
-  const updatePersonalInfoMutation = useMutation({
-    mutationFn: async (data: PersonalInfoFormValues) => {
-      await api.put('/v1/profile/personal-info', data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-      toast.success("Información personal actualizada.", { description: "Tus cambios han sido guardados." });
-    },
-    onError: (error: any) => {
-      toast.error("Error al actualizar la información personal.", { description: error.response?.data?.error || "Ha ocurrido un error." });
-    },
-  });
 
   function onSubmit(values: PersonalInfoFormValues) {
     updatePersonalInfoMutation.mutate(values);

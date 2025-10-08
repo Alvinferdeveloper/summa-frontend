@@ -6,8 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useMutation } from '@tanstack/react-query';
-import api from '@/lib/api';
+import { useCreateNewUniversity } from '../hooks/useCreateNewUniversity';
 
 interface AddNewUniversityModalProps {
   isOpen: boolean;
@@ -15,26 +14,20 @@ interface AddNewUniversityModalProps {
   onSuccess: (newUniversity: { id: number; name: string }) => void;
 }
 
-const createNewUniversity = async (data: { suggested_name: string; country?: string; website?: string }) => {
-  const response = await api.post('/v1/university-suggestions', data);
-  return response.data;
-};
-
 export default function AddNewUniversityModal({ isOpen, onClose, onSuccess }: AddNewUniversityModalProps) {
   const [suggestedName, setSuggestedName] = useState('');
   const [country, setCountry] = useState('');
   const [website, setWebsite] = useState('');
 
-  const mutation = useMutation({ 
-    mutationFn: createNewUniversity,
-    onSuccess: (data) => {
-      onSuccess({ id: data.ID, name: data.SuggestedName });
-      onClose();
-    }
-  });
+  const mutation = useCreateNewUniversity();
 
   const handleSubmit = () => {
-    mutation.mutate({ suggested_name: suggestedName, country, website });
+    mutation.mutate({ suggested_name: suggestedName, country, website }, {
+      onSuccess: (data) => {
+        onSuccess({ id: data.ID, name: data.SuggestedName });
+        onClose();
+      }
+    });
   };
 
   return (

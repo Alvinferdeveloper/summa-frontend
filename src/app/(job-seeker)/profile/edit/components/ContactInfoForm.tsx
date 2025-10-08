@@ -9,10 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProfileData } from '../../hooks/useMyProfile';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
+import { useUpdateContactInfo } from '../hooks/useUpdateContactInfo';
 import { Loader2, Save } from 'lucide-react';
-import { toast } from 'sonner';
 
 const contactInfoSchema = z.object({
   phone_number: z.string().optional(),
@@ -24,15 +22,14 @@ const contactInfoSchema = z.object({
   profile_picture: z.string().url("Debe ser una URL válida").or(z.literal('')).optional(),
 });
 
-type ContactInfoFormValues = z.infer<typeof contactInfoSchema>;
+export type ContactInfoFormValues = z.infer<typeof contactInfoSchema>;
 
 interface ContactInfoFormProps {
   profile: ProfileData;
 }
 
 export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
-  const queryClient = useQueryClient();
-
+  const updateContactInfoMutation = useUpdateContactInfo();
   const form = useForm<ContactInfoFormValues>({
     resolver: zodResolver(contactInfoSchema),
     defaultValues: {
@@ -46,19 +43,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
     },
   });
 
-  const updateContactInfoMutation = useMutation({
-    mutationFn: async (data: ContactInfoFormValues) => {
-      await api.put('/v1/profile/contact-info', data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-      toast.success("Información de contacto actualizada.", { description: "Tus cambios han sido guardados." });
-    },
-    onError: (error: any) => {
-      toast.error("Error al actualizar la información de contacto.", { description: error.response?.data?.error || "Ha ocurrido un error." });
-    },
-  });
-
+ 
   function onSubmit(values: ContactInfoFormValues) {
     updateContactInfoMutation.mutate(values);
   }

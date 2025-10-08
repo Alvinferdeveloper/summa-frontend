@@ -1,40 +1,34 @@
 
-'use client';
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Briefcase, PlusCircle, Edit, Trash2 } from "lucide-react";
 import { ProfileData } from '../../hooks/useMyProfile';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
-import { toast } from 'sonner';
+import { useDeleteExperience } from '../hooks/useDeleteExperience';
 import ExperienceForm from './ExperienceForm';
+import { z } from 'zod';
+
+export const experienceSchema = z.object({
+  job_title: z.string().min(1, "El título del puesto es requerido."),
+  description: z.string().optional(),
+  start_date: z.string().min(1, "La fecha de inicio es requerida."),
+  end_date: z.string().optional(),
+  employer_id: z.number().optional(),
+  new_employer_id: z.number().optional(),
+});
+export type ExperienceFormValues = z.infer<typeof experienceSchema>;
 
 interface ExperienceListProps {
   profile: ProfileData;
 }
 
 export default function ExperienceList({ profile }: ExperienceListProps) {
-  const queryClient = useQueryClient();
   const [isAdding, setIsAdding] = useState(false);
-
-  const deleteExperienceMutation = useMutation({
-    mutationFn: async (id: number) => {
-      await api.delete(`/v1/profile/experiences/${id}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-      toast.success("Experiencia eliminada.");
-    },
-    onError: (error: any) => {
-      toast.error("Error al eliminar experiencia.", { description: error.response?.data?.error || "Ha ocurrido un error." });
-    },
-  });
+  const { mutate: deleteExperience } = useDeleteExperience();
 
   const handleDelete = (id: number) => {
     if (confirm("¿Estás seguro de que quieres eliminar esta experiencia?")) {
-      deleteExperienceMutation.mutate(id);
+      deleteExperience(id);
     }
   };
 
