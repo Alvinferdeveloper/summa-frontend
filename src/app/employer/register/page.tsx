@@ -9,7 +9,6 @@ import {
     Phone,
     Globe,
     Calendar,
-    Briefcase,
     Users,
     MapPin,
     FileText,
@@ -31,6 +30,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import IndustrySelect from "./components/IndustrySelect"
+import CompanySizeSelect from "./components/CompanySizeSelect"
 
 
 export default function EmployerRegister() {
@@ -133,7 +134,7 @@ export default function EmployerRegister() {
                                                             Nombre de la Empresa <span className="text-secondary">*</span>
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input placeholder="Acme Corporation" {...field} className="h-12 border-2 text-base transition-all focus:border-primary focus:ring-4 focus:ring-primary/20" />
+                                                            <Input placeholder="Acme Corporation" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -149,7 +150,7 @@ export default function EmployerRegister() {
                                                             Correo Electrónico <span className="text-secondary">*</span>
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input placeholder="hola@empresa.com" {...field} className="h-12 border-2 text-base transition-all focus:border-primary focus:ring-4 focus:ring-primary/20" />
+                                                            <Input placeholder="hola@empresa.com" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -165,7 +166,7 @@ export default function EmployerRegister() {
                                                             Contraseña <span className="text-secondary">*</span>
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input type="password" placeholder="Crea una contraseña segura" {...field} className="h-12 border-2 text-base transition-all focus:border-primary focus:ring-4 focus:ring-primary/20" />
+                                                            <Input type="password" placeholder="Crea una contraseña segura" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -187,7 +188,6 @@ export default function EmployerRegister() {
 
                                     {/* Company Details Section */}
                                     <div className="space-y-6">
-                                        {/* ... (section header remains the same) ... */}
                                         <div className="grid gap-6 md:grid-cols-3">
                                             <FormField
                                                 control={form.control}
@@ -199,7 +199,7 @@ export default function EmployerRegister() {
                                                             Número de Teléfono
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input placeholder="+1 (555) 000-0000" {...field} className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20" />
+                                                            <Input placeholder="+1 (555) 000-0000" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -215,7 +215,7 @@ export default function EmployerRegister() {
                                                             País
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input placeholder="Estados Unidos" {...field} className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20" />
+                                                            <Input placeholder="Estados Unidos" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -231,7 +231,7 @@ export default function EmployerRegister() {
                                                             Fundada en
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input type="date" {...field} className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20" />
+                                                            <Input type="date" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-secondary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -241,32 +241,14 @@ export default function EmployerRegister() {
                                                 control={form.control}
                                                 name="industry"
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel className="flex items-center gap-2 text-base font-medium">
-                                                            <Briefcase className="h-4 w-4 text-secondary" />
-                                                            Industria
-                                                        </FormLabel>
-                                                        <FormControl>
-                                                            <Input placeholder="Tecnología, Salud, etc." {...field} className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20" />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
+                                                    <IndustrySelect field={field} />
                                                 )}
                                             />
                                             <FormField
                                                 control={form.control}
                                                 name="size"
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel className="flex items-center gap-2 text-base font-medium">
-                                                            <Users className="h-4 w-4 text-secondary" />
-                                                            Tamaño de la Empresa
-                                                        </FormLabel>
-                                                        <FormControl>
-                                                            <Input placeholder="1-10, 11-50, 51-200..." {...field} className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20" />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
+                                                    <CompanySizeSelect field={field} />
                                                 )}
                                             />
                                             <FormField
@@ -279,7 +261,7 @@ export default function EmployerRegister() {
                                                             Sitio Web
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input type="url" placeholder="https://tuempresa.com" {...field} className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20" />
+                                                            <Input type="url" placeholder="https://tuempresa.com" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -295,7 +277,7 @@ export default function EmployerRegister() {
                                                             Dirección
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input placeholder="123 Calle Principal, Ciudad, Estado, C.P." {...field} className="h-12 border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20" />
+                                                            <Input placeholder="123 Calle Principal, Ciudad, Estado, C.P." {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -311,7 +293,7 @@ export default function EmployerRegister() {
                                                             Descripción de la Empresa
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Textarea placeholder="Cuéntanos sobre la misión, cultura y qué hace única a tu empresa..." {...field} rows={4} className="resize-none border-2 text-base transition-all focus:border-secondary focus:ring-4 focus:ring-secondary/20" />
+                                                            <Textarea placeholder="Cuéntanos sobre la misión, cultura y qué hace única a tu empresa..." {...field} rows={4} className="resize-none border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
