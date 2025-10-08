@@ -24,6 +24,12 @@ export interface University {
   address: string;
 }
 
+interface UniversitySuggestion {
+  ID: number;
+  suggested_name: string;
+  address: string;
+}
+
 export interface Education {
   ID: number;
   degree: string;
@@ -31,6 +37,7 @@ export interface Education {
   start_date: string;
   end_date: string | null;
   university: University;
+  university_suggestion?: UniversitySuggestion;
 }
 
 export interface Skill {
