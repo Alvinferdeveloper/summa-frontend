@@ -10,7 +10,7 @@ interface Employer {
 }
 
 export interface Job {
-  ID: number;
+  id: number;
   title: string;
   location: string;
   work_model: string;
@@ -33,7 +33,6 @@ const timeAgo = (dateString: string) => {
   const date = new Date(dateString);
   const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
   let interval = seconds / 31536000;
-  console.log(dateString, "dateString")
   if (interval > 1) return Math.floor(interval) + " años";
   interval = seconds / 2592000;
   if (interval > 1) return Math.floor(interval) + " meses";

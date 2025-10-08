@@ -7,13 +7,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import React from 'react';
 
 interface PageProps {
-  params: { profileId: string };
+  params: Promise<{ profileId: string }>;
 }
 
 export default function CandidateProfileForEmployerPage({ params }: PageProps) {
-  const { profileId } = params;
+  const { profileId } = React.use(params);
   const { data: profile, isLoading, error } = useCandidateProfileForEmployer(profileId);
 
   if (isLoading) {
@@ -66,7 +67,7 @@ export default function CandidateProfileForEmployerPage({ params }: PageProps) {
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-1">
                   {profile.first_name} {profile.last_name}
                 </h1>
-                <p className="text-base text-muted-foreground">{profile.email}</p>
+                {/* <p className="text-base text-muted-foreground">{profile.email}</p> */}
               </div>
 
               <Link href="/employer/dashboard">
@@ -171,7 +172,7 @@ export default function CandidateProfileForEmployerPage({ params }: PageProps) {
             {profile.disability_types && profile.disability_types.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {profile.disability_types.map((dt) => (
-                  <Badge key={dt.ID} variant="secondary" className="px-3 py-1 text-sm font-normal">{dt.name}</Badge>
+                  <Badge key={dt.id} variant="secondary" className="px-3 py-1 text-sm font-normal">{dt.name}</Badge>
                 ))}
               </div>
             ) : (
@@ -194,7 +195,7 @@ export default function CandidateProfileForEmployerPage({ params }: PageProps) {
             {profile.accessibility_needs && profile.accessibility_needs.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {profile.accessibility_needs.map((an) => (
-                  <Badge key={an.ID} variant="secondary" className="px-3 py-1 text-sm font-normal">{an.name}</Badge>
+                  <Badge key={an.id} variant="secondary" className="px-3 py-1 text-sm font-normal">{an.name}</Badge>
                 ))}
               </div>
             ) : (
@@ -217,7 +218,7 @@ export default function CandidateProfileForEmployerPage({ params }: PageProps) {
             {profile.experiences && profile.experiences.length > 0 ? (
               <div className="space-y-4">
                 {profile.experiences.map((exp) => (
-                  <div key={exp.ID} className="flex items-start gap-4">
+                  <div key={exp.id} className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center flex-shrink-0">
                       <Briefcase className="w-5 h-5 text-gray-500" />
                     </div>
@@ -250,7 +251,7 @@ export default function CandidateProfileForEmployerPage({ params }: PageProps) {
             {profile.educations && profile.educations.length > 0 ? (
               <div className="space-y-4">
                 {profile.educations.map((edu) => (
-                  <div key={edu.ID} className="flex items-start gap-4">
+                  <div key={edu.id} className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center flex-shrink-0">
                       <GraduationCap className="w-5 h-5 text-gray-500" />
                     </div>
@@ -282,7 +283,7 @@ export default function CandidateProfileForEmployerPage({ params }: PageProps) {
             {profile.skills && profile.skills.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {profile.skills.map((skill) => (
-                  <Badge key={skill.ID} variant="secondary" className="px-3 py-1 text-sm font-normal">{skill.name}</Badge>
+                  <Badge key={skill.id} variant="secondary" className="px-3 py-1 text-sm font-normal">{skill.name}</Badge>
                 ))}
               </div>
             ) : (

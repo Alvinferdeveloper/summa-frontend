@@ -10,7 +10,7 @@ import { useParams } from 'next/navigation';
 
 
 export default function JobApplicantsPage() {
-  const { jobId } =  useParams() as { jobId: string };
+  const { jobId } = useParams() as { jobId: string };
   const { data: applicants, isLoading, error } = useJobApplicants(jobId);
 
   if (isLoading) {
@@ -37,7 +37,7 @@ export default function JobApplicantsPage() {
       {applicants && applicants.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {applicants.map((app) => (
-            <ApplicantCard key={app.ID} application={app} />
+            <ApplicantCard key={app.id} application={app} />
           ))}
         </div>
       ) : (

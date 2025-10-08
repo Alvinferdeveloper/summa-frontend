@@ -6,10 +6,10 @@ import api from '@/lib/api';
 import { Job } from '@/app/(job-seeker)/jobs/components/JobListItem'; // Reutilizamos la interfaz Job
 
 export interface JobApplication {
-  ID: number;
+  id: number;
   status: string;
   job_post: Job;
-  CreatedAt: string;
+  created_at: string;
 }
 
 const fetchMyApplications = async (): Promise<JobApplication[]> => {

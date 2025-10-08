@@ -2,66 +2,72 @@
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 
-interface Employer {
-  ID: number;
+// DTOs que coinciden con la respuesta del backend
+
+interface UserSummary {
+  email: string;
+}
+
+interface EmployerSummary {
+  id: number;
   company_name: string;
   logo_url: string;
 }
 
+interface NewEmployerSummary {
+  id: number;
+  company_name: string;
+}
+
 export interface Experience {
-  ID: number;
+  id: number;
   job_title: string;
   description: string;
   start_date: string;
   end_date: string | null;
-  employer: Employer;
-  new_employer: Employer;
+  employer: EmployerSummary | null;
+  new_employer: NewEmployerSummary | null;
 }
 
-export interface University {
-  ID: number;
+interface UniversitySummary {
+  id: number;
   name: string;
-  address: string;
 }
 
-interface UniversitySuggestion {
-  ID: number;
+interface UniversitySuggestionSummary {
+  id: number;
   suggested_name: string;
-  address: string;
 }
 
 export interface Education {
-  ID: number;
+  id: number;
   degree: string;
   field_of_study: string;
   start_date: string;
   end_date: string | null;
-  university: University;
-  university_suggestion?: UniversitySuggestion;
+  university: UniversitySummary | null;
+  university_suggestion: UniversitySuggestionSummary | null;
 }
 
 export interface Skill {
-  ID: number;
+  id: number;
   name: string;
 }
 
 interface DisabilityType {
-  ID: number;
+  id: number;
   name: string;
-  description: string;
 }
 
 interface AccessibilityNeed {
-  ID: number;
+  id: number;
   name: string;
-  category: string;
 }
 
 export interface ProfileData {
-  ID: number;
+  id: number;
   first_name: string;
   last_name: string;
-  email: string;
   phone_number?: string;
   city?: string;
   country?: string;
@@ -70,10 +76,9 @@ export interface ProfileData {
   linked_in?: string;
   resume_url?: string;
   description?: string;
-  onboarding_completed: boolean;
   disability_info_consent: boolean;
   detailed_accommodations?: string;
-  
+  user: UserSummary;
   experiences: Experience[];
   educations: Education[];
   skills: Skill[];

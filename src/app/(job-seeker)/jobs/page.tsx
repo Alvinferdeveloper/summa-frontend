@@ -74,9 +74,9 @@ export default function JobsPage() {
               {data.pages.map((page) =>
                 page.data.map((job) => (
                   <JobListItem
-                    key={job.ID}
+                    key={job.id}
                     job={job}
-                    isActive={selectedJob?.ID === job.ID}
+                    isActive={selectedJob?.id === job.id}
                     onClick={() => setSelectedJob(job)}
                   />
                 ))

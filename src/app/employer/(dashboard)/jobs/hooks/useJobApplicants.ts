@@ -14,7 +14,7 @@ interface ApplicantProfile {
 }
 
 export interface EmployerJobApplication {
-  ID: number;
+  id: number;
   created_at: string;
   status: string;
   cover_letter: string;

@@ -37,10 +37,10 @@ const getStatusVariant = (status: string): "default" | "secondary" | "destructiv
 };
 
 export default function ApplicationCard({ application }: ApplicationCardProps) {
-  const { job_post, status, CreatedAt } = application;
+  const { job_post, status, created_at } = application;
 
   return (
-    <Link href={`/jobs/${job_post.ID}`} className="block">
+    <Link href={`/jobs/${job_post.id}`} className="block">
       <Card className="hover:shadow-lg hover:border-primary/50 transition-all duration-300 rounded-lg h-full flex flex-col">
         <CardHeader>
           <div className="flex justify-between items-start gap-4">
@@ -71,7 +71,7 @@ export default function ApplicationCard({ application }: ApplicationCardProps) {
           </div>
           <div className="flex items-center justify-end text-xs text-muted-foreground mt-4">
             <Clock className="h-3 w-3 mr-1" />
-            Postulado {timeAgo(CreatedAt)}
+            Postulado {timeAgo(created_at)}
           </div>
         </CardContent>
       </Card>

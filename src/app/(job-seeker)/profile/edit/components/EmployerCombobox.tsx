@@ -11,12 +11,11 @@ import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 
 export interface EmployerOption {
-  ID: number;
+  id: number;
   company_name: string;
-  logo_url?: string;
-  industry?: string;
-  dedication?: string;
-  isNew?: boolean;
+  logo_url: string;
+  industry: string;
+  isNew?: boolean; // Para diferenciar una empresa nueva de una existente
 }
 
 interface EmployerComboboxProps {
@@ -61,7 +60,7 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
               </div>
               <div>
                 <p className="font-semibold">{selectedEmployer.company_name}</p>
-                <p className="text-xs text-muted-foreground">Empresa</p>
+                <p className="text-xs text-muted-foreground">Empresa • {selectedEmployer.industry}</p>
               </div>
             </div>
           ) : (
@@ -83,7 +82,7 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
             <CommandGroup>
               {employers?.map((employer) => (
                 <CommandItem
-                  key={employer.ID}
+                  key={employer.id}
                   value={employer.company_name}
                   onSelect={() => {
                     onSelect(employer);
@@ -101,10 +100,10 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
                     </div>
                     <div>
                       <p>{employer.company_name}</p>
-                      <p className="text-xs text-muted-foreground">{employer.industry || "Empresa"} • {employer.dedication}</p>
+                      <p className="text-xs text-muted-foreground">Empresa • {employer.industry}</p>
                     </div>
                   </div>
-                  <Check className={cn("h-4 w-4", selectedEmployer?.ID === employer.ID ? "opacity-100" : "opacity-0")} />
+                  <Check className={cn("h-4 w-4", selectedEmployer?.id === employer.id ? "opacity-100" : "opacity-0")} />
                 </CommandItem>
               ))}
             </CommandGroup>

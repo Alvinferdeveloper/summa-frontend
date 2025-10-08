@@ -72,13 +72,13 @@ export default function EmployerDashboardPage() {
         {jobPosts && jobPosts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {jobPosts.map((job) => (
-              <Card key={job.ID} className="hover:shadow-lg transition-shadow duration-300">
+              <Card key={job.id} className="hover:shadow-lg transition-shadow duration-300">
                 <CardHeader>
                   <CardTitle className="text-lg">{job.title}</CardTitle>
                   <p className="text-sm text-muted-foreground">{job.location} - {job.work_model}</p>
                 </CardHeader>
                 <CardContent className="flex justify-end">
-                  <Link href={`/employer/jobs/${job.ID}/applicants`}>
+                  <Link href={`/employer/jobs/${job.id}/applicants`}>
                     <Button variant="outline" size="sm">
                       Ver Postulantes
                     </Button>

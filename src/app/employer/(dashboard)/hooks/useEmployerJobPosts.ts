@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 
 interface EmployerJobPostsResponse {
-  ID: number;
+  id: number;
   created_at: string;
   title: string;
   location: string;
