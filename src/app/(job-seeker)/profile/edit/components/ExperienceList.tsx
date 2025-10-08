@@ -57,7 +57,7 @@ export default function ExperienceList({ profile }: ExperienceListProps) {
         )}
         {profile.experiences && profile.experiences.length > 0 ? (
           profile.experiences.map((exp) => (
-            <div key={exp.ID} className="flex items-center justify-between p-3 border rounded-md">
+            <div key={exp.id} className="flex items-center justify-between p-3 border rounded-md">
               <div>
                 <h3 className="font-semibold">{exp.job_title}</h3>
                 <p className="text-sm text-muted-foreground">{exp.employer?.company_name || exp.new_employer?.company_name || 'Empleador no especificado'}</p>
@@ -66,7 +66,7 @@ export default function ExperienceList({ profile }: ExperienceListProps) {
                 <Button variant="outline" size="icon" onClick={() => alert('Funcionalidad de editar pendiente.')}>
                   <Edit className="h-4 w-4" />
                 </Button>
-                <Button variant="destructive" size="icon" onClick={() => handleDelete(exp.ID)}>
+                <Button variant="destructive" size="icon" onClick={() => handleDelete(exp.id)}>
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>

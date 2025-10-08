@@ -27,7 +27,7 @@ export default function ExperienceSection({ experiences }: ExperienceSectionProp
           </div>
         ) : (
           experiences.map((exp) => (
-            <div key={exp.ID} className="relative pl-6 border-l-2 border-gray-200">
+            <div key={exp.id} className="relative pl-6 border-l-2 border-gray-200">
               <div className="absolute -left-2 top-1 w-4 h-4 bg-primary rounded-full"></div>
               <p className="text-sm text-muted-foreground">
                 {new Date(exp.start_date).getFullYear()} - {exp.end_date ? new Date(exp.end_date).getFullYear() : 'Presente'}

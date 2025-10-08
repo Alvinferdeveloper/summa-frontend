@@ -16,6 +16,7 @@ export default function EducationSection({ educations }: EducationSectionProps) 
     const date = new Date(dateString)
     return date.toLocaleDateString("es-ES", { month: "short", year: "numeric" })
   }
+  console.log(educations)
   return (
     <Card className="border-2 border-border/60 shadow-md hover:shadow-lg transition-all duration-300 hover:border-accent/30 rounded-sm">
       <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-border/50">
@@ -31,7 +32,7 @@ export default function EducationSection({ educations }: EducationSectionProps) 
           <div className="space-y-6">
             {educations.map((edu, index) => (
               <div
-                key={edu.ID}
+                key={edu.id}
                 className={`relative pl-6 pb-6 ${index !== educations.length - 1 ? "border-l-2 border-border/40" : ""
                   }`}
               >
@@ -51,7 +52,7 @@ export default function EducationSection({ educations }: EducationSectionProps) 
                       <Calendar className="h-4 w-4" />
                       <span>
                         {formatDate(edu.start_date)} -{" "}
-                        {edu.end_date ? formatDate(edu.end_date) : "N/A"}
+                        {edu.end_date ? formatDate(edu.end_date) : "Presente"}
                       </span>
                     </div>
                     {edu.university?.address && (

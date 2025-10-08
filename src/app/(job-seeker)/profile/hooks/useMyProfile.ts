@@ -2,8 +2,6 @@
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 
-// DTOs que coinciden con la respuesta del backend
-
 interface UserSummary {
   email: string;
 }
@@ -32,6 +30,7 @@ export interface Experience {
 interface UniversitySummary {
   id: number;
   name: string;
+  address: string;
 }
 
 interface UniversitySuggestionSummary {

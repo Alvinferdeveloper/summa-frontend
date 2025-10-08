@@ -36,8 +36,8 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
     defaultValues: {
       disability_info_consent: profile.disability_info_consent,
       detailed_accommodations: profile.detailed_accommodations || '',
-      disability_type_ids: profile.disability_types?.map(dt => dt.ID) || [],
-      accessibility_need_ids: profile.accessibility_needs?.map(an => an.ID) || [],
+      disability_type_ids: profile.disability_types?.map(dt => dt.id) || [],
+      accessibility_need_ids: profile.accessibility_needs?.map(an => an.id) || [],
     },
   });
 
@@ -122,7 +122,7 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {disabilityTypesData?.map((dt: any) => (
                 <FormField
-                  key={dt.ID}
+                  key={dt.id}
                   control={form.control}
                   name="disability_type_ids"
                   render={({ field }) => {
