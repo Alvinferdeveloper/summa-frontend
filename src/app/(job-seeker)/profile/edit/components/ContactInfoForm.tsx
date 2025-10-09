@@ -10,6 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import type { ProfileData } from "../../hooks/useMyProfile"
 import { useUpdateContactInfo } from "../hooks/useUpdateContactInfo"
 import { Loader2, Save, Phone, MapPin, Globe, Home, Linkedin, FileText, User } from "lucide-react"
+import CountrySelector, { SelectMenuOption } from "@/app/components/shared/CountrySelector"
+import { useState } from "react"
+import { COUNTRIES } from "@/app/data/countries"
 
 const contactInfoSchema = z.object({
   phone_number: z.string().optional(),
@@ -29,12 +32,14 @@ interface ContactInfoFormProps {
 
 export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
   const updateContactInfoMutation = useUpdateContactInfo()
+  const [isOpen, setIsOpen] = useState(false);
+  
   const form = useForm<ContactInfoFormValues>({
     resolver: zodResolver(contactInfoSchema),
     defaultValues: {
       phone_number: profile.phone_number || "",
       city: profile.city || "",
-      country: profile.country || "",
+      country: COUNTRIES.find(option => option.title === profile.country)?.value || "NI",
       address: profile.address || "",
       linked_in: profile.linked_in || "",
       resume_url: profile.resume_url || "",
@@ -43,7 +48,10 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
   })
 
   function onSubmit(values: ContactInfoFormValues) {
-    updateContactInfoMutation.mutate(values)
+    updateContactInfoMutation.mutate({
+      ...values,
+      country: COUNTRIES.find(option => option.value === values.country)?.title || "",
+    })
   }
 
   return (
@@ -121,10 +129,12 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                       <FormControl>
                         <div className="relative">
                           <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input
-                            placeholder="Ej: Nicaragua"
-                            {...field}
-                            className="pl-10 border-primary focus:border-primary transition-colors rounded-lg"
+                          <CountrySelector
+                            id="country"
+                            open={isOpen}
+                            onToggle={() => setIsOpen(!isOpen)}
+                            onChange={(val) => field.onChange(val)}
+                            selectedValue={COUNTRIES.find(option => option.value === field.value) as SelectMenuOption}
                           />
                         </div>
                       </FormControl>
