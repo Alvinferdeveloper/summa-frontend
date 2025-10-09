@@ -59,9 +59,9 @@ export default function JobsPage() {
   }, [data, selectedJob]);
 
   return (
-    <div className="h-[calc(100vh-6rem)] grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="h-[calc(100vh-6rem)] grid grid-cols-1 lg:grid-cols-5 gap-6 px-32">
       {/* Left Column: Job List */}
-      <div className=" rounded-lg">
+      <div className=" rounded-lg col-span-2">
         <ScrollArea className="h-full">
           {status === 'pending' ? (
             <div className="flex justify-center items-center h-full">
@@ -91,7 +91,7 @@ export default function JobsPage() {
       </div>
 
       {/* Right Column: Job Details */}
-      <div className="hidden lg:block lg:col-span-2">
+      <div className="hidden lg:block lg:col-span-3">
         <JobDetails job={selectedJob} />
       </div>
     </div>

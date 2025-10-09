@@ -49,7 +49,7 @@ export default function JobListItem({ job, isActive, onClick }: JobListItemProps
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left p-5 rounded-lg mb-2 border transition-all bg-white hover:shadow-md relative ${isActive ? "border-primary bg-primary/5 shadow-sm" : "border-red-900"
+      className={`w-full text-left text-2xl p-5 rounded-lg mb-2 border transition-all bg-white hover:shadow-md relative ${isActive ? "border-primary bg-primary/5 shadow-sm" : "border-red-900"
         }`}
     >
       <div className="flex items-start justify-between mb-3">
@@ -59,11 +59,11 @@ export default function JobListItem({ job, isActive, onClick }: JobListItemProps
         </div>
       </div>
 
-      <h3 className="font-bold text-lg text-foreground mb-2 leading-tight">{job.title}</h3>
+      <h3 className="font-bold text-xl text-foreground mb-2 leading-tight">{job.title}</h3>
 
-      <p className="text-base text-foreground mb-2 font-medium">{job.employer.company_name}</p>
+      <p className="text-base text-muted-foreground mb-2 font-medium">{job.employer.company_name}</p>
 
-      <p className="text-sm text-muted-foreground mb-3">{job.location}</p>
+      <p className="text-lg text-muted-foreground mb-3">{job.location}</p>
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-sm text-primary">
