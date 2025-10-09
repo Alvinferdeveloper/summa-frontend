@@ -31,6 +31,7 @@ interface UniversitySummary {
   id: number;
   name: string;
   address: string;
+  logo_url: string;
 }
 
 interface UniversitySuggestionSummary {

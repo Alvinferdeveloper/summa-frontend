@@ -29,11 +29,11 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
         ) : (
           <div className="flex flex-wrap gap-2">
             {skills.map((skill) => (
-              <Badge key={skill.ID} variant="secondary">{skill.name}</Badge>
+              <Badge key={skill.id} variant="secondary">{skill.name}</Badge>
             ))}
           </div>
         )}
-        <Link href="/profile/edit#contact" className="inline-flex mx-auto items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+        <Link href="/profile/edit#skills" className="inline-flex mx-auto items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
           <PlusCircle className="h-4 w-4" />
           Añadir Habilidades
         </Link>

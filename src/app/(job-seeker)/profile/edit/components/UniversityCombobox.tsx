@@ -34,7 +34,7 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between h-16 text-base"
+          className="w-full justify-between bg-primary hover:bg-primary/80 h-16 text-white"
         >
           {selectedUniversity ? (
             <div className="flex items-center gap-3 text-left">
@@ -47,7 +47,7 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
               </div>
               <div>
                 <p className="font-semibold">{selectedUniversity.name}</p>
-                <p className="text-xs text-muted-foreground">Universidad</p>
+                <p className="text-xs text-muted">Universidad</p>
               </div>
             </div>
           ) : (
@@ -56,7 +56,7 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+      <PopoverContent className="w-[500px] p-0">
         <Command>
           <CommandInput 
             placeholder="Busca una universidad..." 
@@ -75,7 +75,7 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
                     onSelect(university);
                     setOpen(false);
                   }}
-                  className="flex items-center justify-between"
+                  className="flex items-center justify-between [&:hover]:bg-primary/80 data-[active]:bg-primary h-16"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
@@ -87,7 +87,7 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
                     </div>
                     <p>{university.name}</p>
                   </div>
-                  <Check className={cn("h-4 w-4", selectedUniversity?.id === university.id ? "opacity-100" : "opacity-0")} />
+                  <Check className={cn("h-4 w-4 text-muted", selectedUniversity?.id === university.id ? "opacity-100" : "opacity-0", [selectedUniversity?.id === university.id ? "text-muted" : "text-primary"])} />
                 </CommandItem>
               ))}
             </CommandGroup>

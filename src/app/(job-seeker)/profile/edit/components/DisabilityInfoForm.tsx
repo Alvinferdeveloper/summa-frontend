@@ -50,7 +50,7 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
   }
 
   return (
-    <Card>
+    <Card className='rounded-sm'>
       <CardHeader>
         <CardTitle>Información de Discapacidad y Accesibilidad</CardTitle>
       </CardHeader>
@@ -66,6 +66,7 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      className='border-primary'
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
@@ -85,7 +86,11 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
                 <FormItem>
                   <FormLabel>Adaptaciones Detalladas</FormLabel>
                   <FormControl>
-                    <Textarea rows={3} placeholder="Describe cualquier adaptación específica que necesites..." {...field} />
+                    <Textarea 
+                    rows={3} 
+                    placeholder="Describe cualquier adaptación específica que necesites..." {...field}
+                    className='border-primary'
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -115,6 +120,7 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
                                   )
                                 );
                             }}
+                            className='border-primary'
                           />
                         </FormControl>
                         <FormLabel className="font-normal">
@@ -151,6 +157,7 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
                                   )
                                 );
                             }}
+                            className='border-primary'
                           />
                         </FormControl>
                         <FormLabel className="font-normal">

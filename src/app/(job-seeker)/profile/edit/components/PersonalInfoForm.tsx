@@ -39,7 +39,7 @@ export default function PersonalInfoForm({ profile }: PersonalInfoFormProps) {
   }
 
   return (
-    <Card>
+    <Card className='rounded-sm'>
       <CardHeader>
         <CardTitle>Información Personal</CardTitle>
       </CardHeader>
@@ -53,7 +53,7 @@ export default function PersonalInfoForm({ profile }: PersonalInfoFormProps) {
                 <FormItem>
                   <FormLabel>Nombre</FormLabel>
                   <FormControl>
-                    <Input placeholder="Tu nombre" {...field} />
+                    <Input placeholder="Tu nombre" {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -66,7 +66,7 @@ export default function PersonalInfoForm({ profile }: PersonalInfoFormProps) {
                 <FormItem>
                   <FormLabel>Apellido</FormLabel>
                   <FormControl>
-                    <Input placeholder="Tu apellido" {...field} />
+                    <Input placeholder="Tu apellido" {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

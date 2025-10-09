@@ -49,7 +49,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
   }
 
   return (
-    <Card>
+    <Card className='rounded-sm'>
       <CardHeader>
         <CardTitle>Información de Contacto</CardTitle>
       </CardHeader>
@@ -63,7 +63,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                 <FormItem>
                   <FormLabel>Número de Teléfono</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ej: +505 8888-8888" {...field} />
+                    <Input placeholder="Ej: +505 8888-8888" {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -76,7 +76,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                 <FormItem>
                   <FormLabel>Ciudad</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ej: Managua" {...field} />
+                    <Input placeholder="Ej: Managua" {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,7 +89,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                 <FormItem>
                   <FormLabel>País</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ej: Nicaragua" {...field} />
+                    <Input placeholder="Ej: Nicaragua" {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -102,7 +102,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                 <FormItem>
                   <FormLabel>Dirección</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ej: 123 Calle Principal" {...field} />
+                    <Input placeholder="Ej: 123 Calle Principal" {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -115,7 +115,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                 <FormItem>
                   <FormLabel>Perfil de LinkedIn</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://linkedin.com/in/tuperfil" {...field} />
+                    <Input placeholder="https://linkedin.com/in/tuperfil" {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -128,7 +128,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                 <FormItem>
                   <FormLabel>URL del Currículum</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://tuweb.com/curriculum.pdf" {...field} />
+                    <Input placeholder="https://tuweb.com/curriculum.pdf" {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -141,7 +141,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                 <FormItem>
                   <FormLabel>URL de la Foto de Perfil</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://ejemplo.com/tu_foto.jpg" {...field} />
+                    <Input placeholder="https://ejemplo.com/tu_foto.jpg" {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

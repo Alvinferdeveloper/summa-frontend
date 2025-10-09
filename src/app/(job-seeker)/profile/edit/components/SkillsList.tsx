@@ -46,7 +46,7 @@ export default function SkillsList({ profile }: SkillsListProps) {
   }
 
   return (
-    <Card>
+    <Card className='rounded-sm'>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <Star className="h-5 w-5" />
@@ -88,6 +88,7 @@ export default function SkillsList({ profile }: SkillsListProps) {
                           value={field.value?.join(', ')}
                           onChange={(e) => field.onChange(e.target.value.split(',').map(s => s.trim()).filter(s => s !== ''))}
                           placeholder="Ej: Go, React, PostgreSQL"
+                          className='border-primary'
                         />
                       </FormControl>
                       <FormMessage />

@@ -37,7 +37,7 @@ export default function DescriptionForm({ profile }: DescriptionFormProps) {
   }
 
   return (
-    <Card>
+    <Card className='rounded-sm'>
       <CardHeader>
         <CardTitle>Sobre Mí</CardTitle>
       </CardHeader>
@@ -51,7 +51,7 @@ export default function DescriptionForm({ profile }: DescriptionFormProps) {
                 <FormItem>
                   <FormLabel>Descripción Personal</FormLabel>
                   <FormControl>
-                    <Textarea rows={5} placeholder="Cuéntanos sobre ti, tus aspiraciones y lo que te hace único..." {...field} />
+                    <Textarea rows={5} placeholder="Cuéntanos sobre ti, tus aspiraciones y lo que te hace único..." {...field} className='border-primary' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/badge"
 export default function ProfilePage() {
   const { data: session, status: sessionStatus } = useSession()
   const { data: profile, status: profileStatus, error } = useMyProfile();
+  console.log(profile, "mi profile")
 
   if (sessionStatus === "loading" || profileStatus === "pending") {
     return (
@@ -211,7 +212,7 @@ export default function ProfilePage() {
             ) : (
               <p className="text-center py-4 text-muted-foreground">No has especificado tus necesidades de accesibilidad.</p>
             )}
-            <Link href="/profile/edit#accessibility-needs" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+            <Link href="/profile/edit#disability-types" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
               <PlusCircle className="h-4 w-4" />
               Añadir Necesidades
             </Link>

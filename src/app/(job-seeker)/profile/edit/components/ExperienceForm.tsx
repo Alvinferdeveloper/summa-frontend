@@ -74,7 +74,7 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
         onSuccess={handleNewEmployerSuccess}
       />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-4 border rounded-lg">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-4 border rounded-sm">
           <h2 className="text-xl font-semibold">Añadir Nueva Experiencia</h2>
           <FormItem>
             <FormLabel>Empresa</FormLabel>

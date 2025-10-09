@@ -88,7 +88,7 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
         onSuccess={handleNewUniversitySuccess}
       />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-4 border rounded-lg">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-4 border rounded-sm">
           <h2 className="text-xl font-semibold">Añadir Formación Académica</h2>
           <FormField
             control={form.control}
@@ -115,7 +115,7 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Título</FormLabel>
-                <FormControl><Input placeholder="Ej: Ingeniería de Software" {...field} /></FormControl>
+                <FormControl><Input placeholder="Ej: Ingeniería de Software" {...field} className='border-primary' /></FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -127,7 +127,7 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Campo de Estudio</FormLabel>
-                <FormControl><Input placeholder="Ej: Ciencias de la Computación" {...field} /></FormControl>
+                <FormControl><Input placeholder="Ej: Ciencias de la Computación" {...field} className='border-primary' /></FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -140,7 +140,7 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Fecha de Inicio</FormLabel>
-                  <FormControl><Input type="date" {...field} /></FormControl>
+                  <FormControl><Input type="date" {...field} className='border-primary' /></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -151,7 +151,7 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Fecha de Fin (o en blanco)</FormLabel>
-                  <FormControl><Input type="date" {...field} /></FormControl>
+                  <FormControl><Input type="date" {...field} className='border-primary' /></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
