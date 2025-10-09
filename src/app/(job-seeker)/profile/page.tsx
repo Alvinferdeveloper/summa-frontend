@@ -24,7 +24,6 @@ import { Badge } from "@/components/ui/badge"
 export default function ProfilePage() {
   const { data: session, status: sessionStatus } = useSession()
   const { data: profile, status: profileStatus, error } = useMyProfile();
-  console.log(profile, "mi profile")
 
   if (sessionStatus === "loading" || profileStatus === "pending") {
     return (

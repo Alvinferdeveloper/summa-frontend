@@ -10,6 +10,7 @@ interface EmployerSummary {
   id: number;
   company_name: string;
   logo_url: string;
+  address: string;
 }
 
 interface NewEmployerSummary {
