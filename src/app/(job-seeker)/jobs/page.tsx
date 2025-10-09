@@ -7,7 +7,7 @@ import JobListItem, { Job } from './components/JobListItem';
 import JobDetails from './components/JobDetails';
 import { useInView } from 'react-intersection-observer';
 import { Loader2 } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 interface JobsApiResponse {
   data: Job[];
@@ -59,10 +59,10 @@ export default function JobsPage() {
   }, [data, selectedJob]);
 
   return (
-    <div className="h-[calc(100vh-6rem)] grid grid-cols-1 lg:grid-cols-5 gap-6 px-32">
+    <div className="h-[calc(100vh-6rem)] grid grid-cols-1 lg:grid-cols-5 gap-2 px-32">
       {/* Left Column: Job List */}
       <div className=" rounded-lg col-span-2">
-        <ScrollArea className="h-full">
+        <ScrollArea className="h-[calc(100vh-6rem)]">
           {status === 'pending' ? (
             <div className="flex justify-center items-center h-full">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -87,12 +87,15 @@ export default function JobsPage() {
               </div>
             </div>
           )}
+          <ScrollBar orientation="vertical" className="w-3" />
         </ScrollArea>
       </div>
 
       {/* Right Column: Job Details */}
       <div className="hidden lg:block lg:col-span-3">
-        <JobDetails job={selectedJob} />
+        <ScrollArea className="h-[calc(100vh-6rem)]">
+          <JobDetails job={selectedJob} />
+        </ScrollArea>
       </div>
     </div>
   );
