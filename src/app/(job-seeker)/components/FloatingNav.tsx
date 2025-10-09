@@ -36,7 +36,7 @@ export default function FloatingNav() {
               {isActive && (
                 <motion.span
                   layoutId="active-pill-job-seeker"
-                  className="absolute inset-0 rounded-full bg-black"
+                  className="absolute inset-0 rounded-full bg-primary"
                   style={{ borderRadius: 9999 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 />
