@@ -75,7 +75,7 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
                     onSelect(university);
                     setOpen(false);
                   }}
-                  className="flex items-center justify-between [&:hover]:bg-primary/80 data-[active]:bg-primary h-16"
+                   className="group flex items-center justify-between data-[selected=true]:bg-primary [&:hover]:bg-primary/80 data-[active]:bg-primary h-16"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
@@ -87,7 +87,7 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
                     </div>
                     <p>{university.name}</p>
                   </div>
-                  <Check className={cn("h-4 w-4 text-muted", selectedUniversity?.id === university.id ? "opacity-100" : "opacity-0", [selectedUniversity?.id === university.id ? "text-muted" : "text-primary"])} />
+                  <Check className={cn("h-4 w-4 mr-3 text-primary [.group:hover_&]:text-muted", selectedUniversity?.id === university.id ? "opacity-100" : "opacity-0")} />
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -96,9 +96,9 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
                 onAddNew();
                 setOpen(false);
               }}
-              className="text-primary font-semibold"
+              className="font-semibold !bg-primary text-muted"
             >
-              <PlusCircle className="mr-2 h-4 w-4" />
+              <PlusCircle className="mr-2 h-4 w-4 text-muted" />
               Añadir nueva universidad
             </CommandItem>
           </CommandList>

@@ -32,7 +32,7 @@ export default function AddNewUniversityModal({ isOpen, onClose, onSuccess }: Ad
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className='bg-white'>
         <DialogHeader>
           <DialogTitle>Añadir Nueva Universidad</DialogTitle>
           <DialogDescription>
@@ -42,20 +42,20 @@ export default function AddNewUniversityModal({ isOpen, onClose, onSuccess }: Ad
         <div className="space-y-4 py-4">
           <div className="space-y-2">
             <Label htmlFor="new-university-name">Nombre de la Universidad</Label>
-            <Input id="new-university-name" value={suggestedName} onChange={(e) => setSuggestedName(e.target.value)} />
+            <Input id="new-university-name" className='border-primary' value={suggestedName} onChange={(e) => setSuggestedName(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="new-university-country">País (Opcional)</Label>
-            <Input id="new-university-country" value={country} onChange={(e) => setCountry(e.target.value)} />
+            <Input id="new-university-country" className='border-primary' value={country} onChange={(e) => setCountry(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="new-university-website">Sitio Web (Opcional)</Label>
-            <Input id="new-university-website" value={website} onChange={(e) => setWebsite(e.target.value)} />
+            <Input id="new-university-website" className='border-primary' value={website} onChange={(e) => setWebsite(e.target.value)} />
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={onClose}>Cancelar</Button>
-          <Button onClick={handleSubmit} disabled={mutation.isPending}>
+          <Button variant="outline" className='bg-secondary border-primary hover:bg-primary/70 cursor-pointer' onClick={onClose}>Cancelar</Button>
+          <Button className='cursor-pointer' onClick={handleSubmit} disabled={mutation.isPending}>
             {mutation.isPending ? 'Guardando...' : 'Guardar Universidad'}
           </Button>
         </DialogFooter>

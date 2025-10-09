@@ -36,7 +36,7 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between h-16 text-base"
+          className="w-full justify-between bg-primary hover:bg-primary/80 h-16 text-white"
         >
           {selectedEmployer ? (
             <div className="flex items-center gap-3 text-left">
@@ -49,7 +49,7 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
               </div>
               <div>
                 <p className="font-semibold">{selectedEmployer.company_name}</p>
-                <p className="text-xs text-muted-foreground">Empresa • {selectedEmployer.industry}</p>
+                <p className="text-xs text-muted">Empresa • {selectedEmployer.industry}</p>
               </div>
             </div>
           ) : (
@@ -60,8 +60,8 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
       </PopoverTrigger>
       <PopoverContent className="w-[500px] p-0">
         <Command>
-          <CommandInput 
-            placeholder="Busca una empresa..." 
+          <CommandInput
+            placeholder="Busca una empresa..."
             value={searchQuery}
             onValueChange={setSearchQuery}
           />
@@ -77,7 +77,7 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
                     onSelect(employer);
                     setOpen(false);
                   }}
-                  className="flex items-center justify-between data-[selected=true]:bg-gray-100 data-[selected=true]:text-black"
+                  className="group flex items-center justify-between data-[selected=true]:bg-primary [&:hover]:bg-primary/80 data-[active]:bg-primary h-16"
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
@@ -89,21 +89,21 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
                     </div>
                     <div>
                       <p>{employer.company_name}</p>
-                      <p className="text-xs text-muted-foreground">Empresa • {employer.industry}</p>
+                      <p>Empresa • {employer.industry}</p>
                     </div>
                   </div>
-                  <Check className={cn("h-4 w-4", selectedEmployer?.id === employer.id ? "opacity-100" : "opacity-0")} />
+                  <Check className={cn("h-4 w-4 mr-3 text-primary [.group:hover_&]:text-muted", selectedEmployer?.id === employer.id ? "opacity-100" : "opacity-0")} />
                 </CommandItem>
               ))}
             </CommandGroup>
-            <CommandItem 
+            <CommandItem
               onSelect={() => {
                 onAddNew();
                 setOpen(false);
               }}
-              className="text-primary font-semibold"
+              className="font-semibold !bg-primary text-muted"
             >
-              <PlusCircle className="mr-2 h-4 w-4" />
+              <PlusCircle className="mr-2 h-4 w-4 text-muted" />
               Añadir nueva empresa
             </CommandItem>
           </CommandList>

@@ -30,7 +30,7 @@ export default function AddNewEmployerModal({ isOpen, onClose, onSuccess }: AddN
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className='bg-white'>
         <DialogHeader>
           <DialogTitle>Añadir Nueva Empresa</DialogTitle>
           <DialogDescription>
@@ -40,16 +40,16 @@ export default function AddNewEmployerModal({ isOpen, onClose, onSuccess }: AddN
         <div className="space-y-4 py-4">
           <div className="space-y-2">
             <Label htmlFor="new-company-name">Nombre de la Empresa</Label>
-            <Input id="new-company-name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+            <Input id="new-company-name" className="border-primary" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="new-company-website">Sitio Web (Opcional)</Label>
-            <Input id="new-company-website" value={website} onChange={(e) => setWebsite(e.target.value)} />
+            <Input id="new-company-website" className="border-primary" value={website} onChange={(e) => setWebsite(e.target.value)} />
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={onClose}>Cancelar</Button>
-          <Button onClick={handleSubmit} disabled={mutation.isPending}>
+          <Button variant="outline" className='bg-secondary border-primary hover:bg-primary/70 cursor-pointer' onClick={onClose}>Cancelar</Button>
+          <Button className='cursor-pointer' onClick={handleSubmit} disabled={mutation.isPending}>
             {mutation.isPending ? 'Guardando...' : 'Guardar Empresa'}
           </Button>
         </DialogFooter>
