@@ -40,7 +40,7 @@ export default function ProfileEditPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header con gradiente */}
-      <div className="relative w-3/4 mx-auto bg-gradient-to-br from-primary/10 via-accent/30 to-background border-b">
+      <div className="relative w-3/4 mx-auto bg-gradient-to-br from-primary/70 via-accent/30 to-primary border-b">
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             {/* Avatar y info principal */}
@@ -61,7 +61,7 @@ export default function ProfileEditPage() {
                 <h1 className="text-3xl font-bold tracking-tight">
                   {profile.first_name || 'Nombre'} {profile.last_name || 'Apellido'}
                 </h1>
-                <Badge variant="secondary" className="font-medium">
+                <Badge variant="default" className="font-medium">
                   Perfil Activo
                 </Badge>
               </div>
