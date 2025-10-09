@@ -32,6 +32,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import IndustrySelect from "./components/IndustrySelect"
 import CompanySizeSelect from "./components/CompanySizeSelect"
+import CountrySelector, { SelectMenuOption } from "@/app/components/shared/CountrySelector"
+import { COUNTRIES } from "@/app/data/countries"
 
 
 export default function EmployerRegister() {
@@ -46,7 +48,7 @@ export default function EmployerRegister() {
             email: "",
             password: "",
             phone_number: "",
-            country: "",
+            country: "NI",
             foundation_date: "",
             industry: "",
             size: "",
@@ -57,6 +59,7 @@ export default function EmployerRegister() {
     })
 
     const { mutate, isPending, isSuccess, error } = useEmployerRegistration()
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         if (isSuccess) {
@@ -199,7 +202,7 @@ export default function EmployerRegister() {
                                                             Número de Teléfono
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input placeholder="+1 (555) 000-0000" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
+                                                            <Input placeholder="+1 (555) 000-0000" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 !focus:ring-primary" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -215,7 +218,14 @@ export default function EmployerRegister() {
                                                             País
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input placeholder="Estados Unidos" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
+                                                            <CountrySelector
+                                                                id="country"
+                                                                className="h-12 border-2"
+                                                                open={isOpen}
+                                                                onToggle={() => setIsOpen(!isOpen)}
+                                                                onChange={(val) => field.onChange(val)}
+                                                                selectedValue={COUNTRIES.find(option => option.value === field.value) as SelectMenuOption}
+                                                            />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>

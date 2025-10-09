@@ -24,7 +24,7 @@ export default function CompanySizeSelect({ field }: { field: any }) {
                     defaultValue={field.value}
                 >
                     <SelectTrigger className="py-6 text-md border-2 focus:border-primary rounded-sm transition-all">
-                        <SelectValue placeholder="Selecciona una industria" />
+                        <SelectValue placeholder="Selecciona el tamaño de la empresa" />
                     </SelectTrigger>
                     <SelectContent>
                         {sizes.map((size) => (

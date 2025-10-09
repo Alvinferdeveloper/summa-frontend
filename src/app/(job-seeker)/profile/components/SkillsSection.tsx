@@ -29,7 +29,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
         ) : (
           <div className="flex flex-wrap gap-2">
             {skills.map((skill) => (
-              <Badge key={skill.id} variant="secondary">{skill.name}</Badge>
+              <Badge key={skill.id} variant="default">{skill.name}</Badge>
             ))}
           </div>
         )}

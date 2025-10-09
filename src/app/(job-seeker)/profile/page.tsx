@@ -180,7 +180,7 @@ export default function ProfilePage() {
             {profile?.disability_types && profile.disability_types.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {profile.disability_types.map((dt) => (
-                  <Badge key={dt.id} variant="secondary" className="px-3 py-1 text-sm font-normal">{dt.name}</Badge>
+                  <Badge key={dt.id} variant="default" className="px-3 py-1 text-sm font-normal">{dt.name}</Badge>
                 ))}
               </div>
             ) : (
@@ -205,7 +205,7 @@ export default function ProfilePage() {
             {profile?.accessibility_needs && profile.accessibility_needs.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {profile.accessibility_needs.map((an) => (
-                  <Badge key={an.id} variant="secondary" className="px-3 py-1 text-sm font-normal">{an.name}</Badge>
+                  <Badge key={an.id} variant="default" className="px-3 py-1 text-sm font-normal">{an.name}</Badge>
                 ))}
               </div>
             ) : (
