@@ -91,7 +91,7 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Título del Puesto</FormLabel>
-                <FormControl><Input placeholder="Ej: Desarrollador Frontend" {...field} /></FormControl>
+                <FormControl><Input placeholder="Ej: Desarrollador Frontend" {...field} className="border-primary" /></FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -104,7 +104,7 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Fecha de Inicio</FormLabel>
-                  <FormControl><Input type="date" {...field} /></FormControl>
+                  <FormControl><Input type="date" {...field} className="border-primary" /></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -115,7 +115,7 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Fecha de Fin (o en blanco)</FormLabel>
-                  <FormControl><Input type="date" {...field} /></FormControl>
+                  <FormControl><Input type="date" {...field} className="border-primary" /></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -128,7 +128,7 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Descripción</FormLabel>
-                <FormControl><Textarea placeholder="Describe tus responsabilidades..." {...field} /></FormControl>
+                <FormControl><Textarea placeholder="Describe tus responsabilidades..." {...field} className="border-primary" /></FormControl>
                 <FormMessage />
               </FormItem>
             )}

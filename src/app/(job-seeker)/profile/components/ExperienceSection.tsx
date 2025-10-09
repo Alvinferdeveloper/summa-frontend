@@ -44,7 +44,7 @@ export default function ExperienceSection({ experiences }: ExperienceSectionProp
                 <div className="absolute left-4 top-2 w-5 h-5 bg-primary rounded-full border-4 border-background shadow-sm group-hover:scale-110 transition-transform duration-200" />
 
                 {/* Content card */}
-                <div className="bg-card border border-border/50 rounded-lg p-5 hover:border-primary/30 hover:shadow-md transition-all duration-300">
+                <div className="bg-card border hover:bg-primary/5 border-border/50 rounded-lg p-5 hover:border-primary/50 hover:shadow-lg transition-all duration-300">
                   <div className="flex items-start gap-4">
                     {/* Logo */}
                     <div className="flex-shrink-0">

@@ -40,7 +40,7 @@ export default function ProfileEditPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header con gradiente */}
-      <div className="relative w-3/4 mx-auto bg-gradient-to-br from-primary/70 via-accent/30 to-primary border-b">
+      <div className="relative w-3/4 mx-auto bg-gradient-to-br from-primary/70 via-primary/30 to-primary border-b">
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             {/* Avatar y info principal */}
@@ -92,7 +92,7 @@ export default function ProfileEditPage() {
         <Card className="shadow-medium rounded-sm">
           <CardContent className="p-6">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3 md:grid-cols-7 gap-2 bg-muted/50 p-1">
+              <TabsList className="grid w-full grid-cols-3 md:grid-cols-7 gap-2 bg-primary/50 p-1 ">
                 <TabsTrigger value="personal-info" className="data-[state=active]:bg-background data-[state=active]:shadow-sm">
                   <User className="h-4 w-4 md:mr-2" />
                   <span className="hidden md:inline">Personal</span>

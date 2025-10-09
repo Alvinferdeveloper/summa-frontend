@@ -59,7 +59,7 @@ export default function EducationList({ profile }: EducationListProps) {
             {profile.educations.map((edu) => (
               <div
                 key={edu.id}
-                className="group relative flex gap-4 p-4 border border-border/50 rounded-xl bg-card hover:bg-accent/5 hover:border-primary/20 hover:shadow-md transition-all duration-300"
+                className="group relative flex gap-4 p-4 border border-border/50 rounded-xl bg-card hover:bg-primary/5 hover:border-primary/20 hover:shadow-md transition-all duration-300"
               >
                 {/* Logo de la universidad */}
                 <div className="flex-shrink-0">
