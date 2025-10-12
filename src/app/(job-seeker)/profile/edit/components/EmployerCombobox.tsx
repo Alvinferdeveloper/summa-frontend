@@ -41,11 +41,7 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
           {selectedEmployer ? (
             <div className="flex items-center gap-3 text-left">
               <div className="w-10 h-10 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
-                {selectedEmployer.logo_url ? (
-                  <img src={selectedEmployer.logo_url} alt={selectedEmployer.company_name} className="w-full h-full object-contain rounded-md" />
-                ) : (
-                  <Building2 className="w-5 h-5 text-gray-400" />
-                )}
+                <img src={selectedEmployer.logo_url || '/company_placeholder.png'} alt={selectedEmployer.company_name} className="w-full h-full object-contain rounded-md" />
               </div>
               <div>
                 <p className="font-semibold">{selectedEmployer.company_name}</p>
@@ -81,11 +77,7 @@ export function EmployerCombobox({ selectedEmployer, onSelect, onAddNew }: Emplo
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
-                      {employer.logo_url ? (
-                        <img src={employer.logo_url} alt={employer.company_name} className="w-full h-full object-contain rounded-md" />
-                      ) : (
-                        <Building2 className="w-4 h-4 text-gray-400" />
-                      )}
+                      <img src={employer.logo_url || '/company_placeholder.png'} alt={employer.company_name} className="w-full h-full object-contain rounded-md" />
                     </div>
                     <div>
                       <p>{employer.company_name}</p>

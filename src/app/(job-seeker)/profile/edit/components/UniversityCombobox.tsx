@@ -39,11 +39,7 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
           {selectedUniversity ? (
             <div className="flex items-center gap-3 text-left">
               <div className="w-10 h-10 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
-                {selectedUniversity.logo_url ? (
-                  <img src={selectedUniversity.logo_url} alt={selectedUniversity.name} className="w-full h-full object-contain rounded-md" />
-                ) : (
-                  <GraduationCap className="w-5 h-5 text-gray-400" />
-                )}
+                  <img src={selectedUniversity.logo_url || '/university_placeholder.png'} alt={selectedUniversity.name} className="w-full h-full object-contain rounded-md" />
               </div>
               <div>
                 <p className="font-semibold">{selectedUniversity.name}</p>
@@ -79,11 +75,7 @@ export function UniversityCombobox({ selectedUniversity, onSelect, onAddNew }: U
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
-                      {university.logo_url ? (
-                        <img src={university.logo_url} alt={university.name} className="w-full h-full object-contain rounded-md" />
-                      ) : (
-                        <GraduationCap className="w-4 h-4 text-gray-400" />
-                      )}
+                        <img src={university.logo_url || '/university_placeholder.png'} alt={university.name} className="w-full h-full object-contain rounded-md" />
                     </div>
                     <p>{university.name}</p>
                   </div>
