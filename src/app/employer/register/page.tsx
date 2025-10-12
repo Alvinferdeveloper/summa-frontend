@@ -84,7 +84,7 @@ export default function EmployerRegister() {
         const { logo, ...rest } = values
         mutate({
             values: rest,
-            logo: logo?.[0] ?? null,
+            logo: logo,
         })
     }
 
@@ -329,6 +329,7 @@ export default function EmployerRegister() {
                                             <AlertDescription className="text-base">{error.message}</AlertDescription>
                                         </Alert>
                                     )}
+
 
                                     {/* Submit Button */}
                                     <div className="space-y-4 pt-4">

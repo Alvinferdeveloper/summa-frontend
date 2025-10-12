@@ -1,7 +1,8 @@
-
 import { useMutation } from '@tanstack/react-query';
 import api from '@/lib/api';
 import type { EmployerRegisterSchema } from '../register/validation';
+import { AxiosError } from 'axios';
+import { ApiErrorResponse } from '@/lib/api';
 
 interface EmployerRegistrationPayload {
   values: Omit<EmployerRegisterSchema, 'logo'>;
@@ -33,7 +34,14 @@ const registerEmployer = async ({ values, logo }: EmployerRegistrationPayload): 
 };
 
 export const useEmployerRegistration = () => {
-  return useMutation<EmployerRegistrationResponse, Error, EmployerRegistrationPayload>({
+  return useMutation<EmployerRegistrationResponse, AxiosError<ApiErrorResponse>, EmployerRegistrationPayload>({
     mutationFn: registerEmployer,
+    onError: (error: AxiosError<ApiErrorResponse>) => {
+      if (error.response?.data.error) {
+        error.message = error.response?.data.error;
+        return;
+      }
+      error.message = "Error al registrar la empresa";
+    },
   });
 };

@@ -9,6 +9,12 @@ const api = axios.create({
   },
 });
 
+export interface ApiErrorResponse {
+  error: string;
+  code?: string;
+  status?: number;
+}
+
 // Interceptor para añadir el token JWT del backend a las peticiones
 api.interceptors.request.use(
   async (config) => {
