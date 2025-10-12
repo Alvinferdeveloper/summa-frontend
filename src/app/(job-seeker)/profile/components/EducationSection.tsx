@@ -42,17 +42,16 @@ export default function EducationSection({ educations }: EducationSectionProps) 
 
                 <div className="group hover:bg-primary/5 rounded-xl p-6 border border-border/60 hover:border-primary/50 hover:shadow-lg transition-all duration-300">
                   <div className="flex flex-col sm:flex-row gap-5">
-                    {edu.university?.logo_url && (
-                      <div className="flex-shrink-0">
-                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 border-border/60 group-hover:border-primary/40 transition-all duration-300 shadow-sm group-hover:shadow-md bg-white">
-                          <img
-                            src={edu.university.logo_url || "/placeholder.svg"}
-                            alt={`${edu.university.name} logo`}
-                            className="object-contain p-2"
-                          />
-                        </div>
+                    <div className="flex-shrink-0">
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 border-border/60 group-hover:border-primary/40 transition-all duration-300 shadow-sm group-hover:shadow-md bg-white">
+                        <img
+                          src={edu.university?.logo_url || "/university_placeholder.png"}
+                          alt={`${edu.university?.name} logo`}
+                          className="object-contain p-2"
+                        />
                       </div>
-                    )}
+                    </div>
+
 
                     <div className="flex-1 min-w-0">
                       <div className="mb-4">

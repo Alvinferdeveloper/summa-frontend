@@ -50,7 +50,7 @@ export default function ExperienceSection({ experiences }: ExperienceSectionProp
                     <div className="flex-shrink-0">
                       <div className="w-14 h-14 rounded-lg overflow-hidden border border-border/50 bg-muted/30 flex items-center justify-center">
                         <img
-                          src={exp.employer?.logo_url || "/placeholder.svg?height=56&width=56"}
+                          src={exp.employer?.logo_url || "/company_placeholder.png"}
                           alt={exp.employer?.company_name || "Company logo"}
                           className="w-full h-full object-cover"
                         />

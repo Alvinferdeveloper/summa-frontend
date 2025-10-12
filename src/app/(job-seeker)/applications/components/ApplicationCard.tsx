@@ -45,11 +45,7 @@ export default function ApplicationCard({ application }: ApplicationCardProps) {
         <CardHeader>
           <div className="flex justify-between items-start gap-4">
             <div className="w-14 h-14 flex-shrink-0 bg-gray-100 rounded-lg flex items-center justify-center">
-              {job_post.employer.logo_url ? (
-                <img src={job_post.employer.logo_url} alt={job_post.employer.company_name} className="w-full h-full object-contain rounded-lg" />
-              ) : (
-                <Building2 className="w-7 h-7 text-gray-400" />
-              )}
+                <img src={job_post.employer.logo_url || "/company_placeholder.png"} alt={job_post.employer.company_name} className="w-full h-full object-contain rounded-lg" />
             </div>
             <div className="flex-grow">
               <p className="text-sm font-semibold text-primary">{job_post.employer.company_name}</p>

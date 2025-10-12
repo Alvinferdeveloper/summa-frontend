@@ -39,15 +39,11 @@ export default function JobDetails({ job }: JobDetailsProps) {
           <div className="bg-gradient-to-br from-primary/5 via-primary/3 to-transparent border-b border-border p-6 lg:p-8">
             <div className="flex items-start gap-4 mb-6">
               <div className="w-20 h-20 flex-shrink-0 bg-background border border-border rounded-xl flex items-center justify-center shadow-sm">
-                {job.employer.logo_url ? (
-                  <img
-                    src={job.employer.logo_url || "/placeholder.svg"}
-                    alt={job.employer.company_name}
-                    className="w-full h-full object-contain rounded-xl p-2"
-                  />
-                ) : (
-                  <Building2 className="w-10 h-10 text-muted-foreground" />
-                )}
+                <img
+                  src={job.employer.logo_url || "/company_placeholder.png"}
+                  alt={job.employer.company_name}
+                  className="w-full h-full object-contain rounded-xl p-2"
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-2 text-balance leading-tight">

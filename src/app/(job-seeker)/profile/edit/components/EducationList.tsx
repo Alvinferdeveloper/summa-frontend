@@ -65,7 +65,7 @@ export default function EducationList({ profile }: EducationListProps) {
                 <div className="flex-shrink-0">
                   <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted border border-border/50 flex items-center justify-center">
                     <img
-                      src={edu.university?.logo_url || "/placeholder.svg?height=64&width=64&query=university"}
+                      src={edu.university?.logo_url || "/university_placeholder.png"}
                       alt={edu.university?.name || "Universidad"}
                       className="w-full h-full object-cover"
                     />

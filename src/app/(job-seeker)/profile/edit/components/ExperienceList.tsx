@@ -66,7 +66,7 @@ export default function ExperienceList({ profile }: ExperienceListProps) {
                 <div className="flex-shrink-0">
                   <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-muted ring-1 ring-border/50">
                     <img
-                      src={exp.employer?.logo_url || "/placeholder.svg"}
+                      src={exp.employer?.logo_url || "/company_placeholder.png"}
                       alt="Logo"
                       className="w-full h-full object-cover"
                     />
