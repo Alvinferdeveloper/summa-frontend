@@ -85,8 +85,11 @@ export default function SkillsList({ profile }: SkillsListProps) {
                       <FormControl>
                         <Input
                           {...field}
-                          value={field.value?.join(', ')}
-                          onChange={(e) => field.onChange(e.target.value.split(',').map(s => s.trim()).filter(s => s !== ''))}
+                          onChange={(e) => {
+                            const values = e.target.value.split(',').map(s => s.trim());
+                            field.onChange(values);
+                          }}
+
                           placeholder="Ej: Go, React, PostgreSQL"
                           className='border-primary'
                         />

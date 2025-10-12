@@ -11,10 +11,10 @@ export const useUpdateSkills = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-            toast("Habilidades actualizadas.");
+            toast.success("Habilidades actualizadas.");
         },
         onError: (error: any) => {
-            toast(error.response?.data?.error || "Error al actualizar habilidades.");
+            toast.error(error.response?.data?.error || "Error al actualizar habilidades.");
         },
     });
 };
