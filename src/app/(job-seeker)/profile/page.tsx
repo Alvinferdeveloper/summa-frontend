@@ -1,11 +1,13 @@
-"use client"
-import ExperienceSection from "./components/ExperienceSection"
-import EducationSection from "./components/EducationSection"
-import SkillsSection from "./components/SkillsSection"
-import { useSession } from "next-auth/react"
-import { useMyProfile } from "./hooks/useMyProfile"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from "next/link"
+'use client';
+
+import ExperienceSection from "./components/ExperienceSection";
+import EducationSection from "./components/EducationSection";
+import SkillsSection from "./components/SkillsSection";
+import { useSession } from "next-auth/react";
+import { useMyProfile } from "./hooks/useMyProfile";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import {
   Loader2,
   Phone,
@@ -17,12 +19,13 @@ import {
   Heart,
   UserCircle2,
   PlusCircle,
-} from "lucide-react"
-import OnboardingForm from "./components/OnboardingForm"
-import { Badge } from "@/components/ui/badge"
+} from "lucide-react";
+import OnboardingForm from "./components/OnboardingForm";
+import { Badge } from "@/components/ui/badge";
+import ImageEdit from './components/ImageEdit';
 
 export default function ProfilePage() {
-  const { data: session, status: sessionStatus } = useSession()
+  const { data: session, status: sessionStatus } = useSession();
   const { data: profile, status: profileStatus, error } = useMyProfile();
 
   if (sessionStatus === "loading" || profileStatus === "pending") {
@@ -30,11 +33,11 @@ export default function ProfilePage() {
       <div className="flex justify-center items-center min-h-[60vh]">
         <Loader2 className="h-10 w-10 animate-spin text-primary" />
       </div>
-    )
+    );
   }
 
   if (session && !session.onboardingCompleted) {
-    return <OnboardingForm />
+    return <OnboardingForm />;
   }
 
   if (profileStatus === "error") {
@@ -46,31 +49,43 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <div className="relative">
-        <div className="h-48 sm:h-60 flex justify-center rounded-md rounded-tr-lg border-b border-border">
-          <img
-            src="https://media.licdn.com/dms/image/v2/D5616AQFdem9Vr7zxyQ/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1732840373751?e=1762387200&v=beta&t=QAJr3O7gKxFVEk5k9ZyofGKFtkTApG20T-do9qc2sFI" width={350} height={1400} alt="Profile"
-            className="w-full sm:w-5/6 h-full object-cover rounded-tr-lg rounded-tl-lg" />
-        </div>
+        <ImageEdit
+          imageUrl={profile?.banner_url || '/banner_placeholder.png'}
+          endpoint="/v1/profile/banner"
+          paramName="banner"
+          queryToInvalidate="myProfile"
+          title="Banner del Perfil"
+          className="w-3/4 mx-auto"
+        >
+          <div className="h-48 relative sm:h-60 flex justify-center rounded-md rounded-tr-lg border-b border-border">
+            <img
+              src={profile?.banner_url || "/banner_placeholder.png"}
+              alt="Profile Banner"
+              className="w-full h-full object-cover rounded-tr-lg rounded-tl-lg" />
+          </div>
+        </ImageEdit>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative -mt-20 sm:-mt-24 pb-6">
             <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-end">
-              {profile?.profile_picture || session?.user?.image ? (
+              <ImageEdit
+                imageUrl={profile?.profile_picture_url || session?.user?.image || '/profile_placeholder.png'}
+                endpoint="/v1/profile/picture"
+                paramName="picture"
+                queryToInvalidate="myProfile"
+                title="Foto de Perfil"
+              >
                 <img
-                  src={profile?.profile_picture || session?.user?.image || "/placeholder.svg"}
+                  src={profile?.profile_picture_url || session?.user?.image || '/profile_placeholder.png'}
                   alt="Profile"
                   className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover ring-4 ring-background border-4 border-background shadow-xl"
                 />
-              ) : (
-                <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-card flex items-center justify-center ring-4 ring-background border-4 border-background shadow-xl">
-                  <UserCircle2 className="w-20 h-20 sm:w-24 sm:h-24 text-muted-foreground" />
-                </div>
-              )}
+              </ImageEdit>
 
               <div className="flex-1 min-w-0">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-1">
@@ -78,14 +93,21 @@ export default function ProfilePage() {
                 </h1>
                 <p className="text-base text-muted-foreground">{session?.user?.email}</p>
               </div>
+
+              <Link href="/profile/edit" className="sm:pb-2">
+                <Button
+                  variant="outline"
+                  className="font-medium border-2 hover:bg-accent/5 hover:border-primary bg-transparent"
+                >
+                  Editar Perfil
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 space-y-2">
-
-        {/* Contact Info Section */}
         <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-foreground">Información de Contacto</CardTitle>
@@ -223,5 +245,5 @@ export default function ProfilePage() {
         <SkillsSection skills={profile?.skills} />
       </div>
     </div>
-  )
+  );
 }

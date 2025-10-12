@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 interface UploadPayload {
   file: File;
   endpoint: string;
-  paramName: string; // El nombre del campo en el multipart/form-data (ej: "logo", "picture")
+  paramName: string;
 }
 
 const uploadFile = async ({ file, endpoint, paramName }: UploadPayload) => {

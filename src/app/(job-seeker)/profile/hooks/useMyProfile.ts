@@ -72,10 +72,11 @@ export interface ProfileData {
   phone_number?: string;
   city?: string;
   country?: string;
-  profile_picture?: string;
+  profile_picture_url?: string;
   address?: string;
   linked_in?: string;
   resume_url?: string;
+  banner_url?: string;
   description?: string;
   disability_info_consent: boolean;
   detailed_accommodations?: string;

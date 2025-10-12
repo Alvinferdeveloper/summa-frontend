@@ -49,7 +49,7 @@ export default function ImageUpload({ onFileChange, label }: ImageUploadProps) {
             <button 
               type="button"
               onClick={(e) => { 
-                e.stopPropagation(); // Evita que se abra el selector de archivos
+                e.stopPropagation(); 
                 handleRemoveImage();
               }}
               className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
