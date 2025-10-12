@@ -363,10 +363,10 @@ export default function EmployerRegister() {
             <div className="relative hidden lg:block">
                 <div className="sticky top-0 h-screen overflow-hidden">
                     {/* Gradient Overlay Effect */}
-                    <div className="absolute inset-0 z-10 bg-gradient-to-br from-primary/20 via-secondary/20 to-primary/30 mix-blend-overlay" />
+                    <div className="absolute inset-0 z-10 bg-gradient-to-br from-primary/20 via-primary/20 to-primary/30 mix-blend-overlay" />
 
                     {/* Animated Gradient Background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-primary animate-gradient-shift" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary via-green-300 to-primary animate-gradient-shift" />
 
                     {/* Decorative Shapes */}
                     <div className="absolute inset-0 z-20">
