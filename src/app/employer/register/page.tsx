@@ -34,7 +34,7 @@ import IndustrySelect from "./components/IndustrySelect"
 import CompanySizeSelect from "./components/CompanySizeSelect"
 import CountrySelector, { SelectMenuOption } from "@/app/components/shared/CountrySelector"
 import { COUNTRIES } from "@/app/data/countries"
-
+import FileUpload from "@/app/components/shared/FileUpload"
 
 export default function EmployerRegister() {
     const [showWelcomeModal, setShowWelcomeModal] = useState(true);
@@ -81,7 +81,11 @@ export default function EmployerRegister() {
     }, [isSuccess, form, router])
 
     function onSubmit(values: EmployerRegisterSchema) {
-        mutate(values)
+        const { logo, ...rest } = values
+        mutate({
+            values: rest,
+            logo: logo?.[0] ?? null,
+        })
     }
 
     if (status === "loading") {
@@ -142,6 +146,13 @@ export default function EmployerRegister() {
                                                         <FormMessage />
                                                     </FormItem>
                                                 )}
+                                            />
+                                            <FileUpload
+                                                label="Logo de la empresa (opcional)"
+                                                value={form.watch("logo")}
+                                                onChange={(file: File | null) => form.setValue("logo", file)}
+                                                accept="image/*"
+                                                maxSizeMB={5}
                                             />
                                             <FormField
                                                 control={form.control}

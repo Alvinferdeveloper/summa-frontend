@@ -1,4 +1,5 @@
 
+import Logo from '@/app/components/icons/Logo';
 import { z } from 'zod';
 
 const passwordValidation = new RegExp(
@@ -23,6 +24,9 @@ export const employerRegisterSchema = z.object({
   description: z.string().optional(),
   address: z.string().optional(),
   website: z.string().url({ message: "Por favor, introduce una URL válida." }).optional().or(z.literal('')),
+  logo: z
+    .any()
+    .optional(),
 });
 
 export type EmployerRegisterSchema = z.infer<typeof employerRegisterSchema>;
