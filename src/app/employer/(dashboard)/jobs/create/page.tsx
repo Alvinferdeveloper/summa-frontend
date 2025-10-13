@@ -18,15 +18,20 @@ import { Button } from '@/components/ui/button';
 const jobPostSchema = z.object({
   title: z.string().min(5, "El título debe tener al menos 5 caracteres."),
   location: z.string().min(3, "La ubicación es requerida."),
-  workModel: z.string().min(1, "El modelo de trabajo es requerido."),
-  contractType: z.string().min(1, "El tipo de contrato es requerido."),
+  is_urgent: z.boolean().default(false),
+  workModel: z.enum(['Presencial', 'Híbrido', 'Remoto'], { message: "Debes seleccionar un modelo de trabajo." }),
+  workSchedule: z.enum(['Tiempo completo', 'Medio Tiempo', 'Beca/Practicas', 'Por horas'], { message: "Debes seleccionar una jornada." }),
+  contractType: z.enum(['Indefinido', 'Determinado', 'Obra o labor', 'Aprendizaje', 'Otro'], { message: "Debes seleccionar un tipo de contrato." }),
+  experienceLevel: z.enum(['Sin experiencia', '1 año', '2 años', '3-4 años', '5-10 años', 'Más de 10 años'], { message: "Debes seleccionar un nivel de experiencia." }),
+  salary: z.string().optional(),
+  category_id: z.number({ message: "La categoría es requerida." }),
   description: z.string().min(50, "La descripción debe tener al menos 50 caracteres."),
   responsibilities: z.string().min(50, "Las responsabilidades deben tener al menos 50 caracteres."),
   requirements: z.string().min(50, "Los requisitos deben tener al menos 50 caracteres."),
   accessibilityFeatures: z.array(z.string()).optional(),
 });
 
-export type JobPostSchema = z.infer<typeof jobPostSchema>;
+export type JobPostSchema = z.input<typeof jobPostSchema>;
 
 const steps = [
   { id: 1, name: 'El Rol' },
@@ -44,8 +49,13 @@ export default function CreateJobPage() {
     defaultValues: {
       title: '',
       location: '',
-      workModel: '',
-      contractType: '',
+      is_urgent: false,
+      workModel: undefined,
+      workSchedule: undefined,
+      contractType: undefined,
+      experienceLevel: undefined,
+      salary: '',
+      category_id: undefined,
       description: '',
       responsibilities: '',
       requirements: '',

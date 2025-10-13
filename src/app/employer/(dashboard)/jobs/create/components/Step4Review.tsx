@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { JobPostSchema } from '../page';
+import { useCategories } from '../hooks/useCategories';
 
 interface Step4ReviewProps {
   prevStep: () => void;
@@ -16,6 +17,8 @@ interface Step4ReviewProps {
 export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
   const { getValues } = useFormContext<JobPostSchema>();
   const values = getValues();
+  const { data: categories } = useCategories();
+  const categoryName = categories?.find(c => c.id === values.category_id)?.name;
 
   return (
     <motion.div
@@ -30,14 +33,26 @@ export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>{values.title}</CardTitle>
-            <div className="flex gap-2 pt-2">
-              <Badge variant="secondary">{values.location}</Badge>
-              <Badge variant="secondary">{values.workModel}</Badge>
-              <Badge variant="secondary">{values.contractType}</Badge>
+            <div className="flex justify-between items-start">
+              <CardTitle>{values.title}</CardTitle>
+              {values.is_urgent && <Badge variant="destructive">Urgente</Badge>}
+            </div>
+            <div className="flex flex-wrap gap-2 pt-2">
+              <Badge variant="default">{values.location}</Badge>
+              <Badge variant="default">{values.workModel}</Badge>
+              <Badge variant="default">{values.workSchedule}</Badge>
+              <Badge variant="default">{values.contractType}</Badge>
+              <Badge variant="default">{values.experienceLevel}</Badge>
+              {categoryName && <Badge variant="default">{categoryName}</Badge>}
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
+            {values.salary && (
+              <div>
+                <h3 className="font-semibold mb-2">Salario</h3>
+                <p className="text-sm text-muted-foreground">{values.salary}</p>
+              </div>
+            )}
             <div>
               <h3 className="font-semibold mb-2">Descripción</h3>
               <p className="text-sm text-muted-foreground">{values.description}</p>
