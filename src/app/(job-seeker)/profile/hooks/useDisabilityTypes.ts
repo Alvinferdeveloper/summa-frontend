@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import apiClient from '@/lib/axios';
 
 interface DisabilityType {
-  ID: number;
+  id: number;
   name: string;
   description: string;
 }

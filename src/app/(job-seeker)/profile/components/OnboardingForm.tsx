@@ -66,7 +66,7 @@ export default function OnboardingForm() {
           <div className="flex items-center justify-center py-8">
             <div className="flex flex-col items-center gap-3">
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-              <p className="text-sm text-muted-foreground">Cargando formulario...</p>
+              <DialogTitle className="text-center text-2xl font-semibold">Cargando formulario...</DialogTitle>
             </div>
           </div>
         </DialogContent>
@@ -135,14 +135,14 @@ export default function OnboardingForm() {
 
                   <div className="space-y-3 rounded-lg border bg-muted/30 p-4 max-h-[200px] overflow-y-auto">
                     {disabilityTypes?.map((type) => (
-                      <div key={type.ID} className="flex items-center space-x-3">
+                      <div key={type.id} className="flex items-center space-x-3">
                         <Checkbox
-                          id={`type-${type.ID}`}
-                          checked={selectedTypes.has(type.ID)}
-                          onCheckedChange={() => handleTypeChange(type.ID)}
+                          id={`type-${type.id}`}
+                          checked={selectedTypes.has(type.id)}
+                          onCheckedChange={() => handleTypeChange(type.id)}
                         />
                         <Label
-                          htmlFor={`type-${type.ID}`}
+                          htmlFor={`type-${type.id}`}
                           className="text-sm font-normal cursor-pointer leading-relaxed"
                         >
                           {type.name}
