@@ -15,12 +15,14 @@ export interface Job {
   location: string;
   work_model: string;
   created_at: string;
+  salary: string;
   employer: Employer;
   accessibility_features: string;
   description: string;
   responsibilities: string;
   requirements: string;
   contract_type: string;
+  is_urgent: boolean;
 }
 
 interface JobListItemProps {
@@ -54,7 +56,11 @@ export default function JobListItem({ job, isActive, onClick }: JobListItemProps
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">Se precisa Urgente</span>
+          {
+            job.is_urgent && (
+              <span className="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">Se precisa Urgente</span>
+            )
+          }
           <span className="text-xs font-medium text-amber-700 bg-amber-50 px-2 py-1 rounded">Empleo destacado</span>
         </div>
       </div>
@@ -64,11 +70,12 @@ export default function JobListItem({ job, isActive, onClick }: JobListItemProps
       <p className="text-base text-muted-foreground mb-2 font-medium">{job.employer.company_name}</p>
 
       <p className="text-lg text-muted-foreground mb-3">{job.location}</p>
+      <p className="text-sm text-green-500 mb-3">{job.salary}</p>
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-sm text-primary">
           <Home className="h-4 w-4" />
-          <span className="font-medium">Remoto</span>
+          <span className="font-medium">{job.work_model}</span>
         </div>
 
         <span className="text-xs text-muted-foreground">Hace {timeAgo(job.created_at)} días</span>

@@ -15,8 +15,7 @@ interface JobDetailsProps {
 
 export default function JobDetails({ job }: JobDetailsProps) {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false)
-  console.log(job)
-
+  
   if (!job) {
     return (
       <div className="hidden lg:flex h-full items-center justify-center bg-gradient-to-br from-muted/30 via-muted/10 to-transparent rounded-lg">
@@ -77,7 +76,10 @@ export default function JobDetails({ job }: JobDetailsProps) {
                       {job.work_model}
                     </Badge>
                   )}
+
                 </div>
+                <p className="text-lg text-muted-foreground mt-4">{job.location}</p>
+                <p className="text-sm text-green-500">{job.salary}</p>
               </div>
             </div>
 
