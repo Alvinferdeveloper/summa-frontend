@@ -4,13 +4,14 @@
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 
-interface EmployerJobPostsResponse {
+export interface EmployerJobPostsResponse {
   id: number;
   created_at: string;
   title: string;
   location: string;
   work_model: string;
   contract_type: string;
+  applicant_count: number; 
 }
 
 const fetchEmployerJobPosts = async (): Promise<EmployerJobPostsResponse[]> => {
