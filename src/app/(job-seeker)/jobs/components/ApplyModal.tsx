@@ -22,7 +22,7 @@ export default function ApplyModal({ isOpen, onClose, job }: ApplyModalProps) {
 
   const handleSubmit = () => {
     if (!job) return;
-    mutate({ jobId: job.ID, cover_letter: coverLetter }, {
+    mutate({ jobId: job.id, cover_letter: coverLetter }, {
       onSuccess: () => {
         onClose();
       }
