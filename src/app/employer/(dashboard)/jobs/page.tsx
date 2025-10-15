@@ -5,9 +5,22 @@ import { useEmployerJobPosts } from "../hooks/useEmployerJobPosts"
 import { useJobApplicants } from "./hooks/useJobApplicants"
 import { CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Loader2, Users, Briefcase, FileText } from "lucide-react"
+import { Loader2, Users, Briefcase, FileText, Clock } from "lucide-react"
 import Link from "next/link"
 import EmployerJobListItem from "./components/EmployerJobListItem"
+
+const timeAgo = (dateString: string) => {
+  const date = new Date(dateString);
+  const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
+  let interval = seconds / 86400;
+  if (interval > 1) return `hace ${Math.floor(interval)} días`;
+  interval = seconds / 3600;
+  if (interval > 1) return `hace ${Math.floor(interval)} horas`;
+  interval = seconds / 60;
+  if (interval > 1) return `hace ${Math.floor(interval)} minutos`;
+  return `hace ${Math.floor(seconds)} segundos`;
+};
+
 
 export default function MyJobsPage() {
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null)
@@ -148,13 +161,19 @@ export default function MyJobsPage() {
                     <Link key={app.id} href={`/employer/applicants/${app.applicant.profile_id}`}>
                       <div className="flex items-center gap-4 p-4 mb-2 border border-gray-100 rounded-lg hover:bg-blue-50/50 hover:border-blue-200 transition-all duration-200 group cursor-pointer">
                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-sm group-hover:shadow-md transition-shadow">
-                          <Users className="h-6 w-6 text-white" />
+                         
+                            <img src={app.applicant.profile_picture || "/profile_placeholder.png"} alt={app.applicant.first_name} className="w-full h-full object-cover rounded-full" />
+                          
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
                             {app.applicant.first_name} {app.applicant.last_name}
                           </p>
-                          <p className="text-sm text-muted-foreground truncate">{"alvinfer67@gmail.com"}</p>
+                          <p className="text-sm text-muted-foreground truncate">{app.applicant.email}</p>
+                        </div>
+                        <div className="flex items-center justify-end text-xs text-muted-foreground mt-4">
+                          <Clock className="h-3 w-3 mr-1" />
+                          Postulado {timeAgo(app.created_at)}
                         </div>
                         <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                           <svg className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
