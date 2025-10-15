@@ -70,6 +70,7 @@ export interface ProfileData {
   first_name: string;
   last_name: string;
   phone_number?: string;
+  email: string;
   city?: string;
   country?: string;
   profile_picture_url?: string;

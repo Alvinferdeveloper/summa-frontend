@@ -17,8 +17,8 @@ import {
   FileText,
   Accessibility,
   Heart,
-  UserCircle2,
   PlusCircle,
+  Mail,
 } from "lucide-react";
 import OnboardingForm from "./components/OnboardingForm";
 import { Badge } from "@/components/ui/badge";
@@ -119,6 +119,12 @@ export default function ProfilePage() {
                   <div className="flex items-center gap-3 text-sm">
                     <Phone className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                     <span className="text-foreground">{profile.phone_number}</span>
+                  </div>
+                )}
+                {profile?.email && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <Mail className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <span className="text-foreground">{profile.email}</span>
                   </div>
                 )}
                 {profile?.address && (

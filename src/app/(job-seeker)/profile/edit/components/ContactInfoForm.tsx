@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import type { ProfileData } from "../../hooks/useMyProfile"
 import { useUpdateContactInfo } from "../hooks/useUpdateContactInfo"
-import { Loader2, Save, Phone, MapPin, Globe, Home, Linkedin, FileText, User } from "lucide-react"
+import { Loader2, Save, Phone, MapPin, Globe, Home, Linkedin, Mail } from "lucide-react"
 import CountrySelector, { SelectMenuOption } from "@/app/components/shared/CountrySelector"
 import { useState } from "react"
 import { COUNTRIES } from "@/app/data/countries"
@@ -20,8 +20,7 @@ const contactInfoSchema = z.object({
   country: z.string().optional(),
   address: z.string().optional(),
   linked_in: z.string().url("Debe ser una URL válida").or(z.literal("")).optional(),
-  resume_url: z.string().url("Debe ser una URL válida").or(z.literal("")).optional(),
-  profile_picture: z.string().url("Debe ser una URL válida").or(z.literal("")).optional(),
+  email: z.string().email("Debe ser un correo electrónico válido").optional(),
 })
 
 export type ContactInfoFormValues = z.infer<typeof contactInfoSchema>
@@ -33,7 +32,7 @@ interface ContactInfoFormProps {
 export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
   const updateContactInfoMutation = useUpdateContactInfo()
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const form = useForm<ContactInfoFormValues>({
     resolver: zodResolver(contactInfoSchema),
     defaultValues: {
@@ -42,8 +41,7 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
       country: COUNTRIES.find(option => option.title === profile.country)?.value || "NI",
       address: profile.address || "",
       linked_in: profile.linked_in || "",
-      resume_url: profile.resume_url || "",
-      profile_picture: profile.profile_picture || "",
+      email: profile.email || "",
     },
   })
 
@@ -72,15 +70,15 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
 
               <FormField
                 control={form.control}
-                name="phone_number"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium">Número de Teléfono</FormLabel>
+                    <FormLabel className="text-sm font-medium">Correo Electrónico</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
-                          placeholder="Ej: +505 8888-8888"
+                          placeholder="Ej: pablo@summa.com"
                           {...field}
                           className="pl-10 border-primary focus:border-primary transition-colors rounded-lg"
                         />
@@ -90,6 +88,26 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                   </FormItem>
                 )}
               />
+                <FormField
+                  control={form.control}
+                  name="phone_number"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium">Número de Teléfono</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            placeholder="Ej: +505 8888-8888"
+                            {...field}
+                            className="pl-10 border-primary focus:border-primary transition-colors rounded-lg"
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
             </div>
 
             <div className="space-y-4 pt-2">
@@ -183,48 +201,6 @@ export default function ContactInfoForm({ profile }: ContactInfoFormProps) {
                         <Linkedin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
                           placeholder="https://linkedin.com/in/tuperfil"
-                          {...field}
-                          className="pl-10 border-primary focus:border-primary transition-colors rounded-lg"
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="resume_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-medium">URL del Currículum</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          placeholder="https://tuweb.com/curriculum.pdf"
-                          {...field}
-                          className="pl-10 border-primary focus:border-primary transition-colors rounded-lg"
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="profile_picture"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-medium">URL de la Foto de Perfil</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          placeholder="https://ejemplo.com/tu_foto.jpg"
                           {...field}
                           className="pl-10 border-primary focus:border-primary transition-colors rounded-lg"
                         />
