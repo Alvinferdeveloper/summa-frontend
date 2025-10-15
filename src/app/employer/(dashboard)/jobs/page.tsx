@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useUpdateApplicationStatus } from "./hooks/useApplicationMutations";
+import clsx from "clsx";
 
 const timeAgo = (dateString: string) => {
   const date = new Date(dateString);
@@ -30,6 +31,7 @@ const getStatusVariant = (status: string): "default" | "secondary" | "destructiv
     case 'aceptado': return 'default';
     case 'en revisión': return 'outline';
     case 'rechazado': return 'destructive';
+    case 'postulado': return 'secondary';
     default: return 'outline';
   }
 };
@@ -213,7 +215,7 @@ export default function MyJobsPage() {
                       </Link>
 
                       <div className="flex items-center gap-3">
-                        <Badge variant={getStatusVariant(app.status)} className="capitalize font-medium px-3 py-1 text-xs">
+                        <Badge variant={getStatusVariant(app.status)} className={clsx("capitalize font-medium px-3 py-1 text-xs", app.status == 'Postulado' && 'bg-green-500 text-white')}>
                           {app.status}
                         </Badge>
                         <DropdownMenu>
