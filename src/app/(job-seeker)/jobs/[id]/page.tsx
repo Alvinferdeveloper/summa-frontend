@@ -22,7 +22,7 @@ export default async function JobDetailPage({ params }: PageProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <JobDetails job={data} />
+      <JobDetails job={data} isAppliable={false} />
     </div>
   );
 }

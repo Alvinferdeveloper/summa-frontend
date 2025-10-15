@@ -17,6 +17,7 @@ export interface Job {
   created_at: string;
   salary: string;
   employer: Employer;
+  has_applied: boolean;
   accessibility_features: string;
   description: string;
   responsibilities: string;
@@ -51,7 +52,7 @@ export default function JobListItem({ job, isActive, onClick }: JobListItemProps
   return (
     <button
       onClick={onClick}
-      className={`w-[95%] text-left text-2xl p-5 rounded-lg mb-2 border transition-all bg-white hover:shadow-md relative ${isActive ? "border-primary bg-primary/5 shadow-sm" : "border-red-900"
+      className={`w-[95%] cursor-pointer text-left text-2xl p-5 rounded-lg mb-2 border transition-all bg-white hover:shadow-md relative ${isActive ? "border-primary bg-primary/5 shadow-sm" : "border-red-900"
         }`}
     >
       <div className="flex items-start justify-between mb-3">

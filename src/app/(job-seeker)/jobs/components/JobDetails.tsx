@@ -10,12 +10,13 @@ import { Building2, MapPin, Briefcase, Zap, Clock, FileText, CheckCircle2, Monit
 import ApplyModal from "./ApplyModal"
 
 interface JobDetailsProps {
-  job: Job | null
+  job: Job | null,
+  isAppliable?: boolean
 }
 
-export default function JobDetails({ job }: JobDetailsProps) {
+export default function JobDetails({ job, isAppliable = true }: JobDetailsProps) {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false)
-  
+
   if (!job) {
     return (
       <div className="hidden lg:flex h-full items-center justify-center bg-gradient-to-br from-muted/30 via-muted/10 to-transparent rounded-lg">
@@ -38,7 +39,7 @@ export default function JobDetails({ job }: JobDetailsProps) {
 
   return (
     <>
-      <ApplyModal isOpen={isApplyModalOpen} onClose={() => setIsApplyModalOpen(false)} job={job} />
+      {isAppliable && <ApplyModal isOpen={isApplyModalOpen} onClose={() => setIsApplyModalOpen(false)} job={job} />}
       <div className="h-full bg-card border border-border rounded-lg shadow-sm overflow-hidden">
         <ScrollArea className="h-full">
           {/* Header Section */}
@@ -83,13 +84,16 @@ export default function JobDetails({ job }: JobDetailsProps) {
               </div>
             </div>
 
-            <Button
-              onClick={() => setIsApplyModalOpen(true)}
-              size="sm"
-              className="w-auto rounded-2xl px-6 h-12 text-md font-semibold shadow-md hover:shadow-lg transition-all cursor-pointer"
-            >
-              Postularme
-            </Button>
+            {isAppliable && (
+              <Button
+                onClick={() => setIsApplyModalOpen(true)}
+                size="sm"
+                disabled={job.has_applied}
+                className="w-auto rounded-2xl px-6 h-12 text-md font-semibold shadow-md hover:shadow-lg transition-all cursor-pointer"
+              >
+                {job.has_applied ? "Postulado" : "Postularme"}
+              </Button>
+            )}
           </div>
 
           {/* Content Section */}
