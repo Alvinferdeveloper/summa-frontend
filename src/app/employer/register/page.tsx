@@ -1,19 +1,6 @@
-"use client"
+'use client'
 
-import type React from "react"
-import {
-    Building2,
-    Loader2,
-    Mail,
-    Lock,
-    Phone,
-    Globe,
-    Calendar,
-    Users,
-    MapPin,
-    FileText,
-    Sparkles,
-} from "lucide-react"
+import { Briefcase, Building2, Calendar, FileText, Globe, Loader2, Lock, Mail, MapPin, Phone, Sparkles } from "lucide-react"
 import Link from "next/link"
 import WelcomeModal from "../components/WelcomeModal"
 import Image from "next/image"
@@ -35,11 +22,27 @@ import CompanySizeSelect from "./components/CompanySizeSelect"
 import CountrySelector, { SelectMenuOption } from "@/app/components/shared/CountrySelector"
 import { COUNTRIES } from "@/app/data/countries"
 import FileUpload from "@/app/components/shared/FileUpload"
+import CheckboxGroup from "./components/CheckboxGroup"
+import { useQuery } from "@tanstack/react-query"
+import api from "@/lib/api"
+
+const fetchInfrastructures = async () => {
+    const { data } = await api.get<{ id: number; name: string }[]>("/v1/infrastructures");
+    return data.map(item => ({ ...item, id: String(item.id) }));
+};
+
+const fetchPrograms = async () => {
+    const { data } = await api.get<{ id: number; name: string }[]>("/v1/programs");
+    return data.map(item => ({ ...item, id: String(item.id) }));
+};
 
 export default function EmployerRegister() {
     const [showWelcomeModal, setShowWelcomeModal] = useState(true);
     const router = useRouter()
     const { status } = useSession()
+
+    const { data: infrastructureOptions = [] } = useQuery({ queryKey: ['infrastructures'], queryFn: fetchInfrastructures });
+    const { data: programOptions = [] } = useQuery({ queryKey: ['programs'], queryFn: fetchPrograms });
 
     const form = useForm<EmployerRegisterSchema>({
         resolver: zodResolver(employerRegisterSchema),
@@ -55,6 +58,9 @@ export default function EmployerRegister() {
             description: "",
             address: "",
             website: "",
+            dedication: "",
+            accessible_infrastructure_ids: [],
+            inclusive_program_ids: [],
         },
     })
 
@@ -81,11 +87,12 @@ export default function EmployerRegister() {
     }, [isSuccess, form, router])
 
     function onSubmit(values: EmployerRegisterSchema) {
-        const { logo, ...rest } = values
+        const { logo, ...rest } = values;
+
         mutate({
             values: rest,
             logo: logo,
-        })
+        });
     }
 
     if (status === "loading") {
@@ -127,7 +134,7 @@ export default function EmployerRegister() {
                                             </div>
                                             <div>
                                                 <h2 className="text-2xl font-bold">Información Esencial</h2>
-                                                <p className="text-sm text-muted-foreground">Comienza con la información básica</p>
+                                                <p className="text-sm text-muted-foreground">Comienza con la información básica de tu empresa</p>
                                             </div>
                                         </div>
                                         <div className="grid gap-6 md:grid-cols-2">
@@ -138,7 +145,7 @@ export default function EmployerRegister() {
                                                     <FormItem className="md:col-span-2">
                                                         <FormLabel className="flex items-center gap-2 text-base font-medium">
                                                             <Building2 className="h-4 w-4 text-primary" />
-                                                            Nombre de la Empresa <span className="text-secondary">*</span>
+                                                            Nombre de la Empresa <span className="text-destructive">*</span>
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input placeholder="Acme Corporation" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
@@ -161,7 +168,7 @@ export default function EmployerRegister() {
                                                     <FormItem>
                                                         <FormLabel className="flex items-center gap-2 text-base font-medium">
                                                             <Mail className="h-4 w-4 text-primary" />
-                                                            Correo Electrónico <span className="text-secondary">*</span>
+                                                            Correo Electrónico <span className="text-destructive">*</span>
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input placeholder="hola@empresa.com" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
@@ -177,7 +184,7 @@ export default function EmployerRegister() {
                                                     <FormItem>
                                                         <FormLabel className="flex items-center gap-2 text-base font-medium">
                                                             <Lock className="h-4 w-4 text-primary" />
-                                                            Contraseña <span className="text-secondary">*</span>
+                                                            Contraseña <span className="text-destructive">*</span>
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input type="password" placeholder="Crea una contraseña segura" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
@@ -195,7 +202,7 @@ export default function EmployerRegister() {
                                         </div>
                                         <div className="relative flex justify-center">
                                             <span className="bg-card px-4 text-sm font-medium text-muted-foreground">
-                                                Información Adicional (Opcional)
+                                                Detalles de la Empresa
                                             </span>
                                         </div>
                                     </div>
@@ -209,8 +216,8 @@ export default function EmployerRegister() {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormLabel className="flex items-center gap-2 text-base font-medium">
-                                                            <Phone className="h-4 w-4 text-secondary" />
-                                                            Número de Teléfono
+                                                            <Phone className="h-4 w-4 text-primary" />
+                                                            Número de Teléfono <span className="text-destructive">*</span>
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input placeholder="+1 (555) 000-0000" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 !focus:ring-primary" />
@@ -225,8 +232,8 @@ export default function EmployerRegister() {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormLabel className="flex items-center gap-2 text-base font-medium">
-                                                            <Globe className="h-4 w-4 text-secondary" />
-                                                            País
+                                                            <Globe className="h-4 w-4 text-primary" />
+                                                            País <span className="text-destructive">*</span>
                                                         </FormLabel>
                                                         <FormControl>
                                                             <CountrySelector
@@ -244,15 +251,15 @@ export default function EmployerRegister() {
                                             />
                                             <FormField
                                                 control={form.control}
-                                                name="foundation_date"
+                                                name="address"
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormLabel className="flex items-center gap-2 text-base font-medium">
-                                                            <Calendar className="h-4 w-4 text-secondary" />
-                                                            Fundada en
+                                                            <MapPin className="h-4 w-4 text-primary" />
+                                                            Dirección <span className="text-destructive">*</span>
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input type="date" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-secondary/20" />
+                                                            <Input placeholder="123 Calle Principal, Ciudad" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -274,15 +281,15 @@ export default function EmployerRegister() {
                                             />
                                             <FormField
                                                 control={form.control}
-                                                name="website"
+                                                name="dedication"
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormLabel className="flex items-center gap-2 text-base font-medium">
-                                                            <Globe className="h-4 w-4 text-secondary" />
-                                                            Sitio Web
+                                                            <Briefcase className="h-4 w-4 text-primary" />
+                                                            Dedicación <span className="text-destructive">*</span>
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input type="url" placeholder="https://tuempresa.com" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
+                                                            <Input placeholder="Ej: Desarrollo de Software" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -290,15 +297,31 @@ export default function EmployerRegister() {
                                             />
                                             <FormField
                                                 control={form.control}
-                                                name="address"
+                                                name="website"
                                                 render={({ field }) => (
-                                                    <FormItem className="md:col-span-3">
+                                                    <FormItem>
                                                         <FormLabel className="flex items-center gap-2 text-base font-medium">
-                                                            <MapPin className="h-4 w-4 text-secondary" />
-                                                            Dirección
+                                                            <Globe className="h-4 w-4 text-primary" />
+                                                            Sitio Web (Opcional)
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Input placeholder="123 Calle Principal, Ciudad, Estado, C.P." {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
+                                                            <Input type="url" placeholder="https://tuempresa.com" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="foundation_date"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel className="flex items-center gap-2 text-base font-medium">
+                                                            <Calendar className="h-4 w-4 text-primary" />
+                                                            Fundada en (Opcional)
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input type="date" {...field} className="h-12 border-2 text-base transition-all focus:border-none focus:ring-primary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -310,11 +333,11 @@ export default function EmployerRegister() {
                                                 render={({ field }) => (
                                                     <FormItem className="md:col-span-3">
                                                         <FormLabel className="flex items-center gap-2 text-base font-medium">
-                                                            <FileText className="h-4 w-4 text-secondary" />
-                                                            Descripción de la Empresa
+                                                            <FileText className="h-4 w-4 text-primary" />
+                                                            Descripción de la Empresa (Opcional)
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Textarea placeholder="Cuéntanos sobre la misión, cultura y qué hace única a tu empresa..." {...field} rows={4} className="resize-none border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-secondary/20" />
+                                                            <Textarea placeholder="Cuéntanos sobre la misión, cultura y qué hace única a tu empresa..." {...field} rows={4} className="resize-none border-2 text-base transition-all focus:border-none focus:ring-4 focus:ring-primary/20" />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -322,6 +345,33 @@ export default function EmployerRegister() {
                                             />
                                         </div>
                                     </div>
+
+                                    <div className="relative py-4">
+                                        <div className="absolute inset-0 flex items-center">
+                                            <div className="w-full border-t-2 border-dashed border-border" />
+                                        </div>
+                                        <div className="relative flex justify-center">
+                                            <span className="bg-card px-4 text-sm font-medium text-muted-foreground">
+                                                Compromiso con la Inclusión (Opcional)
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-8">
+                                        <CheckboxGroup
+                                            control={form.control}
+                                            name="accessible_infrastructure_ids"
+                                            options={infrastructureOptions}
+                                            label="Infraestructura Accesible en Oficinas"
+                                        />
+                                        <CheckboxGroup
+                                            control={form.control}
+                                            name="inclusive_program_ids"
+                                            options={programOptions}
+                                            label="Programas o Beneficios Inclusivos"
+                                        />
+                                    </div>
+
 
                                     {/* Error Message */}
                                     {error && (

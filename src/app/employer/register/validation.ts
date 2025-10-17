@@ -1,5 +1,4 @@
 
-import Logo from '@/app/components/icons/Logo';
 import { z } from 'zod';
 
 const passwordValidation = new RegExp(
@@ -15,18 +14,21 @@ export const employerRegisterSchema = z.object({
       message: "La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.",
     }),
 
+  // Campos obligatorios
+  phone_number: z.string().min(1, { message: "El número de teléfono es obligatorio." }),
+  country: z.string().min(1, { message: "El país es obligatorio." }),
+  industry: z.string().min(1, { message: "La industria es obligatoria." }),
+  size: z.string().min(1, { message: "El tamaño de la empresa es obligatorio." }),
+  address: z.string().min(1, { message: "La dirección es obligatoria." }),
+  dedication: z.string().min(1, { message: "La dedicación es obligatoria." }),
+
   // Campos opcionales
-  phone_number: z.string().optional(),
-  country: z.string().optional(),
   foundation_date: z.string().optional(),
-  industry: z.string().optional(),
-  size: z.string().optional(),
   description: z.string().optional(),
-  address: z.string().optional(),
   website: z.string().url({ message: "Por favor, introduce una URL válida." }).optional().or(z.literal('')),
-  logo: z
-    .any()
-    .optional(),
+  logo: z.any().optional(),
+  accessible_infrastructure_ids: z.array(z.string()).optional(),
+  inclusive_program_ids: z.array(z.string()).optional(),
 });
 
 export type EmployerRegisterSchema = z.infer<typeof employerRegisterSchema>;

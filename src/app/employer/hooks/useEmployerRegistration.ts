@@ -17,14 +17,22 @@ const registerEmployer = async ({ values, logo }: EmployerRegistrationPayload): 
   const formData = new FormData();
 
   Object.entries(values).forEach(([key, value]) => {
-    if (key === 'logo') return;
-    if (value) {
-      formData.append(key, value);
+    if (!value) return;
+    if (Array.isArray(value)) {
+      value.forEach(item => {
+        formData.append(key, item);
+      });
+      return;
     }
+    formData.append(key, value as string);
   });
   if (logo) {
     formData.append("logo", logo);
   }
+
+  formData.forEach((value, key) => {
+    console.log(key, value);
+  });
   const response = await api.post<EmployerRegistrationResponse>('/v1/employer/register', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
