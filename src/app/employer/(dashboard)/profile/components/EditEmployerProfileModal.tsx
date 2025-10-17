@@ -83,7 +83,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto bg-card">
         <DialogHeader className="space-y-3 pb-6 border-b">
           <DialogTitle className="text-2xl font-light tracking-tight">Editar Perfil de la Empresa</DialogTitle>
           <DialogDescription className="text-base text-muted-foreground">
@@ -106,7 +106,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                     <FormItem className="md:col-span-2">
                       <FormLabel className="text-sm font-normal text-foreground">Nombre de la Empresa</FormLabel>
                       <FormControl>
-                        <Input className="h-11" {...field} />
+                        <Input className="h-11 border-primary" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -119,7 +119,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                     <FormItem>
                       <FormLabel className="text-sm font-normal text-foreground">Industria</FormLabel>
                       <FormControl>
-                        <Input className="h-11" placeholder="Ej: Tecnología" {...field} />
+                        <Input className="h-11 border-primary" placeholder="Ej: Tecnología" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -132,7 +132,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                     <FormItem>
                       <FormLabel className="text-sm font-normal text-foreground">Tamaño de la Empresa</FormLabel>
                       <FormControl>
-                        <Input className="h-11" placeholder="Ej: 1-10 empleados" {...field} />
+                        <Input className="h-11 border-primary" placeholder="Ej: 1-10 empleados" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -145,7 +145,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                     <FormItem>
                       <FormLabel className="text-sm font-normal text-foreground">Fecha de Fundación</FormLabel>
                       <FormControl>
-                        <Input className="h-11" type="date" {...field} />
+                        <Input className="h-11 border-primary" type="date" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -158,7 +158,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                     <FormItem>
                       <FormLabel className="text-sm font-normal text-foreground">País</FormLabel>
                       <FormControl>
-                        <Input className="h-11" placeholder="Ej: Estados Unidos" {...field} />
+                        <Input className="h-11 border-primary" placeholder="Ej: Estados Unidos" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -179,7 +179,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                     <FormItem>
                       <FormLabel className="text-sm font-normal text-foreground">Sitio Web</FormLabel>
                       <FormControl>
-                        <Input className="h-11" type="url" placeholder="https://tuempresa.com" {...field} />
+                        <Input className="h-11 border-primary" type="url" placeholder="https://tuempresa.com" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -192,7 +192,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                     <FormItem>
                       <FormLabel className="text-sm font-normal text-foreground">Número de Teléfono</FormLabel>
                       <FormControl>
-                        <Input className="h-11" placeholder="+1 (555) 000-0000" {...field} />
+                        <Input className="h-11 border-primary" placeholder="+1 (555) 000-0000" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -205,7 +205,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                     <FormItem className="md:col-span-2">
                       <FormLabel className="text-sm font-normal text-foreground">Dirección</FormLabel>
                       <FormControl>
-                        <Input className="h-11" placeholder="123 Calle Principal, Ciudad" {...field} />
+                        <Input className="h-11 border-primary" placeholder="123 Calle Principal, Ciudad" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -225,7 +225,7 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                     <FormControl>
                       <Textarea
                         placeholder="Describe tu empresa, su misión y valores..."
-                        className="min-h-[120px] resize-none"
+                        className="min-h-[120px] resize-none border-primary"
                         {...field}
                       />
                     </FormControl>
