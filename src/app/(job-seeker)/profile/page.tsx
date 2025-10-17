@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { useMyProfile } from "./hooks/useMyProfile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import CVUpload from "./components/CVUpload";
 import Link from "next/link";
 import {
   Loader2,
@@ -113,64 +114,48 @@ export default function ProfilePage() {
             <CardTitle className="text-xl font-semibold text-foreground">Información de Contacto</CardTitle>
           </CardHeader>
           <CardContent>
-            {profile?.phone_number || profile?.address || profile?.city || profile?.linked_in || profile?.resume_url ? (
-              <div className="grid gap-3 sm:grid-cols-2">
-                {profile?.phone_number && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <Phone className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                    <span className="text-foreground">{profile.phone_number}</span>
-                  </div>
-                )}
-                {profile?.email && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <Mail className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                    <span className="text-foreground">{profile.email}</span>
-                  </div>
-                )}
-                {profile?.address && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                    <span className="text-foreground">{profile.address}</span>
-                  </div>
-                )}
-                {profile?.city && profile?.country && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <Globe className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                    <span className="text-foreground">
-                      {profile.city}, {profile.country}
-                    </span>
-                  </div>
-                )}
-                {profile?.linked_in && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <Linkedin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                    <a
-                      href={profile.linked_in}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:underline font-medium"
-                    >
-                      Ver LinkedIn
-                    </a>
-                  </div>
-                )}
-                {profile?.resume_url && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <FileText className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                    <a
-                      href={profile.resume_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:underline font-medium"
-                    >
-                      Ver Currículum
-                    </a>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <p className="text-center py-4 text-muted-foreground">No tienes información de contacto adicional registrada.</p>
-            )}
+            <CVUpload resumeUrl={profile?.resume_url} />
+            <div className="grid gap-3 sm:grid-cols-2 mt-4">
+              {profile?.phone_number && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Phone className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                  <span className="text-foreground">{profile.phone_number}</span>
+                </div>
+              )}
+              {profile?.email && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Mail className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                  <span className="text-foreground">{profile.email}</span>
+                </div>
+              )}
+              {profile?.address && (
+                <div className="flex items-center gap-3 text-sm">
+                  <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                  <span className="text-foreground">{profile.address}</span>
+                </div>
+              )}
+              {profile?.city && profile?.country && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Globe className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                  <span className="text-foreground">
+                    {profile.city}, {profile.country}
+                  </span>
+                </div>
+              )}
+              {profile?.linked_in && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Linkedin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                  <a
+                    href={profile.linked_in}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-medium"
+                  >
+                    Ver LinkedIn
+                  </a>
+                </div>
+              )}
+            </div>
             <Link href="/profile/edit#contact" className="inline-flex mx-auto items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
               <PlusCircle className="h-4 w-4" />
               Añadir Información de Contacto
