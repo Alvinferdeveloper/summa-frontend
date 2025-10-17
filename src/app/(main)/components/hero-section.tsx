@@ -30,7 +30,7 @@ export function HeroSection() {
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="text-base bg-transparent text-white" asChild>
-                <Link href="/employer/register">Soy empleador</Link>
+                <Link href="/employer/login">Soy empleador</Link>
               </Button>
             </div>
 

@@ -9,13 +9,14 @@ interface FilterButtonProps {
   title: string;
   icon: React.ReactNode;
   children: React.ReactNode;
+  className?: string;
 }
 
-export default function FilterButton({ title, icon, children }: FilterButtonProps) {
+export default function FilterButton({ title, icon, children, className }: FilterButtonProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2 shadow-md bg-white hover:bg-primary/30 hover:text-black cursor-pointer">
+        <Button variant="outline" className={`flex items-center gap-2 shadow-md bg-white hover:bg-primary/30 hover:text-black cursor-pointer ${className}`}>
           {icon}
           <span className="hidden sm:inline">{title}</span>
           <ChevronDown className="h-4 w-4 text-muted-foreground" />

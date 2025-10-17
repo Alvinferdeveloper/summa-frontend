@@ -27,7 +27,7 @@ export default function SignInPage() {
           <CardContent className="space-y-4">
             <div className="space-y-3">
               <Button
-                onClick={() => signIn('google', { callbackUrl: '/profile' })}
+                onClick={() => signIn('google', { callbackUrl: '/jobs' })}
                 variant="outline"
                 className="w-full h-12 text-left justify-start gap-3 border-border bg-inherit transition-colors hover:bg-muted/50 hover:text-primary"
               >
