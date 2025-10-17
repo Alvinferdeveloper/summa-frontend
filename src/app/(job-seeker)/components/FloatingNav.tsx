@@ -30,6 +30,7 @@ export default function FloatingNav() {
             <Link
               key={item.href}
               href={item.href}
+              aria-label={item.name}
               className={`relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 
                 ${isActive ? 'text-white' : 'text-gray-600 hover:text-black'}`}
             >
@@ -49,6 +50,7 @@ export default function FloatingNav() {
         {/* Botón de Cerrar Sesión */}
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
+          aria-label="Cerrar sesión"
           className="flex items-center cursor-pointer gap-2 rounded-full px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50 transition-colors duration-200"
         >
           <LogOut className="h-5 w-5" />

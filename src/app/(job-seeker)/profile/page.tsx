@@ -108,128 +108,133 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 space-y-2">
-        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold text-foreground">Información de Contacto</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <CVUpload resumeUrl={profile?.resume_url} />
-            <div className="grid gap-3 sm:grid-cols-2 mt-4">
-              {profile?.phone_number && (
-                <div className="flex items-center gap-3 text-sm">
-                  <Phone className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                  <span className="text-foreground">{profile.phone_number}</span>
-                </div>
-              )}
-              {profile?.email && (
-                <div className="flex items-center gap-3 text-sm">
-                  <Mail className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                  <span className="text-foreground">{profile.email}</span>
-                </div>
-              )}
-              {profile?.address && (
-                <div className="flex items-center gap-3 text-sm">
-                  <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                  <span className="text-foreground">{profile.address}</span>
-                </div>
-              )}
-              {profile?.city && profile?.country && (
-                <div className="flex items-center gap-3 text-sm">
-                  <Globe className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                  <span className="text-foreground">
-                    {profile.city}, {profile.country}
-                  </span>
-                </div>
-              )}
-              {profile?.linked_in && (
-                <div className="flex items-center gap-3 text-sm">
-                  <Linkedin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                  <a
-                    href={profile.linked_in}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline font-medium"
-                  >
-                    Ver LinkedIn
-                  </a>
-                </div>
-              )}
-            </div>
-            <Link href="/profile/edit#contact" className="inline-flex mx-auto items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
-              <PlusCircle className="h-4 w-4" />
-              Añadir Información de Contacto
-            </Link>
-          </CardContent>
-        </Card>
-
-        {/* About Me Section */}
-        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold text-foreground">Sobre Mí</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {profile?.description ? (
-              <p className="text-foreground leading-relaxed text-pretty">{profile.description}</p>
-            ) : (
-              <p className="text-center py-4 text-muted-foreground">Aún no has escrito una descripción sobre ti.</p>
-            )}
-            <Link href="/profile/edit#about" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
-              <PlusCircle className="h-4 w-4" />
-              Añadir Descripción
-            </Link>
-          </CardContent>
-        </Card>
-
-        {/* Disability Types Section */}
-        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl font-semibold text-foreground">
-              <Accessibility className="h-5 w-5 text-primary" />
-              Tipos de Discapacidad
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {profile?.disability_types && profile.disability_types.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {profile.disability_types.map((dt) => (
-                  <Badge key={dt.id} variant="default" className="px-3 py-1 text-sm font-normal">{dt.name}</Badge>
-                ))}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 space-y-8">
+        <section aria-labelledby="contact-info-heading">
+          <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
+            <CardHeader>
+              <h2 id="contact-info-heading" className="text-xl font-semibold text-foreground">Información de Contacto</h2>
+            </CardHeader>
+            <CardContent>
+              <CVUpload resumeUrl={profile?.resume_url} />
+              <div className="grid gap-3 sm:grid-cols-2 mt-4">
+                {profile?.phone_number && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <Phone className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <span className="text-foreground">{profile.phone_number}</span>
+                  </div>
+                )}
+                {profile?.email && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <Mail className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <span className="text-foreground">{profile.email}</span>
+                  </div>
+                )}
+                {profile?.address && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <span className="text-foreground">{profile.address}</span>
+                  </div>
+                )}
+                {profile?.city && profile?.country && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <Globe className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <span className="text-foreground">
+                      {profile.city}, {profile.country}
+                    </span>
+                  </div>
+                )}
+                {profile?.linked_in && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <Linkedin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <a
+                      href={profile.linked_in}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline font-medium"
+                    >
+                      Ver LinkedIn
+                    </a>
+                  </div>
+                )}
               </div>
-            ) : (
-              <p className="text-center py-4 text-muted-foreground">No has especificado tus tipos de discapacidad.</p>
-            )}
-            <Link href="/profile/edit#disability-types" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
-              <PlusCircle className="h-4 w-4" />
-              Añadir Tipos de Discapacidad
-            </Link>
-          </CardContent>
-        </Card>
+              <Link href="/profile/edit#contact" aria-label="Añadir Información de Contacto" className="inline-flex mx-auto items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+                <PlusCircle className="h-4 w-4" />
+                Añadir Información de Contacto
+              </Link>
+            </CardContent>
+          </Card>
+        </section>
 
-        {/* Accessibility Needs Section */}
-        <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl font-semibold text-foreground">
-              <Heart className="h-5 w-5 text-primary" />
-              Necesidades de Accesibilidad
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {profile?.accessibility_needs && profile.accessibility_needs.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {profile.accessibility_needs.map((an) => (
-                  <Badge key={an.id} variant="default" className="px-3 py-1 text-sm font-normal">{an.name}</Badge>
-                ))}
-              </div>
-            ) : (
-              <p className="text-center py-4 text-muted-foreground">No has especificado tus necesidades de accesibilidad.</p>
-            )}
-            <Link href="/profile/edit#disability-types" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
-              <PlusCircle className="h-4 w-4" />
-              Añadir Necesidades
-            </Link>
-          </CardContent>
-        </Card>
+        <section aria-labelledby="about-me-heading">
+          <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
+            <CardHeader>
+              <h2 id="about-me-heading" className="text-xl font-semibold text-foreground">Sobre Mí</h2>
+            </CardHeader>
+            <CardContent>
+              {profile?.description ? (
+                <p className="text-foreground leading-relaxed text-pretty">{profile.description}</p>
+              ) : (
+                <p className="text-center py-4 text-muted-foreground">Aún no has escrito una descripción sobre ti.</p>
+              )}
+              <Link href="/profile/edit#about" aria-label="Añadir Descripción" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+                <PlusCircle className="h-4 w-4" />
+                Añadir Descripción
+              </Link>
+            </CardContent>
+          </Card>
+        </section>
+
+        <section aria-labelledby="disability-types-heading">
+          <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
+            <CardHeader>
+              <h2 id="disability-types-heading" className="flex items-center gap-2 text-xl font-semibold text-foreground">
+                <Accessibility className="h-5 w-5 text-primary" />
+                Tipos de Discapacidad
+              </h2>
+            </CardHeader>
+            <CardContent>
+              {profile?.disability_types && profile.disability_types.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {profile.disability_types.map((dt) => (
+                    <Badge key={dt.id} variant="default" className="px-3 py-1 text-sm font-normal">{dt.name}</Badge>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center py-4 text-muted-foreground">No has especificado tus tipos de discapacidad.</p>
+              )}
+              <Link href="/profile/edit#disability-types" aria-label="Añadir Tipos de Discapacidad" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+                <PlusCircle className="h-4 w-4" />
+                Añadir Tipos de Discapacidad
+              </Link>
+            </CardContent>
+          </Card>
+        </section>
+
+        <section aria-labelledby="accessibility-needs-heading">
+          <Card className="border border-border shadow-sm hover:shadow-md transition-shadow rounded-sm">
+            <CardHeader>
+              <h2 id="accessibility-needs-heading" className="flex items-center gap-2 text-xl font-semibold text-foreground">
+                <Heart className="h-5 w-5 text-primary" />
+                Necesidades de Accesibilidad
+              </h2>
+            </CardHeader>
+            <CardContent>
+              {profile?.accessibility_needs && profile.accessibility_needs.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {profile.accessibility_needs.map((an) => (
+                    <Badge key={an.id} variant="default" className="px-3 py-1 text-sm font-normal">{an.name}</Badge>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center py-4 text-muted-foreground">No has especificado tus necesidades de accesibilidad.</p>
+              )}
+              <Link href="/profile/edit#disability-types" aria-label="Añadir Necesidades de Accesibilidad" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-4">
+                <PlusCircle className="h-4 w-4" />
+                Añadir Necesidades
+              </Link>
+            </CardContent>
+          </Card>
+        </section>
 
         <ExperienceSection experiences={profile?.experiences} />
         <EducationSection educations={profile?.educations} />
