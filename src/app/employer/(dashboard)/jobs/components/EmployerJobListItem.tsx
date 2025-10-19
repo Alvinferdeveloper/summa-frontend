@@ -2,6 +2,10 @@
 
 import { Briefcase, MapPin, Users } from "lucide-react"
 import type { EmployerJobPostsResponse } from "../../hooks/useEmployerJobPosts"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
+import { useUpdateJobPostStatus } from "../../hooks/useUpdateJobPostStatus"
+import clsx from "clsx"
 
 interface EmployerJobListItemProps {
   job: EmployerJobPostsResponse
@@ -10,6 +14,13 @@ interface EmployerJobListItemProps {
 }
 
 export default function EmployerJobListItem({ job, isActive, onClick }: EmployerJobListItemProps) {
+  const { mutate: updateStatus, isPending } = useUpdateJobPostStatus();
+
+  const handleStatusChange = (checked: boolean) => {
+    const newStatus = checked ? 'open' : 'closed';
+    updateStatus({ jobId: job.id.toString(), status: newStatus });
+  };
+
   return (
     <div
       onClick={onClick}
@@ -37,7 +48,7 @@ export default function EmployerJobListItem({ job, isActive, onClick }: Employer
         </div>
         <div className="flex-shrink-0">
           <div
-            className={`flex items-center justify-center gap-2  rounded-lg ${
+            className={`flex items-center justify-center gap-2 rounded-lg px-4 py-2 ${
               isActive ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-900"
             }`}
           >
@@ -45,6 +56,19 @@ export default function EmployerJobListItem({ job, isActive, onClick }: Employer
             <span className="font-bold text-lg">{job.applicant_count}</span>
           </div>
           <p className="text-xs text-gray-500 text-center mt-1.5 font-medium">Postulantes</p>
+        </div>
+      </div>
+      <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center space-x-2">
+          <Switch
+            id={`status-${job.id}`}
+            checked={job.status === 'open'}
+            onCheckedChange={handleStatusChange}
+            disabled={isPending}
+          />
+          <Label htmlFor={`status-${job.id}`} className={clsx("font-medium", job.status === 'open' ? "text-green-600" : "text-red-600")}>
+            {job.status === 'open' ? "Abierta" : "Cerrada"}
+          </Label>
         </div>
       </div>
     </div>

@@ -97,7 +97,7 @@ export default function MyJobsPage() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-10rem)]">
           <div className="lg:col-span-1 h-full bg-white border border-slate-200 rounded-sm shadow-sm overflow-hidden flex flex-col">
-            <CardHeader className="border-b border-slate-100 py-5 px-6 bg-gradient-to-br from-green-700/70 via-green-700/60 to-green-700">
+            <CardHeader className="border-b border-slate-100 py-5 px-6 bg-emerald-400">
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-xl font-bold text-slate-900 mb-1">Mis Ofertas</CardTitle>
@@ -149,7 +149,7 @@ export default function MyJobsPage() {
           </div>
 
           <div className="lg:col-span-2 bg-white h-full border border-slate-200 rounded-sm shadow-sm overflow-hidden flex flex-col">
-            <CardHeader className="border-b border-slate-100 py-5 px-6 bg-gradient-to-br from-green-700/70 via-green-700/60 to-green-700">
+            <CardHeader className="border-b border-slate-100 py-5 px-6 bg-emerald-400">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3">

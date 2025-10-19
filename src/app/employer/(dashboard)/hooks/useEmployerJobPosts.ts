@@ -9,6 +9,7 @@ export interface EmployerJobPostsResponse {
   created_at: string;
   title: string;
   location: string;
+  status: string;
   work_model: string;
   contract_type: string;
   applicant_count: number; 
