@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState, useEffect } from "react"
 import { useEmployerJobPosts } from "../hooks/useEmployerJobPosts"
@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useUpdateApplicationStatus } from "./hooks/useApplicationMutations"
 import clsx from "clsx"
+import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationNext } from "@/components/ui/pagination";
 
 const timeAgo = (dateString: string) => {
   const date = new Date(dateString)
@@ -43,9 +44,11 @@ const getStatusVariant = (status: string): "default" | "secondary" | "destructiv
 
 export default function MyJobsPage() {
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1);
+  const APPLICANTS_PER_PAGE = 5;
 
   const { data: jobPosts, isLoading: isLoadingJobs, error: jobsError } = useEmployerJobPosts()
-  const { data: applicants, isLoading: isLoadingApplicants, error: applicantsError } = useJobApplicants(selectedJobId!)
+  const { data: applicantsData, isLoading: isLoadingApplicants, error: applicantsError } = useJobApplicants(selectedJobId!, currentPage, APPLICANTS_PER_PAGE)
   const { mutate: updateStatus } = useUpdateApplicationStatus(selectedJobId!)
 
   useEffect(() => {
@@ -54,10 +57,23 @@ export default function MyJobsPage() {
     }
   }, [jobPosts, selectedJobId])
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedJobId])
+
   const selectedJob = jobPosts?.find((job) => job.id.toString() === selectedJobId)
+  const applicants = applicantsData?.data;
+  const totalApplicants = applicantsData?.total || 0;
+  const totalPages = Math.ceil(totalApplicants / APPLICANTS_PER_PAGE);
 
   const handleStatusChange = (applicationId: number, status: string) => {
     updateStatus({ applicationId, status })
+  }
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
   }
 
   return (
@@ -86,7 +102,7 @@ export default function MyJobsPage() {
                 </div>
                 <div>
                   <p className="text-xs text-black leading-none mb-1">Total Postulantes</p>
-                  <p className="text-xl font-semibold text-white leading-none">{applicants?.length || 0}</p>
+                  <p className="text-xl font-semibold text-white leading-none">{totalApplicants}</p>
                 </div>
               </div>
             </div>
@@ -148,14 +164,14 @@ export default function MyJobsPage() {
             </ScrollArea>
           </div>
 
-          <div className="lg:col-span-2 bg-white h-full border border-slate-200 rounded-sm shadow-sm overflow-hidden flex flex-col">
+          <div className="lg:col-span-2 bg-white h-screen border border-slate-200 rounded-sm shadow-sm overflow-hidden flex flex-col">
             <CardHeader className="border-b border-slate-100 py-5 px-6 bg-emerald-400">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3">
                     <CardTitle className="text-xl font-bold text-slate-900">Postulantes</CardTitle>
                     <div className="w-10 h-10 rounded-full bg-slate-900 text-white text-sm font-bold flex items-center justify-center">
-                      {applicants?.length || 0}
+                      {totalApplicants}
                     </div>
                   </div>
                   
@@ -284,6 +300,28 @@ export default function MyJobsPage() {
                     Cuando alguien aplique a esta oferta de empleo, aparecerá aquí para que puedas revisar su perfil y
                     gestionar su aplicación
                   </p>
+                </div>
+              )}
+
+              {totalPages > 1 && (
+                <div className="border-t border-slate-100">
+                  <Pagination>
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious href="#" onClick={(e: React.MouseEvent) => { e.preventDefault(); handlePageChange(currentPage - 1); }} className={currentPage === 1 ? "pointer-events-none opacity-50" : undefined} />
+                      </PaginationItem>
+                      {[...Array(totalPages)].map((_, i) => (
+                        <PaginationItem key={i}>
+                          <PaginationLink href="#" isActive={currentPage === i + 1} onClick={(e: React.MouseEvent) => { e.preventDefault(); handlePageChange(i + 1); }}>
+                            {i + 1}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      <PaginationItem>
+                        <PaginationNext href="#" onClick={(e: React.MouseEvent) => { e.preventDefault(); handlePageChange(currentPage + 1); }} className={currentPage === totalPages ? "pointer-events-none opacity-50" : undefined} />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
                 </div>
               )}
             </ScrollArea>

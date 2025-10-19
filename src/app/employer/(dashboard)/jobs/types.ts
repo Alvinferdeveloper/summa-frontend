@@ -1,0 +1,13 @@
+export interface JobApplication {
+  id: number;
+  status: string;
+  applicant: {
+    profile_id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    profile_picture: string | null;
+    resume_url: string | null;
+  };
+  applied_at: string;
+}
