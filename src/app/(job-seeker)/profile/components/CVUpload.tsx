@@ -71,9 +71,6 @@ export default function CVUpload({ resumeUrl }: CVUploadProps) {
               <Upload className="h-4 w-4 mr-2" />
               {mutation.isPending ? 'Actualizando...' : 'Actualizar CV'}
             </Button>
-            <Button size="sm" variant="destructive" disabled aria-label="Eliminar CV">
-              <Trash2 className="h-4 w-4" />
-            </Button>
           </div>
         ) : (
           <Button

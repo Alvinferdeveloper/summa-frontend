@@ -10,6 +10,7 @@ interface ApplicantProfile {
   first_name: string;
   last_name: string;
   email: string;
+  resume_url: string;
   profile_picture?: string;
 }
 

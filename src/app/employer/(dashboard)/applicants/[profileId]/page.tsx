@@ -72,7 +72,7 @@ export default function CandidateProfileForEmployerPage() {
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-1">
                   {profile.first_name} {profile.last_name}
                 </h1>
-                {/*<p className="text-base text-muted-foreground">{profile.user.email}</p>*/}
+                <p className="text-base text-muted-foreground">{profile.email}</p>
               </div>
 
               <Link href="/employer/jobs">
