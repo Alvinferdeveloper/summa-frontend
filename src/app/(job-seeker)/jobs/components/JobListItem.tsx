@@ -2,6 +2,7 @@
 'use client';
 
 import { Home } from "lucide-react";
+import { Category } from "@/app/employer/(dashboard)/jobs/create/hooks/useCategories";
 interface Employer {
   company_name: string;
   logo_url: string;
@@ -18,6 +19,9 @@ export interface Job {
   salary: string;
   employer: Employer;
   has_applied: boolean;
+  work_schedule: string;
+  experience_level: string;
+  category: Category;
   accessibility_features: string;
   description: string;
   responsibilities: string;
@@ -25,6 +29,7 @@ export interface Job {
   contract_type: string;
   is_urgent: boolean;
 }
+ 
 
 interface JobListItemProps {
   job: Job;

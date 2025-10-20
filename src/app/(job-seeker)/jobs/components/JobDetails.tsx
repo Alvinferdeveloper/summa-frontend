@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Card } from "@/components/ui/card"
-import { Building2, MapPin, Briefcase, Zap, Clock, FileText, CheckCircle2, Monitor } from "lucide-react"
+import { Building2, MapPin, Briefcase, Zap, Clock, FileText, CheckCircle2, Monitor, Calendar } from "lucide-react"
 import ApplyModal from "./ApplyModal"
 
 interface JobDetailsProps {
@@ -75,6 +75,24 @@ export default function JobDetails({ job, isAppliable = true }: JobDetailsProps)
                     <Badge variant="default" className="px-3 py-1.5 text-sm font-medium gap-1.5">
                       <Monitor className="h-3.5 w-3.5" />
                       {job.work_model}
+                    </Badge>
+                  )}
+                  {job.work_schedule && (
+                    <Badge variant="default" className="px-3 py-1.5 text-sm font-medium gap-1.5">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {job.work_schedule}
+                    </Badge>
+                  )}
+                  {job.experience_level && (
+                    <Badge variant="default" className="px-3 py-1.5 text-sm font-medium gap-1.5">
+                      <Monitor className="h-3.5 w-3.5" />
+                      {job.experience_level}
+                    </Badge>
+                  )}
+                  {job.category.name && (
+                    <Badge variant="default" className="px-3 py-1.5 text-sm font-medium gap-1.5">
+                      <Monitor className="h-3.5 w-3.5" />
+                      {job.category.name}
                     </Badge>
                   )}
 
