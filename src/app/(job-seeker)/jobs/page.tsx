@@ -90,97 +90,121 @@ export default function JobsPage() {
     <>
       <div className="flex-shrink-0 p-4 border-b border-gray-200">
         <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2">
-          <FilterButton title="Jornada" icon={<Clock className="h-4 w-4" />}>
+          <FilterButton title="Jornada" icon={<Clock className="h-4 w-4" />} className={filters.work_schedule ? 'bg-blue-100' : ''}>
             <RadioGroup
               value={filters.work_schedule || ""}
               onValueChange={(value) => setFilters((prev) => ({ ...prev, work_schedule: value }))}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {workSchedules.map(item => (
-                <div key={item.id} className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group">
-                  <RadioGroupItem value={item.name} id={`ws-${item.id}`}className='border-primary' />
-                  <Label htmlFor={`ws-${item.id}`}>{item.name}</Label>
-                </div>
+                <Label 
+                  key={item.id} 
+                  htmlFor={`ws-${item.id}`}
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                >
+                  <RadioGroupItem value={item.name} id={`ws-${item.id}`} className='border-primary' />
+                  <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
+                </Label>
               ))}
             </RadioGroup>
             <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, work_schedule: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
-          <FilterButton title="Modelo de Trabajo" icon={<Briefcase className="h-4 w-4" />}>
+          <FilterButton title="Modelo de Trabajo" icon={<Briefcase className="h-4 w-4" />} className={filters.work_model ? 'bg-blue-100' : ''}>
             <RadioGroup
               value={filters.work_model || ""}
               onValueChange={(value) => setFilters((prev) => ({ ...prev, work_model: value }))}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {workModels.map(item => (
-                <div key={item.id} className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group">
-                  <RadioGroupItem value={item.name} id={`wm-${item.id}`}className='border-primary' />
-                  <Label htmlFor={`wm-${item.id}`}>{item.name}</Label>
-                </div>
+                <Label 
+                  key={item.id} 
+                  htmlFor={`wm-${item.id}`}
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                >
+                  <RadioGroupItem value={item.name} id={`wm-${item.id}`} className='border-primary' />
+                  <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
+                </Label>
               ))}
             </RadioGroup>
             <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, work_model: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
-          <FilterButton title="Tipo de Contrato" icon={<Briefcase className="h-4 w-4" />}>
+          <FilterButton title="Tipo de Contrato" icon={<Briefcase className="h-4 w-4" />} className={filters.contract_type ? 'bg-blue-100' : ''}>
             <RadioGroup
               value={filters.contract_type || ""}
               onValueChange={(value) => setFilters((prev) => ({ ...prev, contract_type: value }))}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {contractTypes.map(item => (
-                <div key={item.id} className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group">
-                  <RadioGroupItem value={item.name} id={`ct-${item.id}`}className='border-primary' />
-                  <Label htmlFor={`ct-${item.id}`}>{item.name}</Label>
-                </div>
+                <Label 
+                  key={item.id} 
+                  htmlFor={`ct-${item.id}`}
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                >
+                  <RadioGroupItem value={item.name} id={`ct-${item.id}`} className='border-primary' />
+                  <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
+                </Label>
               ))}
             </RadioGroup>
             <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, contract_type: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
-          <FilterButton title="Experiencia" icon={<Star className="h-4 w-4" />}>
+          <FilterButton title="Experiencia" icon={<Star className="h-4 w-4" />} className={filters.experience_level ? 'bg-blue-100' : ''}>
             <RadioGroup
               value={filters.experience_level || ""}
               onValueChange={(value) => setFilters((prev) => ({ ...prev, experience_level: value }))}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {experienceLevels.map(item => (
-                <div key={item.id} className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group">
-                  <RadioGroupItem value={item.name} id={`el-${item.id}`}className='border-primary' />
-                  <Label htmlFor={`el-${item.id}`}>{item.name}</Label>
-                </div>
+                <Label 
+                  key={item.id} 
+                  htmlFor={`el-${item.id}`}
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                >
+                  <RadioGroupItem value={item.name} id={`el-${item.id}`} className='border-primary' />
+                  <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
+                </Label>
               ))}
             </RadioGroup>
             <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, experience_level: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
-          <FilterButton title="Fecha" icon={<Calendar className="h-4 w-4" />}>
+          <FilterButton title="Fecha" icon={<Calendar className="h-4 w-4" />} className={filters.date_posted ? 'bg-blue-100' : ''}>
             <RadioGroup
               value={filters.date_posted || ""}
               onValueChange={(value) => setFilters((prev) => ({ ...prev, date_posted: value }))}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {dateOptions.map(item => (
-                <div key={item} className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group">
-                  <RadioGroupItem value={item} id={`date-${item}`}className='border-primary' />
-                  <Label htmlFor={`date-${item}`}>{item}</Label>
-                </div>
+                <Label 
+                  key={item} 
+                  htmlFor={`date-${item}`}
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                >
+                  <RadioGroupItem value={item} id={`date-${item}`} className='border-primary' />
+                  <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item}</span>
+                </Label>
               ))}
             </RadioGroup>
             <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, date_posted: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
-          <FilterButton title="Categoría" icon={<Tag className="h-4 w-4" />}>
+          <FilterButton title="Categoría" icon={<Tag className="h-4 w-4" />} className={filters.category_id ? 'bg-blue-100' : ''}>
             <RadioGroup
               value={filters.category_id || ""}
               onValueChange={(value) => setFilters((prev) => ({ ...prev, category_id: value }))}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {categories.map(item => (
-                <div key={item.id} className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group">
-                  <RadioGroupItem value={item.id.toString()} id={`cat-${item.id}`}className='border-primary' />
-                  <Label htmlFor={`cat-${item.id}`}>{item.name}</Label>
-                </div>
+                <Label 
+                  key={item.id} 
+                  htmlFor={`cat-${item.id}`}
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                >
+                  <RadioGroupItem value={item.id.toString()} id={`cat-${item.id}`} className='border-primary' />
+                  <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
+                </Label>
               ))}
             </RadioGroup>
             <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, category_id: "" }))}>Limpiar</Button></div>
@@ -199,17 +223,21 @@ export default function JobsPage() {
             </div>
           </FilterButton>
 
-          <FilterButton title="Discapacidad" icon={<Accessibility className="h-4 w-4" />}>
+          <FilterButton title="Discapacidad" icon={<Accessibility className="h-4 w-4" />} className={filters.disability_type ? 'bg-blue-100' : ''}>
             <RadioGroup
               value={filters.disability_type || ""}
               onValueChange={(value) => setFilters((prev) => ({ ...prev, disability_type: value }))}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {disabilityTypes.map(item => (
-                <div key={item} className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group">
-                  <RadioGroupItem value={item} id={`dis-${item}`}className='border-primary' />
-                  <Label htmlFor={`dis-${item}`}>{item}</Label>
-                </div>
+                <Label 
+                  key={item} 
+                  htmlFor={`dis-${item}`}
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                >
+                  <RadioGroupItem value={item} id={`dis-${item}`} className='border-primary' />
+                  <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item}</span>
+                </Label>
               ))}
             </RadioGroup>
             <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, disability_type: "" }))}>Limpiar</Button></div>
