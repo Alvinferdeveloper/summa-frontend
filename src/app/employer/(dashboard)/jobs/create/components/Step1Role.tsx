@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useFormContext } from 'react-hook-form';
@@ -10,6 +9,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { JobPostSchema } from '../page';
 import { useCategories } from '../hooks/useCategories';
+import { useContractTypes } from '@/app/(job-seeker)/jobs/hooks/useContractTypes';
+import { useExperienceLevels } from '@/app/(job-seeker)/jobs/hooks/useExperienceLevels';
+import { useWorkSchedules } from '../hooks/useWorkSchedules';
+import { useWorkModels } from '../hooks/useWorkModels';
 
 interface Step1RoleProps {
   nextStep: () => void;
@@ -18,10 +21,21 @@ interface Step1RoleProps {
 export default function Step1Role({ nextStep }: Step1RoleProps) {
   const form = useFormContext<JobPostSchema>();
   const { data: categories, isLoading: isLoadingCategories } = useCategories();
-  console.log(categories, "categories")
+  const { data: contractTypes, isLoading: isLoadingContractTypes } = useContractTypes();
+  const { data: experienceLevels, isLoading: isLoadingExperienceLevels } = useExperienceLevels();
+  const { data: workSchedules, isLoading: isLoadingWorkSchedules } = useWorkSchedules();
+  const { data: workModels, isLoading: isLoadingWorkModels } = useWorkModels();
 
   const handleNext = async () => {
-    const isValid = await form.trigger(["title", "location", "workModel", "contractType", "workSchedule", "experienceLevel", "category_id"]);
+    const isValid = await form.trigger([
+      "title",
+      "location",
+      "workModelId",
+      "contractTypeId",
+      "workScheduleId",
+      "experienceLevelId",
+      "category_id"
+    ]);
     if (isValid) {
       nextStep();
     }
@@ -37,7 +51,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
       <div className="space-y-6">
         <h2 className="text-2xl font-bold">Información Básica del Puesto</h2>
         <p className="text-muted-foreground">Comencemos con los detalles fundamentales de la oferta de empleo.</p>
-        
+
         <FormField
           control={form.control}
           name="title"
@@ -68,20 +82,20 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
           />
           <FormField
             control={form.control}
-            name="workModel"
+            name="workModelId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Modelo de Trabajo</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecciona un modelo" />
+                      <SelectValue placeholder={isLoadingWorkModels ? "Cargando..." : "Selecciona un modelo"} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Presencial">Presencial</SelectItem>
-                    <SelectItem value="Híbrido">Híbrido</SelectItem>
-                    <SelectItem value="Remoto">Remoto</SelectItem>
+                    {workModels?.map((model) => (
+                      <SelectItem key={model.id} value={model.id.toString()}>{model.name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -90,21 +104,20 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
           />
           <FormField
             control={form.control}
-            name="workSchedule"
+            name="workScheduleId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Jornada Laboral</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecciona una jornada" />
+                      <SelectValue placeholder={isLoadingWorkSchedules ? "Cargando..." : "Selecciona una jornada"} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Tiempo completo">Tiempo completo</SelectItem>
-                    <SelectItem value="Medio Tiempo">Medio Tiempo</SelectItem>
-                    <SelectItem value="Beca/Practicas">Beca/Prácticas</SelectItem>
-                    <SelectItem value="Por horas">Por horas</SelectItem>
+                    {workSchedules?.map((schedule) => (
+                      <SelectItem key={schedule.id} value={schedule.id.toString()}>{schedule.name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -113,22 +126,20 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
           />
           <FormField
             control={form.control}
-            name="contractType"
+            name="contractTypeId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Tipo de Contrato</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecciona un tipo de contrato" />
+                      <SelectValue placeholder={isLoadingContractTypes ? "Cargando..." : "Selecciona un tipo de contrato"} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Indefinido">Indefinido</SelectItem>
-                    <SelectItem value="Determinado">Determinado</SelectItem>
-                    <SelectItem value="Obra o labor">Obra o labor</SelectItem>
-                    <SelectItem value="Aprendizaje">Aprendizaje</SelectItem>
-                    <SelectItem value="Otro">Otro</SelectItem>
+                    {contractTypes?.map((type) => (
+                      <SelectItem key={type.id} value={type.id.toString()}>{type.name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -137,23 +148,20 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
           />
           <FormField
             control={form.control}
-            name="experienceLevel"
+            name="experienceLevelId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nivel de Experiencia</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecciona un nivel de experiencia" />
+                      <SelectValue placeholder={isLoadingExperienceLevels ? "Cargando..." : "Selecciona un nivel de experiencia"} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Sin experiencia">Sin experiencia</SelectItem>
-                    <SelectItem value="1 año">1 año</SelectItem>
-                    <SelectItem value="2 años">2 años</SelectItem>
-                    <SelectItem value="3-4 años">3-4 años</SelectItem>
-                    <SelectItem value="5-10 años">5-10 años</SelectItem>
-                    <SelectItem value="Más de 10 años">Más de 10 años</SelectItem>
+                    {experienceLevels?.map((level) => (
+                      <SelectItem key={level.id} value={level.id.toString()}>{level.name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />

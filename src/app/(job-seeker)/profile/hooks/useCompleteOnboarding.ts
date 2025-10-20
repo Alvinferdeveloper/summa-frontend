@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import apiClient from '@/lib/axios';
 
 interface OnboardingData {
@@ -16,7 +16,11 @@ const completeOnboarding = async (data: OnboardingData) => {
 };
 
 export const useCompleteOnboarding = () => {
+   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: completeOnboarding,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
+    }
   });
 };

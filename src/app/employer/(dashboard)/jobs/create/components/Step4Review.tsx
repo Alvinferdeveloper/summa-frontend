@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useFormContext } from 'react-hook-form';
@@ -8,6 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { JobPostSchema } from '../page';
 import { useCategories } from '../hooks/useCategories';
+import { useContractTypes } from '@/app/(job-seeker)/jobs/hooks/useContractTypes';
+import { useExperienceLevels } from '@/app/(job-seeker)/jobs/hooks/useExperienceLevels';
+import { useWorkSchedules } from '../hooks/useWorkSchedules';
+import { useWorkModels } from '../hooks/useWorkModels';
 
 interface Step4ReviewProps {
   prevStep: () => void;
@@ -17,8 +20,18 @@ interface Step4ReviewProps {
 export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
   const { getValues } = useFormContext<JobPostSchema>();
   const values = getValues();
+
   const { data: categories } = useCategories();
+  const { data: contractTypes } = useContractTypes();
+  const { data: experienceLevels } = useExperienceLevels();
+  const { data: workSchedules } = useWorkSchedules();
+  const { data: workModels } = useWorkModels();
+
   const categoryName = categories?.find(c => c.id === values.category_id)?.name;
+  const contractTypeName = contractTypes?.find(c => c.id === values.contractTypeId)?.name;
+  const experienceLevelName = experienceLevels?.find(e => e.id === values.experienceLevelId)?.name;
+  const workScheduleName = workSchedules?.find(w => w.id === values.workScheduleId)?.name;
+  const workModelName = workModels?.find(w => w.id === values.workModelId)?.name;
 
   return (
     <motion.div
@@ -39,10 +52,10 @@ export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
             </div>
             <div className="flex flex-wrap gap-2 pt-2">
               <Badge variant="default">{values.location}</Badge>
-              <Badge variant="default">{values.workModel}</Badge>
-              <Badge variant="default">{values.workSchedule}</Badge>
-              <Badge variant="default">{values.contractType}</Badge>
-              <Badge variant="default">{values.experienceLevel}</Badge>
+              {workModelName && <Badge variant="default">{workModelName}</Badge>}
+              {workScheduleName && <Badge variant="default">{workScheduleName}</Badge>}
+              {contractTypeName && <Badge variant="default">{contractTypeName}</Badge>}
+              {experienceLevelName && <Badge variant="default">{experienceLevelName}</Badge>}
               {categoryName && <Badge variant="default">{categoryName}</Badge>}
             </div>
           </CardHeader>
