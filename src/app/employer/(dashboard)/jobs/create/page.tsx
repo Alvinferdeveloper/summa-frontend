@@ -29,6 +29,7 @@ const jobPostSchema = z.object({
   responsibilities: z.string().min(50, "Las responsabilidades deben tener al menos 50 caracteres."),
   requirements: z.string().min(50, "Los requisitos deben tener al menos 50 caracteres."),
   accessibilityNeedIds: z.array(z.number()).optional(),
+  disabilityTypeIds: z.array(z.number()).optional(),
 });
 
 export type JobPostSchema = z.input<typeof jobPostSchema>;

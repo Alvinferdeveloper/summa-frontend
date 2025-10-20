@@ -1,9 +1,11 @@
+'use client'
+
 import { Checkbox } from "@/components/ui/checkbox"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import type { Control, FieldValues, Path } from 'react-hook-form';
 
 interface Option {
-    id: string;
+    id: number;
     name: string;
 }
 

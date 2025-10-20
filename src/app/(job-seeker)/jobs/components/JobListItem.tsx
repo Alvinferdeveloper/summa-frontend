@@ -4,6 +4,7 @@
 import { Home } from "lucide-react";
 import { Category } from "@/app/employer/(dashboard)/jobs/create/hooks/useCategories";
 import { AccessibilityNeedOption } from "@/app/employer/(dashboard)/jobs/create/hooks/useAccessibilityNeeds";
+import { DisabilityTypeOption } from "@/app/employer/(dashboard)/jobs/create/hooks/useDisabilityTypes";
 interface Employer {
   company_name: string;
   logo_url: string;
@@ -24,13 +25,14 @@ export interface Job {
   experience_level: string;
   category: Category;
   accessibility_needs: AccessibilityNeedOption[];
+  disability_types: DisabilityTypeOption[];
   description: string;
   responsibilities: string;
   requirements: string;
   contract_type: string;
   is_urgent: boolean;
 }
- 
+
 
 interface JobListItemProps {
   job: Job;

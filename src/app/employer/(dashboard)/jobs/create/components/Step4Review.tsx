@@ -12,6 +12,7 @@ import { useExperienceLevels } from '@/app/(job-seeker)/jobs/hooks/useExperience
 import { useWorkSchedules } from '../hooks/useWorkSchedules';
 import { useWorkModels } from '../hooks/useWorkModels';
 import { useAccessibilityNeeds } from '../hooks/useAccessibilityNeeds';
+import { useDisabilityTypes } from '../hooks/useDisabilityTypes';
 
 interface Step4ReviewProps {
   prevStep: () => void;
@@ -28,6 +29,7 @@ export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
   const { data: workSchedules } = useWorkSchedules();
   const { data: workModels } = useWorkModels();
   const { data: accessibilityNeeds } = useAccessibilityNeeds();
+  const { data: disabilityTypes } = useDisabilityTypes();
 
   const categoryName = categories?.find(c => c.id === values.category_id)?.name;
   const contractTypeName = contractTypes?.find(c => c.id === values.contractTypeId)?.name;
@@ -35,8 +37,12 @@ export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
   const workScheduleName = workSchedules?.find(w => w.id === values.workScheduleId)?.name;
   const workModelName = workModels?.find(w => w.id === values.workModelId)?.name;
 
-  const selectedAccessibilityNeeds = values.accessibilityNeedIds?.map(id => 
+  const selectedAccessibilityNeeds = values.accessibilityNeedIds?.map(id =>
     accessibilityNeeds?.find(an => an.id === id)?.name
+  ).filter(Boolean);
+
+  const selectedDisabilityTypes = values.disabilityTypeIds?.map(id =>
+    disabilityTypes?.find(dt => dt.id === id)?.name
   ).filter(Boolean);
 
   return (
@@ -89,12 +95,28 @@ export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
                 <h3 className="font-semibold mb-2">Características de Accesibilidad</h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedAccessibilityNeeds.map(feature => (
-                    <Badge 
+                    <Badge
                       key={feature}
                       variant="outline"
                       className="px-4 py-2 text-sm font-medium border-chart-5/30 bg-chart-5/5 text-foreground hover:bg-chart-5/10 transition-colors"
                     >
                       {feature}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+            {selectedDisabilityTypes && selectedDisabilityTypes.length > 0 && (
+              <div>
+                <h3 className="font-semibold mb-2">Tipos de Discapacidad Relevantes</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedDisabilityTypes.map(type => (
+                    <Badge
+                      key={type}
+                      variant="outline"
+                      className="px-4 py-2 text-sm font-medium border-chart-2/30 bg-chart-2/5 text-foreground hover:bg-chart-2/10 transition-colors"
+                    >
+                      {type}
                     </Badge>
                   ))}
                 </div>

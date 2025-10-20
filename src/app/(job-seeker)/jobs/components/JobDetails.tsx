@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Card } from "@/components/ui/card"
-import { Building2, MapPin, Briefcase, Zap, Clock, FileText, CheckCircle2, Monitor, Calendar, Tag } from "lucide-react"
+import { Building2, MapPin, Briefcase, Zap, Clock, FileText, CheckCircle2, Monitor, Calendar, Tag, Accessibility } from "lucide-react"
 import ApplyModal from "./ApplyModal"
 
 interface JobDetailsProps {
@@ -187,16 +187,30 @@ export default function JobDetails({ job, isAppliable = true }: JobDetailsProps)
               </Card>
             )}
 
-            {/* Bottom CTA */}
-            <div className="pt-4">
-              <Button
-                onClick={() => setIsApplyModalOpen(true)}
-                size="sm"
-                className="w-auto px-6 h-9 text-sm font-semibold shadow-md hover:shadow-lg transition-all"
-              >
-                Postular a este empleo
-              </Button>
-            </div>
+            {job.disability_types && job.disability_types.length > 0 && (
+              <Card className="p-6 border-l-4 border-l-chart-3 bg-gradient-to-br from-chart-3/5 to-transparent">
+                <div className="flex items-start gap-3 mb-1">
+                  <div className="w-10 h-10 rounded-lg bg-chart-3/10 flex items-center justify-center flex-shrink-0">
+                    <Accessibility className="h-5 w-5 text-chart-3" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-foreground">Tipos de Discapacidad Relevantes</h2>
+                    <p className="text-sm text-muted-foreground">Esta oferta puede ser de especial interés para personas con:</p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 pl-13">
+                  {job.disability_types.map((type) => (
+                    <Badge
+                      key={type.id}
+                      variant="outline"
+                      className="px-4 py-2 text-sm font-medium border-chart-3/30 bg-chart-3/5 text-foreground hover:bg-chart-3/10 transition-colors"
+                    >
+                      {type.name}
+                    </Badge>
+                  ))}
+                </div>
+              </Card>
+            )}
           </div>
         </ScrollArea>
       </div>
