@@ -11,6 +11,7 @@ import { useContractTypes } from '@/app/(job-seeker)/jobs/hooks/useContractTypes
 import { useExperienceLevels } from '@/app/(job-seeker)/jobs/hooks/useExperienceLevels';
 import { useWorkSchedules } from '../hooks/useWorkSchedules';
 import { useWorkModels } from '../hooks/useWorkModels';
+import { useAccessibilityNeeds } from '../hooks/useAccessibilityNeeds';
 
 interface Step4ReviewProps {
   prevStep: () => void;
@@ -26,12 +27,17 @@ export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
   const { data: experienceLevels } = useExperienceLevels();
   const { data: workSchedules } = useWorkSchedules();
   const { data: workModels } = useWorkModels();
+  const { data: accessibilityNeeds } = useAccessibilityNeeds();
 
   const categoryName = categories?.find(c => c.id === values.category_id)?.name;
   const contractTypeName = contractTypes?.find(c => c.id === values.contractTypeId)?.name;
   const experienceLevelName = experienceLevels?.find(e => e.id === values.experienceLevelId)?.name;
   const workScheduleName = workSchedules?.find(w => w.id === values.workScheduleId)?.name;
   const workModelName = workModels?.find(w => w.id === values.workModelId)?.name;
+
+  const selectedAccessibilityNeeds = values.accessibilityNeedIds?.map(id => 
+    accessibilityNeeds?.find(an => an.id === id)?.name
+  ).filter(Boolean);
 
   return (
     <motion.div
@@ -78,12 +84,18 @@ export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
               <h3 className="font-semibold mb-2">Requisitos</h3>
               <p className="text-sm text-muted-foreground">{values.requirements}</p>
             </div>
-            {values.accessibilityFeatures && values.accessibilityFeatures.length > 0 && (
+            {selectedAccessibilityNeeds && selectedAccessibilityNeeds.length > 0 && (
               <div>
                 <h3 className="font-semibold mb-2">Características de Accesibilidad</h3>
                 <div className="flex flex-wrap gap-2">
-                  {values.accessibilityFeatures.map(feature => (
-                    <Badge key={feature} variant="outline">{feature}</Badge>
+                  {selectedAccessibilityNeeds.map(feature => (
+                    <Badge 
+                      key={feature}
+                      variant="outline"
+                      className="px-4 py-2 text-sm font-medium border-chart-5/30 bg-chart-5/5 text-foreground hover:bg-chart-5/10 transition-colors"
+                    >
+                      {feature}
+                    </Badge>
                   ))}
                 </div>
               </div>
