@@ -19,6 +19,7 @@ import { useExperienceLevels } from "./hooks/useExperienceLevels";
 import { useWorkSchedules } from '@/app/employer/(dashboard)/jobs/create/hooks/useWorkSchedules';
 import { useWorkModels } from '@/app/employer/(dashboard)/jobs/create/hooks/useWorkModels';
 import { useCategories } from '@/app/employer/(dashboard)/jobs/create/hooks/useCategories';
+import { useDisabilityTypes } from './hooks/useDisabilityTypes';
 
 interface JobsApiResponse {
   data: Job[];
@@ -52,6 +53,7 @@ export default function JobsPage() {
   const { data: workSchedules = [] } = useWorkSchedules();
   const { data: workModels = [] } = useWorkModels();
   const { data: categories = [] } = useCategories();
+  const { data: disabilityTypes = [] } = useDisabilityTypes();
 
   const {
     data,
@@ -85,7 +87,6 @@ export default function JobsPage() {
   }, [data, selectedJob]);
 
   const dateOptions = ["Hoy", "Semana", "Mes", "Año"];
-  const disabilityTypes = ["Discapacidad visual", "Discapacidad auditiva", "Discapacidad motriz", "Discapacidad mental"];
 
   const handleDateChange = (value: string) => {
     setSelectedDateFilter(value);
@@ -254,24 +255,24 @@ export default function JobsPage() {
             </div>
           </FilterButton>
 
-          <FilterButton title="Discapacidad" icon={<Accessibility className="h-4 w-4" />}>
+          <FilterButton title="Discapacidad" icon={<Accessibility className="h-4 w-4" />} className={filters.disability_type_id ? 'bg-blue-100' : ''}>
             <RadioGroup
-              value={filters.disability_type || ""}
-              onValueChange={(value) => setFilters((prev) => ({ ...prev, disability_type: value }))}
+              value={filters.disability_type_id || ""}
+              onValueChange={(value) => setFilters((prev) => ({ ...prev, disability_type_id: value }))}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {disabilityTypes.map(item => (
                 <Label
-                  key={item}
-                  htmlFor={`dis-${item}`}
+                  key={item.id}
+                  htmlFor={`dis-${item.id}`}
                   className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
                 >
-                  <RadioGroupItem value={item} id={`dis-${item}`} className='border-primary' />
-                  <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item}</span>
+                  <RadioGroupItem value={item.id.toString()} id={`dis-${item.id}`} className='border-primary' />
+                  <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, disability_type: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, disability_type_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <Button
