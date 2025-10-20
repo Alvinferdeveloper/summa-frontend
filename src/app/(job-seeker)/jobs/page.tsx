@@ -45,6 +45,7 @@ export default function JobsPage() {
   const { ref, inView } = useInView();
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [filters, setFilters] = useState<Record<string, string>>({});
+  const [selectedDateFilter, setSelectedDateFilter] = useState<string>("");
 
   const { data: contractTypes = [] } = useContractTypes();
   const { data: experienceLevels = [] } = useExperienceLevels();
@@ -86,6 +87,36 @@ export default function JobsPage() {
   const dateOptions = ["Hoy", "Semana", "Mes", "Año"];
   const disabilityTypes = ["Discapacidad visual", "Discapacidad auditiva", "Discapacidad motriz", "Discapacidad mental"];
 
+  const handleDateChange = (value: string) => {
+    setSelectedDateFilter(value);
+    const now = new Date();
+    let startDate = new Date();
+
+    switch (value) {
+      case "Hoy":
+        startDate.setDate(now.getDate());
+        break;
+      case "Semana":
+        startDate.setDate(now.getDate() - 7);
+        break;
+      case "Mes":
+        startDate.setMonth(now.getMonth() - 1);
+        break;
+      case "Año":
+        startDate.setFullYear(now.getFullYear() - 1);
+        break;
+      default:
+        break;
+    }
+
+    const formattedDate = startDate.toISOString().split('T')[0];
+
+    setFilters((prev) => ({
+      ...prev,
+      date_posted: formattedDate,
+    }));
+  }
+
   return (
     <>
       <div className="flex-shrink-0 p-4 border-b border-gray-200">
@@ -97,8 +128,8 @@ export default function JobsPage() {
               className="p-3 space-y-1 min-w-[200px]"
             >
               {workSchedules.map(item => (
-                <Label 
-                  key={item.id} 
+                <Label
+                  key={item.id}
                   htmlFor={`ws-${item.id}`}
                   className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
                 >
@@ -107,7 +138,7 @@ export default function JobsPage() {
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, work_schedule_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, work_schedule_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Modelo de Trabajo" icon={<Briefcase className="h-4 w-4" />} className={filters.work_model_id ? 'bg-blue-100' : ''}>
@@ -117,8 +148,8 @@ export default function JobsPage() {
               className="p-3 space-y-1 min-w-[200px]"
             >
               {workModels.map(item => (
-                <Label 
-                  key={item.id} 
+                <Label
+                  key={item.id}
                   htmlFor={`wm-${item.id}`}
                   className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
                 >
@@ -127,7 +158,7 @@ export default function JobsPage() {
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, work_model_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, work_model_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Tipo de Contrato" icon={<Briefcase className="h-4 w-4" />} className={filters.contract_type_id ? 'bg-blue-100' : ''}>
@@ -137,8 +168,8 @@ export default function JobsPage() {
               className="p-3 space-y-1 min-w-[200px]"
             >
               {contractTypes.map(item => (
-                <Label 
-                  key={item.id} 
+                <Label
+                  key={item.id}
                   htmlFor={`ct-${item.id}`}
                   className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
                 >
@@ -147,7 +178,7 @@ export default function JobsPage() {
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, contract_type_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, contract_type_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Experiencia" icon={<Star className="h-4 w-4" />} className={filters.experience_level_id ? 'bg-blue-100' : ''}>
@@ -157,8 +188,8 @@ export default function JobsPage() {
               className="p-3 space-y-1 min-w-[200px]"
             >
               {experienceLevels.map(item => (
-                <Label 
-                  key={item.id} 
+                <Label
+                  key={item.id}
                   htmlFor={`el-${item.id}`}
                   className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
                 >
@@ -167,18 +198,18 @@ export default function JobsPage() {
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, experience_level_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, experience_level_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Fecha" icon={<Calendar className="h-4 w-4" />} className={filters.date_posted ? 'bg-blue-100' : ''}>
             <RadioGroup
-              value={filters.date_posted || ""}
-              onValueChange={(value) => setFilters((prev) => ({ ...prev, date_posted: value }))}
+              value={selectedDateFilter}
+              onValueChange={handleDateChange}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {dateOptions.map(item => (
-                <Label 
-                  key={item} 
+                <Label
+                  key={item}
                   htmlFor={`date-${item}`}
                   className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
                 >
@@ -187,7 +218,7 @@ export default function JobsPage() {
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, date_posted: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => { setFilters(prev => ({ ...prev, date_posted: "" })); setSelectedDateFilter(""); }}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Categoría" icon={<Tag className="h-4 w-4" />} className={filters.category_id ? 'bg-blue-100' : ''}>
@@ -197,8 +228,8 @@ export default function JobsPage() {
               className="p-3 space-y-1 min-w-[200px]"
             >
               {categories.map(item => (
-                <Label 
-                  key={item.id} 
+                <Label
+                  key={item.id}
                   htmlFor={`cat-${item.id}`}
                   className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
                 >
@@ -207,7 +238,7 @@ export default function JobsPage() {
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, category_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, category_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Salario" icon={<DollarSign className="h-4 w-4" />}>
@@ -223,15 +254,15 @@ export default function JobsPage() {
             </div>
           </FilterButton>
 
-          <FilterButton title="Discapacidad" icon={<Accessibility className="h-4 w-4" />} className={filters.disability_type ? 'bg-blue-100' : ''}>
+          <FilterButton title="Discapacidad" icon={<Accessibility className="h-4 w-4" />}>
             <RadioGroup
               value={filters.disability_type || ""}
               onValueChange={(value) => setFilters((prev) => ({ ...prev, disability_type: value }))}
               className="p-3 space-y-1 min-w-[200px]"
             >
               {disabilityTypes.map(item => (
-                <Label 
-                  key={item} 
+                <Label
+                  key={item}
                   htmlFor={`dis-${item}`}
                   className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
                 >
@@ -240,7 +271,7 @@ export default function JobsPage() {
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, disability_type: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, disability_type: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <Button

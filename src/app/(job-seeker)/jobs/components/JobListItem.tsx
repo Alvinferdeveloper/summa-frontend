@@ -84,7 +84,7 @@ export default function JobListItem({ job, isActive, onClick }: JobListItemProps
           <span className="font-medium">{job.work_model}</span>
         </div>
 
-        <span className="text-xs text-muted-foreground">Hace {timeAgo(job.created_at)} días</span>
+        <span className="text-xs text-muted-foreground">Hace {timeAgo(job.created_at)}</span>
       </div>
     </button>
   );
