@@ -75,7 +75,7 @@ export default function EmployerDashboardPage() {
               <Card key={job.id} className="hover:shadow-lg transition-shadow duration-300">
                 <CardHeader>
                   <CardTitle className="text-lg">{job.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{job.location} - {job.work_model}</p>
+                  <p className="text-sm text-muted-foreground">{job.location} - {job.work_model.name}</p>
                 </CardHeader>
                 <CardContent className="flex justify-end">
                   <Link href={`/employer/jobs/${job.id}/applicants`}>

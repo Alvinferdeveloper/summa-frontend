@@ -10,9 +10,14 @@ export interface EmployerJobPostsResponse {
   title: string;
   location: string;
   status: string;
-  work_model: string;
+  work_model: WorkModel;
   contract_type: string;
   applicant_count: number; 
+}
+
+interface WorkModel {
+  id: number;
+  name: string;
 }
 
 const fetchEmployerJobPosts = async (): Promise<EmployerJobPostsResponse[]> => {

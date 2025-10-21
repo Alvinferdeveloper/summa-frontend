@@ -1,11 +1,13 @@
 "use client"
 
-import { Briefcase, MapPin, Users } from "lucide-react"
+import { Briefcase, Edit, MapPin, Users } from "lucide-react"
 import type { EmployerJobPostsResponse } from "../../hooks/useEmployerJobPosts"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { useUpdateJobPostStatus } from "../../hooks/useUpdateJobPostStatus"
 import clsx from "clsx"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 interface EmployerJobListItemProps {
   job: EmployerJobPostsResponse
@@ -24,11 +26,10 @@ export default function EmployerJobListItem({ job, isActive, onClick }: Employer
   return (
     <div
       onClick={onClick}
-      className={`p-5 border-b cursor-pointer transition-all duration-200 ${
-        isActive
-          ? "bg-blue-50 border-l-4 border-l-blue-600 shadow-sm"
-          : "hover:bg-gray-50 hover:shadow-sm border-l-4 border-l-transparent"
-      }`}
+      className={`p-5 border-b cursor-pointer transition-all duration-200 ${isActive
+        ? "bg-blue-50 border-l-4 border-l-blue-600 shadow-sm"
+        : "hover:bg-gray-50 hover:shadow-sm border-l-4 border-l-transparent"
+        }`}
     >
       <div className="flex justify-between items-start gap-4">
         <div className="flex-grow min-w-0">
@@ -42,17 +43,16 @@ export default function EmployerJobListItem({ job, isActive, onClick }: Employer
             </span>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 text-gray-700 rounded-full font-medium">
               <Briefcase className="h-3.5 w-3.5" />
-              {job.contract_type}
+              {job.work_model.name}
             </span>
           </div>
         </div>
         <div className="flex-shrink-0">
           <div
-            className={`flex items-center justify-center gap-2 rounded-lg px-4 py-2 ${
-              isActive ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-900"
-            }`}
+            className={`flex items-center justify-center gap-2 rounded-lg px-2 py-1 ${isActive ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-900"
+              }`}
           >
-            <Users className="h-5 w-5" />
+            <Users className="h-4 w-4" />
             <span className="font-bold text-lg">{job.applicant_count}</span>
           </div>
           <p className="text-xs text-gray-500 text-center mt-1.5 font-medium">Postulantes</p>
@@ -70,6 +70,11 @@ export default function EmployerJobListItem({ job, isActive, onClick }: Employer
             {job.status === 'open' ? "Abierta" : "Cerrada"}
           </Label>
         </div>
+        <Link href={`/employer/jobs/edit/${job.id}`}>
+          <Button variant="outline" size="icon" className="cursor-pointer">
+            <Edit className="h-4 w-4" />
+          </Button>
+        </Link>
       </div>
     </div>
   )
