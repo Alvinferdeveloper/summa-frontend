@@ -15,7 +15,7 @@ export default function CandidateCard({ candidate }: CandidateCardProps) {
   const router = useRouter()
 
   const handleCardClick = () => {
-    router.push(`employer/candidates/${candidate.id}`)
+    router.push(`candidates/${candidate.id}`)
   }
 
   return (
