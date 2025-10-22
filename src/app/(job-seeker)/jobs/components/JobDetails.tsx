@@ -66,24 +66,24 @@ export default function JobDetails({ job, isAppliable = true }: JobDetailsProps)
                   </Badge>
                   <Badge variant="default" className="px-3 py-1.5 text-sm font-medium gap-1.5">
                     <Briefcase className="h-3.5 w-3.5" />
-                    {job.contract_type}
+                    {job.contract_type.name}
                   </Badge>
                   {job.work_model && (
                     <Badge variant="default" className="px-3 py-1.5 text-sm font-medium gap-1.5">
                       <Monitor className="h-3.5 w-3.5" />
-                      {job.work_model}
+                      {job.work_model.name}
                     </Badge>
                   )}
                   {job.work_schedule && (
                     <Badge variant="default" className="px-3 py-1.5 text-sm font-medium gap-1.5">
                       <Calendar className="h-3.5 w-3.5" />
-                      {job.work_schedule}
+                      {job.work_schedule.name}
                     </Badge>
                   )}
                   {job.experience_level && (
                     <Badge variant="default" className="px-3 py-1.5 text-sm font-medium gap-1.5">
                       <Monitor className="h-3.5 w-3.5" />
-                      {job.experience_level}
+                      {job.experience_level.name}
                     </Badge>
                   )}
                   {job.category.name && (

@@ -1,7 +1,6 @@
 "use client"
 
 import type { Candidate } from "../hooks/useTalentPool"
-import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MapPin, FileText, Linkedin, Phone, User } from "lucide-react"

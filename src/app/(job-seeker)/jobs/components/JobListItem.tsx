@@ -16,20 +16,20 @@ export interface Job {
   id: number;
   title: string;
   location: string;
-  work_model: string;
+  work_model: { id: number; name: string };
   created_at: string;
   salary: string;
   employer: Employer;
   has_applied: boolean;
-  work_schedule: string;
-  experience_level: string;
+  work_schedule: { id: number; name: string };
+  experience_level: { id: number; name: string };
   category: Category;
   accessibility_needs: AccessibilityNeedOption[];
   disability_types: DisabilityTypeOption[];
   description: string;
   responsibilities: string;
   requirements: string;
-  contract_type: string;
+  contract_type: { id: number; name: string };
   is_urgent: boolean;
 }
 
@@ -84,7 +84,7 @@ export default function JobListItem({ job, isActive, onClick }: JobListItemProps
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-sm text-primary">
           <Home className="h-4 w-4" />
-          <span className="font-medium">{job.work_model}</span>
+          <span className="font-medium">{job.work_model.name}</span>
         </div>
 
         <span className="text-xs text-muted-foreground">Hace {timeAgo(job.created_at)}</span>
