@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useTalentPool } from "./hooks/useTalentPool"
 import { useDisabilityTypes } from "@/app/(job-seeker)/jobs/hooks/useDisabilityTypes"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
 import {
   Pagination,
   PaginationContent,
@@ -21,12 +22,32 @@ import { useSkills } from "./hooks/useSkills"
 const CANDIDATES_PER_PAGE = 12
 
 export default function TalentPoolPage() {
-  const [filters, setFilters] = useState<Record<string, string>>({})
+  const [filters, setFilters] = useState<Record<string, string>>({
+    country: "",
+    disability_type_id: "",
+    skill_id: "",
+  })
   const [currentPage, setCurrentPage] = useState(1)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("")
 
-  const { data: disabilityTypes = [] } = useDisabilityTypes();
-  const { data: skills = [] } = useSkills();
-  const { data: talentPoolData, isLoading, isError } = useTalentPool(currentPage, CANDIDATES_PER_PAGE, filters)
+  const { data: disabilityTypes = [] } = useDisabilityTypes()
+  const { data: skills = [] } = useSkills()
+  const { data: talentPoolData, isLoading, isError } = useTalentPool(
+    currentPage,
+    CANDIDATES_PER_PAGE,
+    { ...filters, country: debouncedSearchTerm }
+  )
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm)
+    }, 500)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [searchTerm])
 
   const candidates = talentPoolData?.data || []
   const totalCandidates = talentPoolData?.total || 0
@@ -38,7 +59,12 @@ export default function TalentPoolPage() {
   }
 
   const handleClearFilters = () => {
-    setFilters({})
+    setFilters({
+      country: "",
+      disability_type_id: "",
+      skill_id: "",
+    })
+    setSearchTerm("")
     setCurrentPage(1)
   }
 
@@ -48,7 +74,7 @@ export default function TalentPoolPage() {
     }
   }
 
-  const hasActiveFilters = Object.keys(filters).length > 0
+  const hasActiveFilters = Object.values(filters).some((v) => v !== "") || searchTerm !== ""
 
   return (
     <div className="min-h-screen bg-background">
@@ -82,6 +108,15 @@ export default function TalentPoolPage() {
               <span className="hidden sm:inline">Filtros:</span>
             </div>
             <div className="flex flex-wrap gap-3 flex-1">
+              <div className="relative w-full sm:w-[260px]">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar por país..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
               <Select
                 onValueChange={(value) => handleFilterChange("disability_type_id", value)}
                 value={filters.disability_type_id || ""}
