@@ -16,6 +16,7 @@ import { Loader2, Search, Users, Filter, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import CandidateCard from "./components/CandidateCard"
+import { useSkills } from "./hooks/useSkills"
 
 const CANDIDATES_PER_PAGE = 12
 
@@ -23,7 +24,8 @@ export default function TalentPoolPage() {
   const [filters, setFilters] = useState<Record<string, string>>({})
   const [currentPage, setCurrentPage] = useState(1)
 
-  const { data: disabilityTypes = [] } = useDisabilityTypes()
+  const { data: disabilityTypes = [] } = useDisabilityTypes();
+  const { data: skills = [] } = useSkills();
   const { data: talentPoolData, isLoading, isError } = useTalentPool(currentPage, CANDIDATES_PER_PAGE, filters)
 
   const candidates = talentPoolData?.data || []
@@ -91,6 +93,21 @@ export default function TalentPoolPage() {
                   {disabilityTypes.map((dt) => (
                     <SelectItem key={dt.id} value={dt.id.toString()}>
                       {dt.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                onValueChange={(value) => handleFilterChange("skill_id", value)}
+                value={filters.skill_id || ""}
+              >
+                <SelectTrigger className="w-full sm:w-[260px]">
+                  <SelectValue placeholder="Habilidades" />
+                </SelectTrigger>
+                <SelectContent>
+                  {skills.map((s) => (
+                    <SelectItem key={s.id} value={s.id.toString()}>
+                      {s.name}
                     </SelectItem>
                   ))}
                 </SelectContent>

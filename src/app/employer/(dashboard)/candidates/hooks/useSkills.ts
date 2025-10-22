@@ -9,7 +9,7 @@ export interface SkillOption {
 }
 
 const fetchSkills = async (): Promise<SkillOption[]> => {
-  const { data } = await api.get<SkillOption[]>('/v1/skills'); // Assuming you have a /v1/skills endpoint
+  const { data } = await api.get<SkillOption[]>('/v1/skills'); 
   return data;
 };
 
