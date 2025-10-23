@@ -4,7 +4,8 @@
 import { SessionProvider } from 'next-auth/react';
 import React from 'react';
 import QueryProvider from './QueryProvider';
-import { Toaster } from 'sonner'; // Import Sonner's Toaster
+import { Toaster } from 'sonner';
+import { WebSocketProvider } from '@/app/employer/(dashboard)/chat/context/WebSocketContext';
 
 interface Props {
   children: React.ReactNode;
@@ -13,8 +14,12 @@ interface Props {
 export default function AppProviders({ children }: Props) {
   return (
     <SessionProvider>
-      <QueryProvider>{children}</QueryProvider>
-      <Toaster richColors position="top-right" /> {/* Add Sonner's Toaster here */}
+      <QueryProvider>
+        <WebSocketProvider>
+          {children}
+        </WebSocketProvider>
+      </QueryProvider>
+      <Toaster richColors position="top-right" />
     </SessionProvider>
   );
 }

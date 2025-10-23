@@ -3,8 +3,9 @@
 import type { Candidate } from "../hooks/useTalentPool"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { MapPin, FileText, Linkedin, Phone, User } from "lucide-react"
+import { MapPin, FileText, Linkedin, Phone, User, MessageSquare } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useConversations } from "../../chat/hooks/useConversations"
 
 interface CandidateCardProps {
   candidate: Candidate
@@ -12,9 +13,15 @@ interface CandidateCardProps {
 
 export default function CandidateCard({ candidate }: CandidateCardProps) {
   const router = useRouter()
+  const { openConversation } = useConversations()
 
   const handleCardClick = () => {
     router.push(`candidates/${candidate.id}`)
+  }
+
+  const handleChatClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    openConversation(candidate.id)
   }
 
   return (
@@ -95,6 +102,10 @@ export default function CandidateCard({ candidate }: CandidateCardProps) {
         </CardContent>
 
         <CardFooter className="p-4 pt-0 gap-2 flex-shrink-0">
+          <Button variant="outline" className="flex-1" onClick={handleChatClick}>
+            <MessageSquare className="h-4 w-4 mr-2" />
+            Chat
+          </Button>
           {candidate.resume_url ? (
             <a
               href={candidate.resume_url}
