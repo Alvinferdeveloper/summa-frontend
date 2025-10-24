@@ -22,6 +22,8 @@ function ChatPageContent() {
         }
     }, [conversationToOpen, conversations, isLoading]);
 
+    console.log(conversations, "conversations")
+
     return (
         <div className="h-[calc(100vh-80px)] flex flex-col bg-background">
             <div className="flex-1 grid grid-cols-1 md:grid-cols-4 overflow-hidden">

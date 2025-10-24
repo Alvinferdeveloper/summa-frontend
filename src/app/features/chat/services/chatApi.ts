@@ -16,7 +16,7 @@ export const getMessages = async (
     return data;
 };
 
-export const createConversation = async (participantId: number): Promise<Conversation> => {
+export const createConversation = async (participantId: string): Promise<Conversation> => {
     const { data } = await axios.post(`v1/chat/conversations/with/${participantId}`);
     return data.data;
 };

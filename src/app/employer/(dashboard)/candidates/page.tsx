@@ -75,6 +75,7 @@ export default function TalentPoolPage() {
   }
 
   const hasActiveFilters = Object.values(filters).some((v) => v !== "") || searchTerm !== ""
+  console.log(candidates)
 
   return (
     <div className="min-h-screen bg-background">

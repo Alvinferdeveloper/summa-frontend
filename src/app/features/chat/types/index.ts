@@ -6,7 +6,7 @@ export interface Profile {
 }
 
 export interface User {
-    id: number;
+    id: string;
     email: string;
     first_name: string;
     last_name: string;
@@ -14,7 +14,7 @@ export interface User {
 }
 
 export interface Employer {
-    id: number;
+    id: string;
     company_name: string;
     email: string;
     logo_url: string;
@@ -22,7 +22,6 @@ export interface Employer {
 
 export interface Conversation {
     id: number;
-    user_id: number;
     employer_id: number;
     user: User;
     employer: Employer;
@@ -33,9 +32,9 @@ export interface Conversation {
 export interface Message {
     id: number;
     conversation_id: number;
-    sender_id: number;
+    sender_id: string;
     sender_type: 'user' | 'employer';
-    recipient_id: number;
+    recipient_id: string;
     recipient_type: 'user' | 'employer';
     content: string;
     read: boolean;
@@ -51,7 +50,7 @@ export interface PaginatedMessages {
 
 export interface NewMessagePayload {
     conversation_id: number;
-    recipient_id: number;
+    recipient_id: string;
     recipient_type: 'user' | 'employer';
     content: string;
 }

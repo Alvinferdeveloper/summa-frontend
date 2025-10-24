@@ -12,7 +12,7 @@ export const useConversations = () => {
         queryFn: getConversations,
     });
 
-    const { mutate: openConversation } = useMutation<Conversation, Error, number>({
+    const { mutate: openConversation } = useMutation<Conversation, Error, string>({
         mutationFn: createConversation,
         onSuccess: (newConversation) => {
             queryClient.invalidateQueries({ queryKey: ['conversations'] });

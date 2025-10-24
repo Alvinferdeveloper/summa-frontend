@@ -35,7 +35,7 @@ export default function MessageView({ conversation }: MessageViewProps) {
         e.preventDefault();
         if (!newMessage.trim() || !session?.user) return;
 
-        const otherParticipant = conversation.user.id === Number(session?.userId) ? conversation.employer : conversation.user;
+        const otherParticipant = conversation.user.id === session?.userId ? conversation.employer : conversation.user;
         const recipientType = session.role === 'job_seeker' ? 'employer' : 'user';
 
         const messagePayload: NewMessagePayload = {
@@ -54,7 +54,7 @@ export default function MessageView({ conversation }: MessageViewProps) {
         return <div className="flex justify-center items-center h-full"><Loader2 className="h-6 w-6 animate-spin" /></div>;
     }
 
-    const otherParticipant = conversation.user.id === Number(session?.userId) ? conversation.employer : conversation.user;
+    const otherParticipant = conversation.user.id === session?.userId ? conversation.employer : conversation.user;
     let otherParticipantName = '';
     if ("company_name" in otherParticipant) {
         otherParticipantName = otherParticipant.company_name;
@@ -62,7 +62,7 @@ export default function MessageView({ conversation }: MessageViewProps) {
         otherParticipantName = `${otherParticipant.first_name} ${otherParticipant.last_name}`;
     }
 
-    console.log(allMessages)
+    const sessionId = session?.role === 'job_seeker' ? session?.userId : session?.employerId;
     return (
         <div className="flex-1 flex flex-col h-full bg-card">
             <div className="p-4 border-b">
@@ -82,13 +82,13 @@ export default function MessageView({ conversation }: MessageViewProps) {
                         key={msg.id || index}
                         className={cn(
                             'flex items-end gap-2 my-2',
-                            msg.sender_id === Number(session?.userId) ? 'justify-end' : 'justify-start'
+                            msg.sender_id === sessionId ? 'justify-end' : 'justify-start'
                         )}
                     >
                         <div
                             className={cn(
                                 'p-3 rounded-lg max-w-md shadow-sm',
-                                msg.sender_id === Number(session?.userId)
+                                msg.sender_id === sessionId
                                     ? 'bg-primary text-primary-foreground'
                                     : 'bg-muted'
                             )}

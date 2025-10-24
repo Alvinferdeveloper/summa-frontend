@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 
 export interface Candidate {
-  id: number;
+  id: string;
   first_name: string;
   last_name: string;
   phone_number: string;

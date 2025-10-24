@@ -26,7 +26,7 @@ export default function ConversationList({ conversations, isLoading, setActiveCo
             {conversations?.map((conv) => {
                 if (!conv.user || !conv.employer) return null;
 
-                const otherParticipant = conv.user.id === Number(session?.userId) ? conv.employer : conv.user;
+                const otherParticipant = conv.user.id === session?.userId ? conv.employer : conv.user;
                 let otherParticipantName = '';
                 let otherParticipantImage = '';
                 if ("company_name" in otherParticipant) {
