@@ -1,14 +1,14 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react';
-import { useMessages } from '../hooks/useMessages';
-import { useWebSocket } from '../hooks/useWebSocket';
+import { useMessages } from '@/app/features/chat/hooks/useMessages';
+import { useWebSocket } from '@/app/features/chat/hooks/useWebSocket';
 import { useSession } from 'next-auth/react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Send, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Conversation, NewMessagePayload } from '../types';
+import { Conversation, NewMessagePayload } from '@/app/features/chat/types';
 
 interface MessageViewProps {
     conversation: Conversation;
@@ -18,7 +18,6 @@ export default function MessageView({ conversation }: MessageViewProps) {
     const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useMessages(conversation.id);
     const { sendMessage } = useWebSocket();
     const { data: session } = useSession();
-    const user = (session as any)?.user;
     const [newMessage, setNewMessage] = useState('');
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -34,10 +33,10 @@ export default function MessageView({ conversation }: MessageViewProps) {
 
     const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!newMessage.trim() || !user) return;
+        if (!newMessage.trim() || !session?.user) return;
 
-        const otherParticipant = conversation.user.id === user.id ? conversation.employer : conversation.user;
-        const recipientType = user.role === 'job_seeker' ? 'employer' : 'user';
+        const otherParticipant = conversation.user.id === Number(session?.userId) ? conversation.employer : conversation.user;
+        const recipientType = session.role === 'job_seeker' ? 'employer' : 'user';
 
         const messagePayload: NewMessagePayload = {
             conversation_id: conversation.id,
@@ -55,7 +54,7 @@ export default function MessageView({ conversation }: MessageViewProps) {
         return <div className="flex justify-center items-center h-full"><Loader2 className="h-6 w-6 animate-spin" /></div>;
     }
 
-    const otherParticipant = conversation.user.id === user?.id ? conversation.employer : conversation.user;
+    const otherParticipant = conversation.user.id === Number(session?.userId) ? conversation.employer : conversation.user;
     let otherParticipantName = '';
     if ("company_name" in otherParticipant) {
         otherParticipantName = otherParticipant.company_name;
@@ -63,6 +62,7 @@ export default function MessageView({ conversation }: MessageViewProps) {
         otherParticipantName = `${otherParticipant.first_name} ${otherParticipant.last_name}`;
     }
 
+    console.log(allMessages)
     return (
         <div className="flex-1 flex flex-col h-full bg-card">
             <div className="p-4 border-b">
@@ -82,13 +82,13 @@ export default function MessageView({ conversation }: MessageViewProps) {
                         key={msg.id || index}
                         className={cn(
                             'flex items-end gap-2 my-2',
-                            msg.sender_id === user?.id ? 'justify-end' : 'justify-start'
+                            msg.sender_id === Number(session?.userId) ? 'justify-end' : 'justify-start'
                         )}
                     >
                         <div
                             className={cn(
                                 'p-3 rounded-lg max-w-md shadow-sm',
-                                msg.sender_id === user?.id
+                                msg.sender_id === Number(session?.userId)
                                     ? 'bg-primary text-primary-foreground'
                                     : 'bg-muted'
                             )}

@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MapPin, FileText, Linkedin, Phone, User, MessageSquare } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useConversations } from "../../chat/hooks/useConversations"
+import { useConversations } from "@/app/features/chat/hooks/useConversations"
 
 interface CandidateCardProps {
   candidate: Candidate

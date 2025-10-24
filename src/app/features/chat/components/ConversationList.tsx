@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { Conversation } from '../types';
+import { Conversation } from '@/app/features/chat/types';
 
 interface ConversationListProps {
     conversations: Conversation[] | undefined;
@@ -21,7 +21,7 @@ export default function ConversationList({ conversations, isLoading, setActiveCo
     }
 
     return (
-        <div className="h-full">
+        <div className="h-[calc(100vh-120px)]">
             <h2 className="p-4 text-xl font-bold border-b">Chats</h2>
             {conversations?.map((conv) => {
                 if (!conv.user || !conv.employer) return null;

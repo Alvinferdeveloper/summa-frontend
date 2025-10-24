@@ -2,10 +2,11 @@
 
 import React, { createContext, useEffect, useRef, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, InfiniteData } from '@tanstack/react-query';
+import { Message, NewMessagePayload, PaginatedMessages } from '@/app/features/chat/types';
 
 interface WebSocketContextType {
-    sendMessage: (message: any) => void;
+    sendMessage: (message: NewMessagePayload) => void;
     isConnected: boolean;
 }
 
@@ -17,7 +18,7 @@ export const WebSocketProvider = ({ children }: { children: React.ReactNode }) =
     const webSocket = useRef<WebSocket | null>(null);
     const [isConnected, setIsConnected] = React.useState(false);
     const { data: session } = useSession();
-    const token = session?.accessToken;
+    const token = (session as any)?.accessToken;
     const queryClient = useQueryClient();
 
     const connect = useCallback(() => {
@@ -36,12 +37,18 @@ export const WebSocketProvider = ({ children }: { children: React.ReactNode }) =
         ws.onerror = (error) => console.error('WebSocket Error:', error);
 
         ws.onmessage = (event) => {
-            const message = JSON.parse(event.data);
+            const message: Message = JSON.parse(event.data);
 
-            queryClient.setQueryData(['messages', message.conversation_id], (oldData: any) => {
+            queryClient.setQueryData(['messages', message.conversation_id], (oldData: InfiniteData<PaginatedMessages> | undefined) => {
                 if (!oldData) return oldData;
+
                 const newData = { ...oldData };
-                newData.pages[0].data = [message, ...newData.pages[0].data];
+                const newPages = [...newData.pages];
+                const firstPage = { ...newPages[0] };
+                firstPage.data = [message, ...firstPage.data];
+                newPages[0] = firstPage;
+                newData.pages = newPages;
+
                 return newData;
             });
 
@@ -60,7 +67,7 @@ export const WebSocketProvider = ({ children }: { children: React.ReactNode }) =
         };
     }, [token, connect]);
 
-    const sendMessage = (messagePayload: any) => {
+    const sendMessage = (messagePayload: NewMessagePayload) => {
         if (webSocket.current?.readyState === WebSocket.OPEN) {
             webSocket.current.send(JSON.stringify(messagePayload));
             queryClient.invalidateQueries({ queryKey: ['messages', messagePayload.conversation_id] });

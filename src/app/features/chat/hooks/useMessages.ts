@@ -1,15 +1,9 @@
-import { useInfiniteQuery, InfiniteData } from '@tanstack/react-query';
-import { getMessages } from '../services/chatApi';
-import { PaginatedMessages } from '../types';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getMessages } from '@/app/features/chat/services/chatApi';
+import { PaginatedMessages } from '@/app/features/chat/types';
 
 export const useMessages = (conversationId: number | null) => {
-    return useInfiniteQuery<
-        PaginatedMessages,
-        Error,
-        InfiniteData<PaginatedMessages>,
-        readonly [string, number | null],
-        number
-    >({
+    return useInfiniteQuery<PaginatedMessages, Error>({
         queryKey: ['messages', conversationId] as const,
         queryFn: getMessages,
         getNextPageParam: (lastPage) => {

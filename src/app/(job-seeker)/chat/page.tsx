@@ -23,13 +23,13 @@ function ChatPageContent() {
     }, [conversationToOpen, conversations, isLoading]);
 
     return (
-        <div className="h-[calc(80vh-80px)] flex flex-col bg-background">
+        <div className="h-[calc(100vh-80px)] flex flex-col bg-background">
             <div className="flex-1 grid grid-cols-1 md:grid-cols-4 overflow-hidden">
                 <div className="col-span-1 border-r h-full overflow-y-auto bg-card/50">
-                    <ConversationList
+                    <ConversationList 
                         conversations={conversations}
                         isLoading={isLoading}
-                        setActiveConversation={setActiveConversation}
+                        setActiveConversation={setActiveConversation} 
                         activeConversation={activeConversation}
                     />
                 </div>
