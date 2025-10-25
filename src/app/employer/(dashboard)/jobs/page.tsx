@@ -213,7 +213,7 @@ export default function MyJobsPage() {
                       >
                         <div className="relative w-14 h-14 rounded-full flex-shrink-0 ring-2 ring-slate-100 group-hover:ring-blue-200 transition-all duration-200">
                           <img
-                            src={app.applicant.profile_picture || "/profile_placeholder.png"}
+                            src={app.applicant.profile_picture_url || "/profile_placeholder.png"}
                             alt={app.applicant.first_name}
                             className="w-full h-full object-cover rounded-full"
                           />
