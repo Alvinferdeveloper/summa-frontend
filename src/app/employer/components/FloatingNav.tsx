@@ -4,14 +4,15 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, PlusCircle, Users, UserCircle, LogOut, Briefcase } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, Users, UserCircle, LogOut, Briefcase, MessageSquare } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 
 const navItems = [
   { name: 'Dashboard', href: '/employer/dashboard', icon: <LayoutDashboard className="h-5 w-5" /> },
-  { name: 'Mis Empleos', href: '/employer/jobs', icon: <Briefcase className="h-5 w-5" /> },
+  { name: 'Empleos', href: '/employer/jobs', icon: <Briefcase className="h-5 w-5" /> },
   { name: 'Publicar', href: '/employer/jobs/create', icon: <PlusCircle className="h-5 w-5" /> },
   { name: 'Candidatos', href: '/employer/candidates', icon: <Users className="h-5 w-5" /> },
+  { name: 'Chat', href: '/employer/chat', icon: <MessageSquare className="h-5 w-5" /> },
   { name: 'Perfil', href: '/employer/profile', icon: <UserCircle className="h-5 w-5" /> },
 ];
 
