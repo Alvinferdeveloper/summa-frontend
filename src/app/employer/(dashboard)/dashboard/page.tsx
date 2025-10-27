@@ -1,6 +1,6 @@
-
 'use client';
 
+import DisabilityChart from './components/DisabilityChart';
 import { useEmployerDashboard } from './hooks/useEmployerDashboard';
 import PipelineChart from './components/PipelineChart';
 import SkillInsightsChart from './components/SkillInsightsChart';
@@ -10,7 +10,7 @@ import { Briefcase, Users, Bell, PlusCircle, Loader2 } from "lucide-react";
 import Link from 'next/link';
 
 export default function EmployerDashboardPage() {
-  const { stats, pipeline, skillInsights, isLoading, error } = useEmployerDashboard();
+  const { stats, pipeline, skillInsights, disabilityInsights, isLoading, error } = useEmployerDashboard();
 
   if (isLoading) {
     return (
@@ -74,10 +74,17 @@ export default function EmployerDashboardPage() {
       </div>
 
       {/* Charts Grid */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
         {pipeline && <PipelineChart data={pipeline} />}
         {skillInsights && <SkillInsightsChart data={skillInsights} />}
       </div>
+
+      {/* Disability Insights Chart */}
+      {disabilityInsights && disabilityInsights.length > 0 && (
+        <div className="mt-6">
+          <DisabilityChart data={disabilityInsights} />
+        </div>
+      )}
     </div>
   );
 }

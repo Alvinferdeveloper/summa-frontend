@@ -20,6 +20,11 @@ export interface SkillInsight {
   count: number;
 }
 
+export interface DisabilityInsight {
+  name: string;
+  count: number;
+}
+
 
 const fetchDashboardStats = async (): Promise<DashboardStats> => {
   const { data } = await api.get('/v1/employer/dashboard/stats');
@@ -33,6 +38,11 @@ const fetchPipeline = async (): Promise<PipelineStep[]> => {
 
 const fetchSkillInsights = async (): Promise<SkillInsight[]> => {
   const { data } = await api.get('/v1/employer/dashboard/candidate-insights/skills');
+  return data;
+};
+
+const fetchDisabilityInsights = async (): Promise<DisabilityInsight[]> => {
+  const { data } = await api.get('/v1/employer/dashboard/candidate-insights/disabilities');
   return data;
 };
 
@@ -51,6 +61,10 @@ export const useEmployerDashboard = () => {
         queryKey: ['dashboardSkillInsights'],
         queryFn: fetchSkillInsights,
       },
+      {
+        queryKey: ['dashboardDisabilityInsights'],
+        queryFn: fetchDisabilityInsights,
+      },
     ],
   });
 
@@ -62,6 +76,7 @@ export const useEmployerDashboard = () => {
     stats: results[0].data as DashboardStats | undefined,
     pipeline: results[1].data as PipelineStep[] | undefined,
     skillInsights: results[2].data as SkillInsight[] | undefined,
+    disabilityInsights: results[3].data as DisabilityInsight[] | undefined,
     isLoading,
     isError,
     error,
