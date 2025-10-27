@@ -1,6 +1,6 @@
 
 "use client"
-import { useCandidateProfileForEmployer } from '../../hooks/useCandidateProfileForEmployer';
+import { useCandidateProfileForEmployer } from '../../dashboard/hooks/useCandidateProfileForEmployer';
 import {
   Loader2,
 } from 'lucide-react';

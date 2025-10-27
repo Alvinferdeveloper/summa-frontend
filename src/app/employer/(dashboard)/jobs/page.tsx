@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { useEmployerJobPosts } from "../hooks/useEmployerJobPosts"
+import { useEmployerJobPosts } from "../dashboard/hooks/useEmployerJobPosts"
 import { useJobApplicants } from "./hooks/useJobApplicants"
 import { CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"

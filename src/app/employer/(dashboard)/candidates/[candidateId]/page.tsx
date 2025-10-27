@@ -1,6 +1,6 @@
 "use client"
 import CandidateProfile from "@/app/employer/(dashboard)/components/CandidateProfile";
-import { useCandidateProfileForEmployer } from "../../hooks/useCandidateProfileForEmployer";
+import { useCandidateProfileForEmployer } from "../../dashboard/hooks/useCandidateProfileForEmployer";
 import { useParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";

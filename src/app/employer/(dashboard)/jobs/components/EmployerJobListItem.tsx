@@ -1,10 +1,10 @@
 "use client"
 
 import { Briefcase, Edit, MapPin, Users } from "lucide-react"
-import type { EmployerJobPostsResponse } from "../../hooks/useEmployerJobPosts"
+import type { EmployerJobPostsResponse } from "../../dashboard/hooks/useEmployerJobPosts"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { useUpdateJobPostStatus } from "../../hooks/useUpdateJobPostStatus"
+import { useUpdateJobPostStatus } from "../../dashboard/hooks/useUpdateJobPostStatus"
 import clsx from "clsx"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
