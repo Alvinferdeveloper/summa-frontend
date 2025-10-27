@@ -29,6 +29,8 @@ export default function ProfilePage() {
   const { data: session, status: sessionStatus } = useSession();
   const { data: profile, status: profileStatus, error } = useMyProfile();
 
+  console.log(profile)
+
   if (sessionStatus === "loading" || profileStatus === "pending") {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">

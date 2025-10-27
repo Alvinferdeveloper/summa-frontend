@@ -22,7 +22,8 @@ export default function AddNewEmployerModal({ isOpen, onClose, onSuccess }: AddN
   const handleSubmit = () => {
     mutation.mutate({ company_name: companyName, website }, {
       onSuccess: (data) => {
-        onSuccess({ id: data.ID, company_name: data.CompanyName });
+        const { id, company_name } = data.employer;
+        onSuccess({ id, company_name });
         onClose();
       }
     });

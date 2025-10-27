@@ -24,7 +24,7 @@ export default function AddNewUniversityModal({ isOpen, onClose, onSuccess }: Ad
   const handleSubmit = () => {
     mutation.mutate({ suggested_name: suggestedName, country, website }, {
       onSuccess: (data) => {
-        onSuccess({ id: data.ID, name: data.SuggestedName });
+        onSuccess({ id: data.ID, name: data.suggested_name });
         onClose();
       }
     });

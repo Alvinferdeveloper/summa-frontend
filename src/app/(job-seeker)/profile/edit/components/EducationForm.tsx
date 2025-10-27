@@ -51,6 +51,7 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
 
 
   const handleNewUniversitySuccess = (newUniversity: { id: number; name: string }) => {
+    console.log(newUniversity)
     form.setValue('university', { ...newUniversity, isNew: true });
     form.clearErrors('university');
   };
