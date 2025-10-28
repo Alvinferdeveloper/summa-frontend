@@ -29,8 +29,6 @@ export default function ProfilePage() {
   const { data: session, status: sessionStatus } = useSession();
   const { data: profile, status: profileStatus, error } = useMyProfile();
 
-  console.log(profile)
-
   if (sessionStatus === "loading" || profileStatus === "pending") {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
@@ -103,6 +101,14 @@ export default function ProfilePage() {
                   className="font-medium border-2 hover:bg-accent/5 hover:border-primary bg-transparent"
                 >
                   Editar Perfil
+                </Button>
+              </Link>
+              <Link href="/profile/builder" className="sm:pb-2">
+                <Button
+                  variant="outline"
+                  className="font-medium border-2 hover:bg-accent/5 hover:border-primary bg-transparent"
+                >
+                  Construir CV
                 </Button>
               </Link>
             </div>

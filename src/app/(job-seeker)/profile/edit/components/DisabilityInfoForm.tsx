@@ -27,9 +27,10 @@ export type DisabilityInfoFormValues = z.infer<typeof disabilityInfoSchema>;
 
 interface DisabilityInfoFormProps {
   profile: ProfileData;
+  onSave?: () => void;
 }
 
-export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps) {
+export default function DisabilityInfoForm({ profile, onSave }: DisabilityInfoFormProps) {
   const { accessibilityNeedsData } = useDisabilityNeeds();
   const { disabilityTypesData } = useDisabilityTypes();
   const updateDisabilityInfoMutation = useUpdateDisabilityInfo();
@@ -46,7 +47,13 @@ export default function DisabilityInfoForm({ profile }: DisabilityInfoFormProps)
 
 
   function onSubmit(values: DisabilityInfoFormValues) {
-    updateDisabilityInfoMutation.mutate(values);
+    updateDisabilityInfoMutation.mutate(values, {
+      onSuccess: () => {
+        if (onSave) {
+          onSave();
+        }
+      }
+    });
   }
 
   return (

@@ -21,9 +21,10 @@ export type PersonalInfoFormValues = z.infer<typeof personalInfoSchema>;
 
 interface PersonalInfoFormProps {
   profile: ProfileData;
+  onSave?: () => void; // Prop opcional para el callback
 }
 
-export default function PersonalInfoForm({ profile }: PersonalInfoFormProps) {
+export default function PersonalInfoForm({ profile, onSave }: PersonalInfoFormProps) {
   const updatePersonalInfoMutation = useUpdatePersonalInfo();
   const form = useForm<z.input<typeof personalInfoSchema>, z.output<typeof personalInfoSchema>>({
     resolver: zodResolver(personalInfoSchema),
@@ -35,7 +36,13 @@ export default function PersonalInfoForm({ profile }: PersonalInfoFormProps) {
 
 
   function onSubmit(values: PersonalInfoFormValues) {
-    updatePersonalInfoMutation.mutate(values);
+    updatePersonalInfoMutation.mutate(values, {
+      onSuccess: () => {
+        if (onSave) {
+          onSave();
+        }
+      }
+    });
   }
 
   return (

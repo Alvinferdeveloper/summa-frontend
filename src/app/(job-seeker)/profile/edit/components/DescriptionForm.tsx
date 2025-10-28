@@ -20,9 +20,10 @@ export type DescriptionFormValues = z.infer<typeof descriptionSchema>;
 
 interface DescriptionFormProps {
   profile: ProfileData;
+  onSave?: () => void;
 }
 
-export default function DescriptionForm({ profile }: DescriptionFormProps) {
+export default function DescriptionForm({ profile, onSave }: DescriptionFormProps) {
   const updateDescriptionMutation = useUpdateDescription();
   
   const form = useForm<DescriptionFormValues>({
@@ -33,7 +34,13 @@ export default function DescriptionForm({ profile }: DescriptionFormProps) {
   });
 
   function onSubmit(values: DescriptionFormValues) {
-    updateDescriptionMutation.mutate(values);
+    updateDescriptionMutation.mutate(values, {
+      onSuccess: () => {
+        if (onSave) {
+          onSave();
+        }
+      }
+    });
   }
 
   return (
