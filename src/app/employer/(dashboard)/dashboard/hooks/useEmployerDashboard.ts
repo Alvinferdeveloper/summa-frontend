@@ -25,6 +25,13 @@ export interface DisabilityInsight {
   count: number;
 }
 
+export interface LocationInsight {
+  location: string;
+  count: number;
+  latitude: number;
+  longitude: number;
+}
+
 
 const fetchDashboardStats = async (): Promise<DashboardStats> => {
   const { data } = await api.get('/v1/employer/dashboard/stats');
@@ -43,6 +50,11 @@ const fetchSkillInsights = async (): Promise<SkillInsight[]> => {
 
 const fetchDisabilityInsights = async (): Promise<DisabilityInsight[]> => {
   const { data } = await api.get('/v1/employer/dashboard/candidate-insights/disabilities');
+  return data;
+};
+
+const fetchApplicantLocations = async (): Promise<LocationInsight[]> => {
+  const { data } = await api.get('/v1/employer/dashboard/candidate-insights/locations');
   return data;
 };
 
@@ -65,6 +77,10 @@ export const useEmployerDashboard = () => {
         queryKey: ['dashboardDisabilityInsights'],
         queryFn: fetchDisabilityInsights,
       },
+      {
+        queryKey: ['dashboardApplicantLocations'],
+        queryFn: fetchApplicantLocations,
+      },
     ],
   });
 
@@ -77,6 +93,7 @@ export const useEmployerDashboard = () => {
     pipeline: results[1].data as PipelineStep[] | undefined,
     skillInsights: results[2].data as SkillInsight[] | undefined,
     disabilityInsights: results[3].data as DisabilityInsight[] | undefined,
+    applicantLocations: results[4].data as LocationInsight[] | undefined,
     isLoading,
     isError,
     error,

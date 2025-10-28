@@ -1,16 +1,17 @@
 'use client';
 
-import DisabilityChart from './components/DisabilityChart';
 import { useEmployerDashboard } from './hooks/useEmployerDashboard';
 import PipelineChart from './components/PipelineChart';
 import SkillInsightsChart from './components/SkillInsightsChart';
+import DisabilityChart from './components/DisabilityChart';
+import ApplicantMap from './components/ApplicantMap';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Users, Bell, PlusCircle, Loader2 } from "lucide-react";
 import Link from 'next/link';
 
 export default function EmployerDashboardPage() {
-  const { stats, pipeline, skillInsights, disabilityInsights, isLoading, error } = useEmployerDashboard();
+  const { stats, pipeline, skillInsights, disabilityInsights, applicantLocations, isLoading, error } = useEmployerDashboard();
 
   if (isLoading) {
     return (
@@ -77,14 +78,9 @@ export default function EmployerDashboardPage() {
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
         {pipeline && <PipelineChart data={pipeline} />}
         {skillInsights && <SkillInsightsChart data={skillInsights} />}
+        {disabilityInsights && disabilityInsights.length > 0 && <DisabilityChart data={disabilityInsights} />}
+        {applicantLocations && applicantLocations.length > 0 && <ApplicantMap data={applicantLocations} />}
       </div>
-
-      {/* Disability Insights Chart */}
-      {disabilityInsights && disabilityInsights.length > 0 && (
-        <div className="mt-6">
-          <DisabilityChart data={disabilityInsights} />
-        </div>
-      )}
     </div>
   );
 }
