@@ -1,10 +1,11 @@
-
 'use client';
 
 import { Home } from "lucide-react";
 import { Category } from "@/app/employer/(dashboard)/jobs/create/hooks/useCategories";
 import { AccessibilityNeedOption } from "@/app/employer/(dashboard)/jobs/create/hooks/useAccessibilityNeeds";
 import { DisabilityTypeOption } from "@/app/employer/(dashboard)/jobs/create/hooks/useDisabilityTypes";
+import { useJobCompatibility } from '../hooks/useJobCompatibility';
+
 interface Employer {
   company_name: string;
   logo_url: string;
@@ -57,20 +58,29 @@ const timeAgo = (dateString: string) => {
 };
 
 export default function JobListItem({ job, isActive, onClick }: JobListItemProps) {
+  const { data: compatibility } = useJobCompatibility(job.id);
+
+  const getScoreColor = (score: number) => {
+    if (score >= 75) return 'bg-green-500';
+    if (score >= 40) return 'bg-yellow-500';
+    return 'bg-red-500';
+  };
+
   return (
     <button
       onClick={onClick}
-      className={`w-[95%] cursor-pointer text-left text-2xl p-5 rounded-lg mb-2 border transition-all bg-white hover:shadow-md relative ${isActive ? "border-primary bg-primary/5 shadow-sm" : "border-red-900"
-        }`}
-    >
+      className={`w-[95%] cursor-pointer text-left text-2xl p-5 rounded-lg mb-2 border transition-all bg-white hover:shadow-md relative ${isActive ? "border-primary bg-primary/5 shadow-sm" : "border-red-900"}`}>
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2 flex-wrap">
-          {
-            job.is_urgent && (
-              <span className="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">Se precisa Urgente</span>
-            )
-          }
-          <span className="text-xs font-medium text-amber-700 bg-amber-50 px-2 py-1 rounded">Empleo destacado</span>
+          {job.is_urgent && (
+            <span className="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">Se precisa Urgente</span>
+          )}
+          {compatibility && (
+            <div className="flex items-center gap-1.5 text-xs font-medium">
+              <div className={`w-2 h-2 rounded-full ${getScoreColor(compatibility.score)}`} />
+              <span>Compatibilidad: {Math.round(compatibility.score)}%</span>
+            </div>
+          )}
         </div>
       </div>
 

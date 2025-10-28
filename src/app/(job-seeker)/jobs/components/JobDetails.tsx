@@ -1,5 +1,8 @@
 "use client"
 
+import { useJobCompatibility } from '../hooks/useJobCompatibility';
+import CompatibilityScore from './CompatibilityScore';
+
 import { useState } from "react"
 import type { Job } from "./JobListItem"
 import { Button } from "@/components/ui/button"
@@ -15,7 +18,8 @@ interface JobDetailsProps {
 }
 
 export default function JobDetails({ job, isAppliable = true }: JobDetailsProps) {
-  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false)
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const { data: compatibility, isLoading: isLoadingCompatibility } = useJobCompatibility(job?.id || 0);
 
   if (!job) {
     return (
@@ -34,6 +38,7 @@ export default function JobDetails({ job, isAppliable = true }: JobDetailsProps)
       </div>
     )
   }
+
   return (
     <>
       {isAppliable && <ApplyModal isOpen={isApplyModalOpen} onClose={() => setIsApplyModalOpen(false)} job={job} />}
@@ -113,6 +118,19 @@ export default function JobDetails({ job, isAppliable = true }: JobDetailsProps)
 
           {/* Content Section */}
           <div className="p-6 lg:p-8 space-y-6">
+            {/* Compatibility Section */}
+            {compatibility && compatibility.total_candidate_needs > 0 && (
+              <Card className="p-6 bg-gradient-to-br from-blue-50 to-transparent">
+                <div className="flex items-center gap-6">
+                  <CompatibilityScore score={compatibility.score} />
+                  <div>
+                    <h3 className="text-lg font-bold">Puntuación de Compatibilidad</h3>
+                    <p className="text-sm text-muted-foreground">Este empleo cubre {compatibility.met_needs.length} de tus {compatibility.total_candidate_needs} necesidades de accesibilidad.</p>
+                  </div>
+                </div>
+              </Card>
+            )}
+
             {/* Job Description */}
             <Card className="p-6 border-l-4 border-l-primary bg-gradient-to-br from-primary/5 to-transparent">
               <div className="flex items-start gap-3 mb-1">
