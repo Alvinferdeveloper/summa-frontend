@@ -20,6 +20,8 @@ export interface Job {
   work_model: { id: number; name: string };
   created_at: string;
   salary: string;
+  latitude: number;
+  longitude: number;
   employer: Employer;
   has_applied: boolean;
   work_schedule: { id: number; name: string };

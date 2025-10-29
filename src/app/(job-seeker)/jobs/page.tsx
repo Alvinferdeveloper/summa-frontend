@@ -6,20 +6,21 @@ import api from '@/lib/api';
 import JobListItem, { Job } from './components/JobListItem';
 import JobDetails from './components/JobDetails';
 import { useInView } from 'react-intersection-observer';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Map, List, Clock, Briefcase, Star, Calendar, Tag, DollarSign, Accessibility, X } from 'lucide-react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import FilterButton from './components/FilterButton';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Clock, Briefcase, Star, Calendar, Tag, DollarSign, Accessibility, X } from 'lucide-react';
 import { useContractTypes } from "./hooks/useContractTypes";
 import { useExperienceLevels } from "./hooks/useExperienceLevels";
 import { useWorkSchedules } from '@/app/employer/(dashboard)/jobs/create/hooks/useWorkSchedules';
 import { useWorkModels } from '@/app/employer/(dashboard)/jobs/create/hooks/useWorkModels';
 import { useCategories } from '@/app/employer/(dashboard)/jobs/create/hooks/useCategories';
 import { useDisabilityTypes } from './hooks/useDisabilityTypes';
+import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
 
 interface JobsApiResponse {
   data: Job[];
@@ -47,6 +48,9 @@ export default function JobsPage() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [selectedDateFilter, setSelectedDateFilter] = useState<string>("");
+  const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
+
+  const JobsMap = useMemo(() => dynamic(() => import('./components/JobsMap'), { ssr: false }), []);
 
   const { data: contractTypes = [] } = useContractTypes();
   const { data: experienceLevels = [] } = useExperienceLevels();
@@ -117,6 +121,8 @@ export default function JobsPage() {
       date_posted: formattedDate,
     }));
   }
+
+  const allJobs = data?.pages.flatMap(page => page.data) || [];
 
   return (
     <>
@@ -284,46 +290,56 @@ export default function JobsPage() {
           </Button>
         </div>
       </div>
-      <div className="h-[calc(100vh-6rem)] grid grid-cols-1 lg:grid-cols-5 gap-2 px-32">
 
-        {/* Left Column: Job List */}
-        <div className=" rounded-lg col-span-2">
-          <ScrollArea className="h-[calc(100vh-6rem)]">
-            {status === 'pending' ? (
-              <div className="flex justify-center items-center h-full">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              </div>
-            ) : status === 'error' ? (
-              <div className="p-4 text-center text-red-500">Error: {error.message}</div>
-            ) : (
-              <div>
-                {data.pages.map((page) =>
-                  page.data?.map((job) => (
-                    <JobListItem
-                      key={job.id}
-                      job={job}
-                      isActive={selectedJob?.id === job.id}
-                      onClick={() => setSelectedJob(job)}
-                    />
-                  ))
-                )}
-                <div ref={ref} className="flex justify-center items-center h-24">
-                  {isFetchingNextPage && <Loader2 className="h-6 w-6 animate-spin text-primary" />}
-                  {!hasNextPage && data.pages.length > 0 && <p className="text-sm text-muted-foreground">No hay más empleos</p>}
-                </div>
-              </div>
-            )}
-            <ScrollBar orientation="vertical" className="w-3" />
-          </ScrollArea>
-        </div>
-
-        {/* Right Column: Job Details */}
-        <div className="hidden lg:block lg:col-span-3">
-          <ScrollArea className="h-[calc(100vh-6rem)]">
-            <JobDetails job={selectedJob} />
-          </ScrollArea>
-        </div>
+      <div className="px-4 mb-4 flex justify-end">
+        <Button onClick={() => setViewMode(viewMode === 'list' ? 'map' : 'list')} variant="outline" className='cursor-pointer'>
+          {viewMode === 'list' ? <Map className="mr-2 h-4 w-4" /> : <List className="mr-2 h-4 w-4" />}
+          {viewMode === 'list' ? 'Ver en Mapa' : 'Ver Lista'}
+        </Button>
       </div>
+
+      {viewMode === 'list' ? (
+        <div className="h-[calc(100vh-5rem)] grid grid-cols-1 lg:grid-cols-5 gap-2 px-32">
+          <div className=" rounded-lg col-span-2">
+            <ScrollArea className="h-[calc(100vh-6rem)]">
+              {status === 'pending' ? (
+                <div className="flex justify-center items-center h-full">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                </div>
+              ) : status === 'error' ? (
+                <div className="p-4 text-center text-red-500">Error: {error.message}</div>
+              ) : (
+                <div>
+                  {data.pages.map((page) =>
+                    page.data?.map((job) => (
+                      <JobListItem
+                        key={job.id}
+                        job={job}
+                        isActive={selectedJob?.id === job.id}
+                        onClick={() => setSelectedJob(job)}
+                      />
+                    ))
+                  )}
+                  <div ref={ref} className="flex justify-center items-center h-24">
+                    {isFetchingNextPage && <Loader2 className="h-6 w-6 animate-spin text-primary" />}
+                    {!hasNextPage && data.pages.length > 0 && <p className="text-sm text-muted-foreground">No hay más empleos</p>}
+                  </div>
+                </div>
+              )}
+              <ScrollBar orientation="vertical" className="w-3" />
+            </ScrollArea>
+          </div>
+          <div className="hidden lg:block lg:col-span-3">
+            <ScrollArea className="h-[calc(100vh-6rem)]">
+              <JobDetails job={selectedJob} />
+            </ScrollArea>
+          </div>
+        </div>
+      ) : (
+        <div className="h-[calc(100vh-5rem)] px-4 pb-4">
+          <JobsMap jobs={allJobs} />
+        </div>
+      )}
     </>
   );
 }
