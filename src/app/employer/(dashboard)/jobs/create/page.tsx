@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -18,6 +17,8 @@ import { Button } from '@/components/ui/button';
 const jobPostSchema = z.object({
   title: z.string().min(5, "El título debe tener al menos 5 caracteres."),
   location: z.string().min(3, "La ubicación es requerida."),
+  latitude: z.number().optional(),
+  longitude: z.number().optional(),
   is_urgent: z.boolean().default(false),
   workModelId: z.number({ message: "Debes seleccionar un modelo de trabajo." }),
   workScheduleId: z.number({ message: "Debes seleccionar una jornada." }),
@@ -50,6 +51,8 @@ export default function CreateJobPage() {
     defaultValues: {
       title: '',
       location: '',
+      latitude: undefined,
+      longitude: undefined,
       is_urgent: false,
       workModelId: undefined,
       workScheduleId: undefined,

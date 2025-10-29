@@ -13,6 +13,8 @@ import { useContractTypes } from '@/app/(job-seeker)/jobs/hooks/useContractTypes
 import { useExperienceLevels } from '@/app/(job-seeker)/jobs/hooks/useExperienceLevels';
 import { useWorkSchedules } from '../hooks/useWorkSchedules';
 import { useWorkModels } from '../hooks/useWorkModels';
+import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
 
 interface Step1RoleProps {
   nextStep: () => void;
@@ -25,6 +27,8 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
   const { data: experienceLevels, isLoading: isLoadingExperienceLevels } = useExperienceLevels();
   const { data: workSchedules, isLoading: isLoadingWorkSchedules } = useWorkSchedules();
   const { data: workModels, isLoading: isLoadingWorkModels } = useWorkModels();
+
+  const LocationPickerMap = useMemo(() => dynamic(() => import('./LocationPickerMap'), { ssr: false }), []);
 
   const handleNext = async () => {
     const isValid = await form.trigger([
@@ -66,20 +70,33 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
           )}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="location"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Ubicación</FormLabel>
-                <FormControl>
-                  <Input placeholder="Ej: Ciudad de México, Remoto" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ubicación (Texto)</FormLabel>
+              <FormControl>
+                <Input placeholder="Ej: Ciudad de México, Remoto" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div>
+          <FormLabel>Selecciona la Ubicación en el Mapa</FormLabel>
+          <p className="text-sm text-muted-foreground mb-2">Haz clic en el mapa para establecer la ubicación exacta.</p>
+          <LocationPickerMap 
+            position={form.watch('latitude') && form.watch('longitude') ? [form.watch('latitude')!, form.watch('longitude')!] : null}
+            onLocationSelect={(lat, lng) => {
+              form.setValue('latitude', lat);
+              form.setValue('longitude', lng);
+            }}
           />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
             name="workModelId"
