@@ -1,16 +1,29 @@
-
-'use client';
-
-import { useMyApplications } from './hooks/useMyApplications';
+"use client"
+import { useState } from 'react';
+import { useMyApplications, InterviewDetails } from './hooks/useMyApplications';
 import ApplicationCard from './components/ApplicationCard';
+import RespondToInterviewModal from './components/RespondToInterviewModal';
 import { Loader2, Heart } from 'lucide-react';
 
 export default function ApplicationsPage() {
   const { data: applications, status, error } = useMyApplications();
-  console.log(applications, "applications")
+
+  const [isRespondModalOpen, setIsRespondModal] = useState(false);
+  const [selectedInterview, setSelectedInterview] = useState<InterviewDetails | null>(null);
+
+  const handleRespondToInterview = (interview: InterviewDetails) => {
+    setSelectedInterview(interview);
+    setIsRespondModal(true);
+  };
 
   return (
     <div className="max-w-7xl mx-auto">
+      <RespondToInterviewModal
+        isOpen={isRespondModalOpen}
+        onClose={() => setIsRespondModal(false)}
+        interview={selectedInterview}
+      />
+
       <h1 className="text-3xl font-bold tracking-tight mb-8">Mis Postulaciones</h1>
 
       {status === 'pending' ? (
@@ -22,7 +35,11 @@ export default function ApplicationsPage() {
       ) : applications && applications.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {applications.map((app) => (
-            <ApplicationCard key={app.id} application={app} />
+            <ApplicationCard 
+              key={app.id} 
+              application={app} 
+              onRespondToInterview={handleRespondToInterview}
+            />
           ))}
         </div>
       ) : (

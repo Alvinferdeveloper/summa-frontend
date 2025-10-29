@@ -3,12 +3,14 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Clock, Mail, Briefcase } from "lucide-react";
-import { JobApplication } from '../hooks/useMyApplications';
+import { Clock, Mail, Briefcase, CalendarCheck } from "lucide-react";
+import { JobApplication, InterviewDetails } from '../hooks/useMyApplications';
 import Link from 'next/link';
+import { Button } from "@/components/ui/button";
 
 interface ApplicationCardProps {
   application: JobApplication;
+  onRespondToInterview: (interview: InterviewDetails) => void;
 }
 
 const timeAgo = (dateString: string) => {
@@ -29,19 +31,23 @@ const getStatusVariant = (status: string): "default" | "secondary" | "destructiv
       return 'default';
     case 'en revisión':
       return 'secondary';
+    case 'entrevista':
+      return 'outline';
     case 'rechazado':
       return 'destructive';
+    case 'contratado':
+      return 'default';
     default:
       return 'outline';
   }
 };
 
-export default function ApplicationCard({ application }: ApplicationCardProps) {
-  const { job_post, status, created_at } = application;
+export default function ApplicationCard({ application, onRespondToInterview }: ApplicationCardProps) {
+  const { job_post, status, created_at, interview } = application;
 
   return (
-    <Link href={`/jobs/${job_post.id}`} className="block">
-      <Card className="hover:shadow-lg hover:border-primary/50 transition-all duration-300 rounded-lg h-full flex flex-col">
+    <Card className="hover:shadow-lg hover:border-primary/50 transition-all duration-300 rounded-lg h-full flex flex-col">
+      <Link href={`/jobs/${job_post.id}`} className="block flex-grow">
         <CardHeader>
           <div className="flex justify-between items-start gap-4">
             <div className="w-14 h-14 flex-shrink-0 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -70,7 +76,26 @@ export default function ApplicationCard({ application }: ApplicationCardProps) {
             Postulado {timeAgo(created_at)}
           </div>
         </CardContent>
-      </Card>
-    </Link>
+      </Link>
+      {status === 'Entrevista' && interview && interview.candidate_response_status === 'Pendiente' && (
+        <div className="p-4 border-t">
+          <Button 
+            onClick={() => onRespondToInterview({
+              id: interview.id,
+              scheduled_at: interview.scheduled_at,
+              format: interview.format,
+              notes: interview.notes,
+              candidate_response_status: interview.candidate_response_status,
+              requested_accommodations: interview.requested_accommodations,
+              job_post_title: job_post.title,
+              employer_name: job_post.employer.company_name,
+            })}
+            className="w-full"
+          >
+            <CalendarCheck className="mr-2 h-4 w-4" /> Responder Entrevista
+          </Button>
+        </div>
+      )}
+    </Card>
   );
 }

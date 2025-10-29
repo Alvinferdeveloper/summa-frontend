@@ -1,3 +1,5 @@
+import { InterviewDetails } from "@/app/(job-seeker)/applications/hooks/useMyApplications";
+
 export interface JobApplication {
   id: number;
   status: string;
@@ -9,5 +11,6 @@ export interface JobApplication {
     profile_picture_url: string | null;
     resume_url: string | null;
   };
+  interview?: InterviewDetails;
   applied_at: string;
 }

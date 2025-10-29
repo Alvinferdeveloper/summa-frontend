@@ -3,7 +3,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
-import type { JobApplication } from "../types"; 
+import type { JobApplication } from "../types";
 
 interface ApplicantsApiResponse {
   data: JobApplication[];
