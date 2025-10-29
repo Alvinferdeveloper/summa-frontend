@@ -2,7 +2,7 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import apiClient from '@/lib/axios';
+import api from '@/lib/api';
 
 interface OnboardingData {
   first_name: string;
@@ -11,7 +11,7 @@ interface OnboardingData {
 }
 
 const completeOnboarding = async (data: OnboardingData) => {
-  const response = await apiClient.put('/v1/profile', data);
+  const response = await api.put('/v1/profile', data);
   return response.data;
 };
 

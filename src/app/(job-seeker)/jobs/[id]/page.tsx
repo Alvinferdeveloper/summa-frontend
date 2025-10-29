@@ -1,18 +1,18 @@
 
-import api from '@/lib/api';
-import { Job } from '../components/JobListItem';
+import apiServer from '@/lib/apiServer';
 import JobDetails from '../components/JobDetails';
 import { Loader2 } from 'lucide-react';
 
 interface PageProps {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function JobDetailPage({ params, searchParams }: PageProps) {
-  const { id } = params;
-  const { data } = await api.get(`/v1/jobs/${id}`);
-  const isAppliable = searchParams.isAppliable === 'true';
+  const { id } = await params;
+  const { isAppliable } = await searchParams;
+  const { data } = await apiServer.get(`/v1/jobs/${id}`);
+  const appliable = isAppliable === 'true';
 
   if (!data) {
     return (
@@ -24,7 +24,7 @@ export default async function JobDetailPage({ params, searchParams }: PageProps)
 
   return (
     <div className="max-w-4xl mx-auto">
-      <JobDetails job={data} isAppliable={isAppliable || false} />
+      <JobDetails job={data} isAppliable={appliable || false} />
     </div>
   );
 }

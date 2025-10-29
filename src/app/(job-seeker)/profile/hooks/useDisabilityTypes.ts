@@ -2,16 +2,16 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import apiClient from '@/lib/axios';
+import api from '@/lib/api';
 
 interface DisabilityType {
-  id: number;
+  id: number; 
   name: string;
   description: string;
 }
 
 const fetchDisabilityTypes = async (): Promise<DisabilityType[]> => {
-  const { data } = await apiClient.get('/v1/disability-types');
+  const { data } = await api.get('/v1/disability-types');
   return data;
 };
 
