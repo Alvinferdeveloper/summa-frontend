@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Briefcase, UserCircle, Heart, LogOut, MessageSquare } from 'lucide-react';
 import { signOut } from 'next-auth/react';
+import NotificationBell from '@/app/components/layout/NotificationBell';
 
 const navItems = [
   { name: 'Empleos', href: '/jobs', icon: <Briefcase className="h-5 w-5" /> },
@@ -48,6 +49,9 @@ export default function FloatingNav() {
             </Link>
           );
         })}
+        <div className="h-6 w-px bg-gray-300 mx-2"></div>
+
+        <NotificationBell />
         {/* Botón de Cerrar Sesión */}
         <button
           onClick={() => signOut({ callbackUrl: '/' })}

@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -6,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { LayoutDashboard, PlusCircle, Users, UserCircle, LogOut, Briefcase, MessageSquare } from 'lucide-react';
 import { signOut } from 'next-auth/react';
+import NotificationBell from '@/app/components/layout/NotificationBell';
 
 const navItems = [
   { name: 'Dashboard', href: '/employer/dashboard', icon: <LayoutDashboard className="h-5 w-5" /> },
@@ -49,7 +49,11 @@ export default function FloatingNav() {
             </Link>
           );
         })}
-        {/* Botón de Cerrar Sesión */}
+
+        <div className="h-6 w-px bg-gray-300 mx-2"></div>
+
+        <NotificationBell />
+
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
           className="flex items-center cursor-pointer gap-2 rounded-full px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50 transition-colors duration-200"
