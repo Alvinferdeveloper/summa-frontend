@@ -28,6 +28,7 @@ const timeAgo = (dateString: string) => {
 
 export default function ApplicationCard({ application, onRespondToInterview }: ApplicationCardProps) {
   const { job_post, status, created_at, interview } = application;
+  console.log(application)
 
   return (
     <Card className="hover:shadow-lg hover:border-primary/50 transition-all duration-300 rounded-lg h-full flex flex-col">

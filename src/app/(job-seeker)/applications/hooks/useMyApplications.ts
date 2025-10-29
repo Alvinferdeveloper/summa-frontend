@@ -3,7 +3,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
-import { Job } from '@/app/(job-seeker)/jobs/components/JobListItem'; // Reutilizamos la interfaz Job
+import { Job } from '@/app/(job-seeker)/jobs/components/JobListItem';
 
 export interface InterviewDetails {
   id: number;
@@ -24,14 +24,26 @@ export interface JobApplication {
   interview?: InterviewDetails;
 }
 
-const fetchMyApplications = async (): Promise<JobApplication[]> => {
-  const { data } = await api.get('/v1/applications');
+export interface ApplicationsApiResponse {
+  data: JobApplication[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+const fetchMyApplications = async (status: string, page: number, limit: number): Promise<ApplicationsApiResponse> => {
+  const params = new URLSearchParams({
+    status,
+    page: page.toString(),
+    limit: limit.toString(),
+  });
+  const { data } = await api.get<ApplicationsApiResponse>(`/v1/applications?${params.toString()}`);
   return data;
 };
 
-export const useMyApplications = () => {
-  return useQuery<JobApplication[], Error>({
-    queryKey: ['myApplications'],
-    queryFn: fetchMyApplications,
+export const useMyApplications = (status: string, page: number, limit: number) => {
+  return useQuery<ApplicationsApiResponse, Error>({
+    queryKey: ['myApplications', status, page, limit],
+    queryFn: () => fetchMyApplications(status, page, limit),
   });
 };
