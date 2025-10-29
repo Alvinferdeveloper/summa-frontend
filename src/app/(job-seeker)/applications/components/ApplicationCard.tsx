@@ -7,6 +7,7 @@ import { Clock, Mail, Briefcase, CalendarCheck } from "lucide-react";
 import { JobApplication, InterviewDetails } from '../hooks/useMyApplications';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
+import clsx from 'clsx';
 
 interface ApplicationCardProps {
   application: JobApplication;
@@ -25,23 +26,6 @@ const timeAgo = (dateString: string) => {
   return `hace ${Math.floor(seconds)} segundos`;
 };
 
-const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
-  switch (status.toLowerCase()) {
-    case 'postulado':
-      return 'default';
-    case 'en revisión':
-      return 'secondary';
-    case 'entrevista':
-      return 'outline';
-    case 'rechazado':
-      return 'destructive';
-    case 'contratado':
-      return 'default';
-    default:
-      return 'outline';
-  }
-};
-
 export default function ApplicationCard({ application, onRespondToInterview }: ApplicationCardProps) {
   const { job_post, status, created_at, interview } = application;
 
@@ -51,13 +35,23 @@ export default function ApplicationCard({ application, onRespondToInterview }: A
         <CardHeader>
           <div className="flex justify-between items-start gap-4">
             <div className="w-14 h-14 flex-shrink-0 bg-gray-100 rounded-lg flex items-center justify-center">
-                <img src={job_post.employer.logo_url || "/company_placeholder.png"} alt={job_post.employer.company_name} className="w-full h-full object-contain rounded-lg" />
+              <img src={job_post.employer.logo_url || "/company_placeholder.png"} alt={job_post.employer.company_name} className="w-full h-full object-contain rounded-lg" />
             </div>
             <div className="flex-grow">
               <p className="text-sm font-semibold text-primary">{job_post.employer.company_name}</p>
               <CardTitle className="text-lg leading-tight">{job_post.title}</CardTitle>
             </div>
-            <Badge variant={getStatusVariant(status)} className="capitalize">{status}</Badge>
+            <Badge
+              className={clsx(
+                'capitalize',
+                {
+                  'bg-accent text-primary-foreground': status === 'Postulado',
+                  'bg-secondary text-secondary-foreground': status === 'En Revisión',
+                  'bg-destructive text-destructive-foreground': status === 'Rechazado',
+                  'bg-amber-900 text-primary-foreground': status === 'Entrevista',
+                }
+              )}
+            >{status}</Badge>
           </div>
         </CardHeader>
         <CardContent className="flex-grow flex flex-col justify-between">
@@ -79,7 +73,7 @@ export default function ApplicationCard({ application, onRespondToInterview }: A
       </Link>
       {status === 'Entrevista' && interview && interview.candidate_response_status === 'Pendiente' && (
         <div className="p-4 border-t">
-          <Button 
+          <Button
             onClick={() => onRespondToInterview({
               id: interview.id,
               scheduled_at: interview.scheduled_at,

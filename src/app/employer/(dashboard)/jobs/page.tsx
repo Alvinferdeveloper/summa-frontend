@@ -199,7 +199,7 @@ export default function MyJobsPage() {
                         {totalApplicants}
                       </div>
                     </div>
-                    
+
                     {selectedJob ? (
                       <div>
                         <p className="text-sm text-white">{selectedJob.title}</p>
@@ -289,7 +289,7 @@ export default function MyJobsPage() {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end" className="w-48">
-                                {app.status === "Postulado" && (
+                                {(app.status === "Postulado" || app.status === "En revisión") && (
                                   <DropdownMenuItem
                                     onClick={(e) => {
                                       e.preventDefault();
@@ -322,6 +322,13 @@ export default function MyJobsPage() {
                                 >
                                   <Eye className="mr-2 h-4 w-4 text-blue-600" />
                                   <span className="font-medium">En revisión</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={() => handleStatusChange(app.id, "Postulado")}
+                                  className="cursor-pointer"
+                                >
+                                  <Eye className="mr-2 h-4 w-4 text-blue-600" />
+                                  <span className="font-medium">Postulado</span>
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
