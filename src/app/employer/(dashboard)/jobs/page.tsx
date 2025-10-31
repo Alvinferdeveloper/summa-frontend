@@ -93,7 +93,7 @@ export default function MyJobsPage() {
     setSelectedJobTitleForInterview(jobTitle);
     setIsScheduleModalOpen(true);
   };
-console.log(applicants)
+  console.log(applicants)
   return (
     <>
       <ScheduleInterviewModal
@@ -105,10 +105,10 @@ console.log(applicants)
       />
       <div className="min-h-screen">
         <div className="mb-4">
-          <div className="max-w-[1400px] mx-auto px-6 py-3 bg-gradient-to-br from-primary/70 via-primary/50 to-primary border-b">
+          <div className="max-w-7xl rounded-sm mx-auto px-6 py-3 shadow-xl bg-gradient-to-br from-primary/80 via-primary/70 to-primary border-b">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h1 className="text-2xl font-semibold text-black mb-1">Gestión de Ofertas</h1>
+                <h1 className="text-3xl font-bold text-accent mb-1">Gestión de Ofertas</h1>
                 <p className="text-sm text-white">Administra tus publicaciones y revisa los postulantes</p>
               </div>
               <div className="flex items-center gap-6">
@@ -145,7 +145,7 @@ console.log(applicants)
                     <CardTitle className="text-xl font-bold text-slate-900 mb-1">Mis Ofertas</CardTitle>
                     <p className="text-sm text-white">Selecciona para ver postulantes</p>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-slate-900 text-white text-sm font-bold flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-accent text-white text-sm font-bold flex items-center justify-center">
                     {jobPosts?.length || 0}
                   </div>
                 </div>
@@ -196,16 +196,18 @@ console.log(applicants)
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
                       <CardTitle className="text-xl font-bold text-slate-900">Postulantes</CardTitle>
-                      <div className="w-10 h-10 rounded-full bg-slate-900 text-white text-sm font-bold flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-accent text-white text-sm font-bold flex items-center justify-center">
                         {totalApplicants}
                       </div>
                     </div>
-                    
+
                     {selectedJob ? (
                       <div>
                         <p className="text-sm text-white">{selectedJob.title}</p>
-                      </div>
-                    ) : (
+                        <Link href={`/employer/jobs/${selectedJob.id}/pipeline`}>
+                          <Button size="sm" className="mt-2 bg-accent hover:bg-accent/80 cursor-pointer">Ver Pipeline</Button>
+                        </Link>
+                      </div>) : (
                       <p className="text-sm text-white">Selecciona una oferta para ver los postulantes</p>
                     )}
                   </div>
@@ -401,8 +403,8 @@ console.log(applicants)
               </ScrollArea>
             </div>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   )
 }

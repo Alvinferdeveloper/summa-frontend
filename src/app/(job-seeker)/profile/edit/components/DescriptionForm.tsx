@@ -64,7 +64,7 @@ export default function DescriptionForm({ profile, onSave }: DescriptionFormProp
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={updateDescriptionMutation.isPending}>
+            <Button type="submit" className='cursor-pointer' disabled={updateDescriptionMutation.isPending}>
               {updateDescriptionMutation.isPending ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (

@@ -40,7 +40,7 @@ export default function ProfileEditPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header con gradiente */}
-      <div className="relative w-3/4 mx-auto bg-gradient-to-br from-primary/70 via-primary/30 to-primary border-b">
+      <div className="relative w-3/4 mx-auto bg-gradient-to-br from-primary/90 via-primary/70 to-primary/50 border-b rounded-2xl shadow-xl">
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             {/* Avatar y info principal */}
@@ -65,7 +65,7 @@ export default function ProfileEditPage() {
                   Perfil Activo
                 </Badge>
               </div>
-              <p className="text-muted-foreground text-lg">
+              <p className="text-secondary text-lg">
                 Profesional en búsqueda de oportunidades
               </p>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -92,32 +92,32 @@ export default function ProfileEditPage() {
         <Card className="shadow-medium rounded-sm">
           <CardContent className="p-6">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3 md:grid-cols-7 gap-2 bg-primary/50 p-1 ">
-                <TabsTrigger value="personal-info" className="data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <TabsList className="grid w-full grid-cols-3 md:grid-cols-7 gap-2 bg-primary/80 p-1 ">
+                <TabsTrigger value="personal-info" className="data-[state=active]:bg-background data-[state=active]:shadow-sm cursor-pointer">
                   <User className="h-4 w-4 md:mr-2" />
                   <span className="hidden md:inline">Personal</span>
                 </TabsTrigger>
-                <TabsTrigger value="contact-info" className="data-[state=active]:bg-background data-[state=active]:shadow-sm" id='contact'>
+                <TabsTrigger value="contact-info" className="data-[state=active]:bg-background data-[state=active]:shadow-sm cursor-pointer" id='contact'>
                   <Mail className="h-4 w-4 md:mr-2" />
                   <span className="hidden md:inline">Contacto</span>
                 </TabsTrigger>
-                <TabsTrigger value="description" className="data-[state=active]:bg-background data-[state=active]:shadow-sm" id='about'>
+                <TabsTrigger value="description" className="data-[state=active]:bg-background data-[state=active]:shadow-sm cursor-pointer" id='about'>
                   <BookOpen className="h-4 w-4 md:mr-2" />
                   <span className="hidden md:inline">Sobre Mí</span>
                 </TabsTrigger>
-                <TabsTrigger value="disability-info" className="data-[state=active]:bg-background data-[state=active]:shadow-sm" id="disability-types">
+                <TabsTrigger value="disability-info" className="data-[state=active]:bg-background data-[state=active]:shadow-sm cursor-pointer" id="disability-types">
                   <Users className="h-4 w-4 md:mr-2" />
                   <span className="hidden md:inline">Discapacidad</span>
                 </TabsTrigger>
-                <TabsTrigger value="experiences" className="data-[state=active]:bg-background data-[state=active]:shadow-sm" id="experience">
+                <TabsTrigger value="experiences" className="data-[state=active]:bg-background data-[state=active]:shadow-sm cursor-pointer" id="experience">
                   <Briefcase className="h-4 w-4 md:mr-2" />
                   <span className="hidden md:inline">Experiencia</span>
                 </TabsTrigger>
-                <TabsTrigger value="education" className="data-[state=active]:bg-background data-[state=active]:shadow-sm" id="education">
+                <TabsTrigger value="education" className="data-[state=active]:bg-background data-[state=active]:shadow-sm cursor-pointer" id="education">
                   <Award className="h-4 w-4 md:mr-2" />
                   <span className="hidden md:inline">Educación</span>
                 </TabsTrigger>
-                <TabsTrigger value="skills" className="data-[state=active]:bg-background data-[state=active]:shadow-sm" id="skills">
+                <TabsTrigger value="skills" className="data-[state=active]:bg-background data-[state=active]:shadow-sm cursor-pointer" id="skills">
                   <CheckCircle2 className="h-4 w-4 md:mr-2" />
                   <span className="hidden md:inline">Habilidades</span>
                 </TabsTrigger>

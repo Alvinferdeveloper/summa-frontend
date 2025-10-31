@@ -160,7 +160,7 @@ export default function EducationForm({ onSuccess }: EducationFormProps) {
           </div>
 
           <div className="flex justify-end gap-2">
-            <Button type="button" variant="ghost" onClick={onSuccess}>Cancelar</Button>
+            <Button type="button" className='bg-accent hover:bg-accent/80 cursor-pointer' onClick={onSuccess}>Cancelar</Button>
             <Button type="submit" disabled={createEducationMutation.isPending}>
               {createEducationMutation.isPending ? 'Guardando...' : 'Guardar Formación'}
             </Button>

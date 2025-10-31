@@ -52,7 +52,7 @@ export default function SkillsList({ profile }: SkillsListProps) {
           <Star className="h-5 w-5" />
           Habilidades
         </CardTitle>
-        <Button onClick={() => setIsEditing(true)} size="sm" className="gap-1">
+        <Button onClick={() => setIsEditing(true)} size="sm" className="gap-1 cursor-pointer">
           <PlusCircle className="h-4 w-4" /> Editar
         </Button>
       </CardHeader>
@@ -99,7 +99,7 @@ export default function SkillsList({ profile }: SkillsListProps) {
                   )}
                 />
                 <div className="flex justify-end gap-2">
-                  <Button type="button" variant="outline" onClick={() => setIsEditing(false)}>Cancelar</Button>
+                  <Button type="button" className='bg-accent hover:bg-accent/80 cursor-pointer' onClick={() => setIsEditing(false)}>Cancelar</Button>
                   <Button type="submit" disabled={updateSkillsMutation.isPending}>
                     {updateSkillsMutation.isPending ? (
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />

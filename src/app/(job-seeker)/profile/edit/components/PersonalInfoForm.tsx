@@ -79,7 +79,7 @@ export default function PersonalInfoForm({ profile, onSave }: PersonalInfoFormPr
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={updatePersonalInfoMutation.isPending}>
+            <Button type="submit" className='cursor-pointer' disabled={updatePersonalInfoMutation.isPending}>
               {updatePersonalInfoMutation.isPending ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (

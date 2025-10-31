@@ -64,7 +64,7 @@ export default function CVUpload({ resumeUrl }: CVUploadProps) {
             </a>
             <Button
               size="sm"
-              variant="outline"
+              className='bg-accent hover:bg-accent/80 cursor-pointer'
               onClick={() => document.getElementById('cv-upload-input')?.click()}
               disabled={mutation.isPending}
             >
@@ -74,7 +74,7 @@ export default function CVUpload({ resumeUrl }: CVUploadProps) {
           </div>
         ) : (
           <Button
-            variant="outline"
+            className="font-medium hover:bg-accent/80 bg-accent cursor-pointer"
             onClick={() => document.getElementById('cv-upload-input')?.click()}
             disabled={mutation.isPending}
           >

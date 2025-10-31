@@ -126,8 +126,8 @@ export default function Step4Review({ prevStep, isPending }: Step4ReviewProps) {
         </Card>
 
         <div className="flex justify-between mt-8">
-          <Button onClick={prevStep} variant="outline" type="button">Anterior</Button>
-          <Button type="submit" disabled={isPending}>
+          <Button onClick={prevStep} className='bg-accent hover:bg-accent/80 cursor-pointer' type="button">Anterior</Button>
+          <Button type="submit" disabled={isPending} className='cursor-pointer'>
             {isPending ? "Publicando..." : "Publicar Empleo"}
           </Button>
         </div>

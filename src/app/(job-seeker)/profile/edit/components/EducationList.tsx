@@ -41,7 +41,7 @@ export default function EducationList({ profile }: EducationListProps) {
           <Button
             onClick={() => setIsAdding(true)}
             size="sm"
-            className="gap-2 rounded-full shadow-sm hover:shadow-md transition-all"
+            className="gap-2 rounded-full shadow-sm hover:shadow-md transition-all cursor-pointer"
           >
             <PlusCircle className="h-4 w-4" />
             Añadir formación

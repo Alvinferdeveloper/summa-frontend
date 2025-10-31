@@ -135,7 +135,7 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
           />
 
           <div className="flex justify-end gap-2">
-            <Button type="button" variant="ghost" onClick={onSuccess}>Cancelar</Button>
+            <Button type="button" className='bg-accent hover:bg-accent/80 cursor-pointer' onClick={onSuccess}>Cancelar</Button>
             <Button type="submit" disabled={isPending}>
               {isPending ? 'Guardando...' : 'Guardar Experiencia'}
             </Button>

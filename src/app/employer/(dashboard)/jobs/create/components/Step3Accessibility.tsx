@@ -70,8 +70,8 @@ export default function Step3Accessibility({ nextStep, prevStep }: Step3Accessib
         </div>
 
         <div className="flex justify-between mt-8">
-          <Button onClick={prevStep} variant="outline" type="button">Anterior</Button>
-          <Button onClick={handleNext} type="button">Siguiente</Button>
+          <Button onClick={prevStep} className='bg-accent hover:bg-accent/80 cursor-pointer' type="button">Anterior</Button>
+          <Button onClick={handleNext} className='cursor-pointer' type="button">Siguiente</Button>
         </div>
       </div>
     </motion.div>

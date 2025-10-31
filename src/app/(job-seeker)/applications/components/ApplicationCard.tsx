@@ -53,7 +53,7 @@ export default function ApplicationCard({ application, onRespondToInterview }: A
         <CardHeader>
           <div className="flex justify-between items-start gap-4">
             <div className="w-14 h-14 flex-shrink-0 bg-gray-100 rounded-lg flex items-center justify-center">
-                <img src={job_post.employer.logo_url || "/company_placeholder.png"} alt={job_post.employer.company_name} className="w-full h-full object-contain rounded-lg" />
+              <img src={job_post.employer.logo_url || "/company_placeholder.png"} alt={job_post.employer.company_name} className="w-full h-full object-contain rounded-lg" />
             </div>
             <div className="flex-grow">
               <p className="text-sm font-semibold text-primary">{job_post.employer.company_name}</p>
@@ -82,7 +82,7 @@ export default function ApplicationCard({ application, onRespondToInterview }: A
       {status === 'Entrevista' && interview && (
         <div className="p-4 border-t space-y-2">
           {interview.candidate_response_status === 'Pendiente' ? (
-            <Button 
+            <Button
               onClick={() => onRespondToInterview({
                 id: interview.id,
                 scheduled_at: interview.scheduled_at,
@@ -93,12 +93,12 @@ export default function ApplicationCard({ application, onRespondToInterview }: A
                 job_post_title: job_post.title,
                 employer_name: job_post.employer.company_name,
               })}
-              className="w-full"
+              className="w-full bg-accent hover:bg-accent/80 cursor-pointer"
             >
               <CalendarCheck className="mr-2 h-4 w-4" /> Responder Entrevista
             </Button>
           ) : (
-            <Button variant="outline" className="w-full" onClick={() => download(interview.id)}>
+            <Button className="w-full bg-accent hover:bg-accent/80 cursor-pointer" onClick={() => download(interview.id)}>
               <CalendarPlus className="mr-2 h-4 w-4" /> Añadir al Calendario
             </Button>
           )}

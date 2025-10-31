@@ -75,20 +75,19 @@ export default function TalentPoolPage() {
   }
 
   const hasActiveFilters = Object.values(filters).some((v) => v !== "") || searchTerm !== ""
-  console.log(candidates)
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header Section */}
-      <div className="bg-card/50 backdrop-blur-sm bg-gradient-to-br from-primary/70 via-primary/50 to-primary border-b sticky top-0 z-10">
+      <div className="bg-card/50 max-w-7xl rounded-sm shadow-lg mx-auto backdrop-blur-sm bg-gradient-to-br from-primary/90 via-primary/70 to-primary border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-8">
           <div className="flex items-start justify-between gap-4 mb-6">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 rounded-lg bg-primary/10">
-                  <Users className="h-6 w-6 text-primary" />
+                  <Users className="h-6 w-6 text-accent" />
                 </div>
-                <h1 className="text-3xl md:text-4xl font-bold text-balance">Buscador de Talentos</h1>
+                <h1 className="text-2xl md:text-3xl font-bold text-accent">Buscador de Talentos</h1>
               </div>
               <p className="text-secondary text-pretty leading-relaxed">
                 Explora perfiles de candidatos talentosos que se ajustan a tus necesidades y conecta con el mejor
@@ -115,14 +114,14 @@ export default function TalentPoolPage() {
                   placeholder="Buscar por país..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 placeholder:text-black"
                 />
               </div>
               <Select
                 onValueChange={(value) => handleFilterChange("disability_type_id", value)}
                 value={filters.disability_type_id || ""}
               >
-                <SelectTrigger className="w-full sm:w-[260px]">
+                <SelectTrigger className="w-full sm:w-[260px] [&[data-placeholder]]:text-black">
                   <SelectValue placeholder="Tipo de Discapacidad" />
                 </SelectTrigger>
                 <SelectContent>
@@ -137,7 +136,7 @@ export default function TalentPoolPage() {
                 onValueChange={(value) => handleFilterChange("skill_id", value)}
                 value={filters.skill_id || ""}
               >
-                <SelectTrigger className="w-full sm:w-[260px]">
+                <SelectTrigger className="w-full sm:w-[260px] [&[data-placeholder]]:text-black">
                   <SelectValue placeholder="Habilidades" />
                 </SelectTrigger>
                 <SelectContent>
@@ -165,7 +164,7 @@ export default function TalentPoolPage() {
         {/* Results Count - Mobile */}
         {totalCandidates > 0 && (
           <div className="md:hidden mb-4">
-            <Badge variant="secondary" className="text-sm px-3 py-1.5">
+            <Badge variant="secondary" className="text-sm px-3 py-1.5 bg-[#34CC2D]">
               {totalCandidates} {totalCandidates === 1 ? "candidato" : "candidatos"}
             </Badge>
           </div>

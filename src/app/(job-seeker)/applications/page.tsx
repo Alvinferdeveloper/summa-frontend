@@ -34,7 +34,7 @@ export default function ApplicationsPage() {
       <h1 className="text-3xl font-bold tracking-tight mb-8">Mis Postulaciones</h1>
 
       <Tabs defaultValue="Todas" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-5 bg-primary/80">
           {tabs.map(tab => (
             <TabsTrigger key={tab.value} value={tab.value} className='cursor-pointer'>{tab.label}</TabsTrigger>
           ))}
@@ -42,9 +42,9 @@ export default function ApplicationsPage() {
 
         {tabs.map(tab => (
           <TabsContent key={tab.value} value={tab.value} className="mt-6">
-            <ApplicationList 
-              status={tab.value} 
-              onRespondToInterview={handleRespondToInterview} 
+            <ApplicationList
+              status={tab.value}
+              onRespondToInterview={handleRespondToInterview}
             />
           </TabsContent>
         ))}

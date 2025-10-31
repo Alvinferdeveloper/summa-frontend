@@ -178,7 +178,7 @@ export default function DisabilityInfoForm({ profile, onSave }: DisabilityInfoFo
             </div>
             <FormMessage />
 
-            <Button type="submit" disabled={updateDisabilityInfoMutation.isPending}>
+            <Button type="submit" className='cursor-pointer' disabled={updateDisabilityInfoMutation.isPending}>
               {updateDisabilityInfoMutation.isPending ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (

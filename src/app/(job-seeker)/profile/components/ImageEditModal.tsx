@@ -19,12 +19,12 @@ interface ImageEditModalProps {
   title: string;
 }
 
-export default function ImageEditModal({ 
-  isOpen, 
-  onClose, 
-  currentImageUrl, 
-  endpoint, 
-  paramName, 
+export default function ImageEditModal({
+  isOpen,
+  onClose,
+  currentImageUrl,
+  endpoint,
+  paramName,
   queryToInvalidate,
   title
 }: ImageEditModalProps) {
@@ -66,8 +66,8 @@ export default function ImageEditModal({
           <ImageUpload onFileChange={setFile} label="Nueva Imagen" />
         </div>
         <DialogFooter>
-          <Button variant="destructive" onClick={onClose}>Cancelar</Button>
-          <Button onClick={handleSave} disabled={!file || isPending}>
+          <Button className='bg-accent hover:bg-accent/80 cursor-pointer' onClick={onClose}>Cancelar</Button>
+          <Button className='cursor-pointer' onClick={handleSave} disabled={!file || isPending}>
             {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
             Guardar Cambios
           </Button>

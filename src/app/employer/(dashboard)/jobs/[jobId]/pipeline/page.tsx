@@ -39,12 +39,12 @@ export default function PipelinePage() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-br from-slate-50 to-slate-100/50">
+    <div className="h-full flex flex-col bg-gradient-to-br shadow-md from-slate-50 to-slate-100/50">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="p-6 border-b bg-white/80 backdrop-blur-sm shadow-sm bg-gradient-to-br from-primary/70 via-primary/50 to-primary"
+        className="p-6 border-b bg-white/80 backdrop-blur-sm shadow-sm bg-gradient-to-br from-primary/80 via-primary/60 to-primary"
       >
         <div className="flex justify-between items-center max-w-[1800px] mx-auto">
           <div className="flex items-center gap-4">
@@ -52,12 +52,12 @@ export default function PipelinePage() {
               <Users className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">Pipeline de Contratación</h1>
-              <p className="text-sm text-slate-500 mt-0.5">{applications?.length || 0} candidatos en proceso</p>
+              <h1 className="text-2xl font-bold text-accent">Pipeline de Contratación</h1>
+              <p className="text-sm text-accent mt-0.5">{applications?.length || 0} candidatos en proceso</p>
             </div>
           </div>
           <Link href={`/employer/jobs`}>
-            <Button variant="outline" className="gap-2 hover:bg-slate-50 transition-colors bg-transparent">
+            <Button className="gap-2 bg-accent hover:bg-accent/80 transition-colors cursor-pointer">
               <ArrowLeft className="w-4 h-4" />
               Volver a la Lista
             </Button>

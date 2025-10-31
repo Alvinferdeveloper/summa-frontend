@@ -63,7 +63,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
             <FormItem>
               <FormLabel>Título del Puesto</FormLabel>
               <FormControl>
-                <Input placeholder="Ej: Ingeniero de Software Frontend" {...field} />
+                <Input placeholder="Ej: Ingeniero de Software Frontend" {...field} className='border-primary' />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -77,7 +77,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
             <FormItem>
               <FormLabel>Ubicación (Texto)</FormLabel>
               <FormControl>
-                <Input placeholder="Ej: Ciudad de México, Remoto" {...field} />
+                <Input placeholder="Ej: Ciudad de México, Remoto" {...field} className='border-primary' />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -87,7 +87,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
         <div>
           <FormLabel>Selecciona la Ubicación en el Mapa</FormLabel>
           <p className="text-sm text-muted-foreground mb-2">Haz clic en el mapa para establecer la ubicación exacta.</p>
-          <LocationPickerMap 
+          <LocationPickerMap
             position={form.watch('latitude') && form.watch('longitude') ? [form.watch('latitude')!, form.watch('longitude')!] : null}
             onLocationSelect={(lat, lng) => {
               form.setValue('latitude', lat);
@@ -105,7 +105,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
                 <FormLabel>Modelo de Trabajo</FormLabel>
                 <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className='border-primary'>
                       <SelectValue placeholder={isLoadingWorkModels ? "Cargando..." : "Selecciona un modelo"} />
                     </SelectTrigger>
                   </FormControl>
@@ -127,7 +127,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
                 <FormLabel>Jornada Laboral</FormLabel>
                 <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className='border-primary'>
                       <SelectValue placeholder={isLoadingWorkSchedules ? "Cargando..." : "Selecciona una jornada"} />
                     </SelectTrigger>
                   </FormControl>
@@ -149,7 +149,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
                 <FormLabel>Tipo de Contrato</FormLabel>
                 <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className='border-primary'>
                       <SelectValue placeholder={isLoadingContractTypes ? "Cargando..." : "Selecciona un tipo de contrato"} />
                     </SelectTrigger>
                   </FormControl>
@@ -171,7 +171,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
                 <FormLabel>Nivel de Experiencia</FormLabel>
                 <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className='border-primary'>
                       <SelectValue placeholder={isLoadingExperienceLevels ? "Cargando..." : "Selecciona un nivel de experiencia"} />
                     </SelectTrigger>
                   </FormControl>
@@ -193,7 +193,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
                 <FormLabel>Categoría</FormLabel>
                 <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className='border-primary'>
                       <SelectValue placeholder={isLoadingCategories ? "Cargando..." : "Selecciona una categoría"} />
                     </SelectTrigger>
                   </FormControl>
@@ -214,7 +214,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
               <FormItem>
                 <FormLabel>Salario (Opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Ej: $1000 - $1500 USD, A convenir" {...field} />
+                  <Input placeholder="Ej: $1000 - $1500 USD, A convenir" {...field} className='border-primary' />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -226,7 +226,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
             render={({ field }) => (
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <FormControl>
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange} className='border-primary cursor-pointer' />
                 </FormControl>
                 <div className="space-y-1 leading-none">
                   <FormLabel>
@@ -242,7 +242,7 @@ export default function Step1Role({ nextStep }: Step1RoleProps) {
         </div>
 
         <div className="flex justify-end mt-8">
-          <Button onClick={handleNext}>Siguiente</Button>
+          <Button onClick={handleNext} className='cursor-pointer'>Siguiente</Button>
         </div>
       </div>
     </motion.div>

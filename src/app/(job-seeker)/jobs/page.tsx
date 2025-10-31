@@ -138,14 +138,14 @@ export default function JobsPage() {
                 <Label
                   key={item.id}
                   htmlFor={`ws-${item.id}`}
-                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/60 transition-colors cursor-pointer group"
                 >
                   <RadioGroupItem value={item.id.toString()} id={`ws-${item.id}`} className='border-primary' />
                   <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, work_schedule_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button className="w-full bg-accent hover:bg-accent/80 cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, work_schedule_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Modelo de Trabajo" icon={<Briefcase className="h-4 w-4" />} className={filters.work_model_id ? 'bg-blue-100' : ''}>
@@ -158,14 +158,14 @@ export default function JobsPage() {
                 <Label
                   key={item.id}
                   htmlFor={`wm-${item.id}`}
-                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/60 transition-colors cursor-pointer group"
                 >
                   <RadioGroupItem value={item.id.toString()} id={`wm-${item.id}`} className='border-primary' />
                   <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, work_model_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button className="w-full bg-accent hover:bg-accent/80 cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, work_model_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Tipo de Contrato" icon={<Briefcase className="h-4 w-4" />} className={filters.contract_type_id ? 'bg-blue-100' : ''}>
@@ -178,14 +178,14 @@ export default function JobsPage() {
                 <Label
                   key={item.id}
                   htmlFor={`ct-${item.id}`}
-                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/60 transition-colors cursor-pointer group"
                 >
                   <RadioGroupItem value={item.id.toString()} id={`ct-${item.id}`} className='border-primary' />
                   <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, contract_type_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button className="w-full bg-accent hover:bg-accent/80 cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, contract_type_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Experiencia" icon={<Star className="h-4 w-4" />} className={filters.experience_level_id ? 'bg-blue-100' : ''}>
@@ -198,14 +198,14 @@ export default function JobsPage() {
                 <Label
                   key={item.id}
                   htmlFor={`el-${item.id}`}
-                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/60 transition-colors cursor-pointer group"
                 >
                   <RadioGroupItem value={item.id.toString()} id={`el-${item.id}`} className='border-primary' />
                   <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, experience_level_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button className="w-full bg-accent hover:bg-accent/80 cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, experience_level_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Fecha" icon={<Calendar className="h-4 w-4" />} className={filters.date_posted ? 'bg-blue-100' : ''}>
@@ -218,14 +218,14 @@ export default function JobsPage() {
                 <Label
                   key={item}
                   htmlFor={`date-${item}`}
-                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/60 transition-colors cursor-pointer group"
                 >
                   <RadioGroupItem value={item} id={`date-${item}`} className='border-primary' />
                   <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item}</span>
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => { setFilters(prev => ({ ...prev, date_posted: "" })); setSelectedDateFilter(""); }}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button className="w-full bg-accent hover:bg-accent/80 cursor-pointer" onClick={() => { setFilters(prev => ({ ...prev, date_posted: "" })); setSelectedDateFilter(""); }}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Categoría" icon={<Tag className="h-4 w-4" />} className={filters.category_id ? 'bg-blue-100' : ''}>
@@ -238,14 +238,14 @@ export default function JobsPage() {
                 <Label
                   key={item.id}
                   htmlFor={`cat-${item.id}`}
-                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/60 transition-colors cursor-pointer group"
                 >
                   <RadioGroupItem value={item.id.toString()} id={`cat-${item.id}`} className='border-primary' />
                   <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, category_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button className="w-full bg-accent hover:bg-accent/80 cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, category_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <FilterButton title="Salario" icon={<DollarSign className="h-4 w-4" />}>
@@ -271,19 +271,18 @@ export default function JobsPage() {
                 <Label
                   key={item.id}
                   htmlFor={`dis-${item.id}`}
-                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors cursor-pointer group"
+                  className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/60 transition-colors cursor-pointer group"
                 >
                   <RadioGroupItem value={item.id.toString()} id={`dis-${item.id}`} className='border-primary' />
                   <span className="font-normal flex-1 group-hover:text-foreground transition-colors">{item.name}</span>
                 </Label>
               ))}
             </RadioGroup>
-            <div className="p-2 border-t"><Button variant="ghost" className="w-full" onClick={() => setFilters(prev => ({ ...prev, disability_type_id: "" }))}>Limpiar</Button></div>
+            <div className="p-2 border-t"><Button className="w-full bg-accent hover:bg-accent/80 cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, disability_type_id: "" }))}>Limpiar</Button></div>
           </FilterButton>
 
           <Button
-            variant="outline"
-            className="flex items-center gap-2 text-muted-foreground transition-colors cursor-pointer"
+            className="flex items-center gap-2 bg-accent hover:bg-accent/80 cursor-pointer"
             onClick={() => setFilters({})}>
             <X className="h-4 w-4" />
             Limpiar Filtros
@@ -292,7 +291,7 @@ export default function JobsPage() {
       </div>
 
       <div className="px-4 mb-4 flex justify-end">
-        <Button onClick={() => setViewMode(viewMode === 'list' ? 'map' : 'list')} variant="outline" className='cursor-pointer'>
+        <Button onClick={() => setViewMode(viewMode === 'list' ? 'map' : 'list')} className='cursor-pointer mt-2 bg-accent hover:bg-accent/80'>
           {viewMode === 'list' ? <Map className="mr-2 h-4 w-4" /> : <List className="mr-2 h-4 w-4" />}
           {viewMode === 'list' ? 'Ver en Mapa' : 'Ver Lista'}
         </Button>

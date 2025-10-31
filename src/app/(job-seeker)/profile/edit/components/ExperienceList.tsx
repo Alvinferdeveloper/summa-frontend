@@ -49,7 +49,7 @@ export default function ExperienceList({ profile }: ExperienceListProps) {
           Experiencia Laboral
         </CardTitle>
         {!isAdding && (
-          <Button onClick={() => setIsAdding(true)} size="sm" className="gap-2 rounded-full">
+          <Button onClick={() => setIsAdding(true)} size="sm" className="gap-2 rounded-full cursor-pointer">
             <PlusCircle className="h-4 w-4" /> Añadir
           </Button>
         )}

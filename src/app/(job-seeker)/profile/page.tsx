@@ -97,16 +97,14 @@ export default function ProfilePage() {
 
               <Link href="/profile/edit" className="sm:pb-2">
                 <Button
-                  variant="outline"
-                  className="font-medium border-2 hover:bg-accent/5 hover:border-primary bg-transparent"
+                  className="font-medium hover:bg-accent/80 bg-accent cursor-pointer"
                 >
                   Editar Perfil
                 </Button>
               </Link>
               <Link href="/profile/builder" className="sm:pb-2">
                 <Button
-                  variant="outline"
-                  className="font-medium border-2 hover:bg-accent/5 hover:border-primary bg-transparent"
+                  className="font-medium hover:bg-accent/80 bg-accent cursor-pointer"
                 >
                   Construir CV
                 </Button>

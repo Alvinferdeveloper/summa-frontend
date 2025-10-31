@@ -75,8 +75,8 @@ export default function Step2Description({ nextStep, prevStep }: Step2Descriptio
         />
 
         <div className="flex justify-between mt-8">
-          <Button onClick={prevStep} variant="outline">Anterior</Button>
-          <Button onClick={handleNext}>Siguiente</Button>
+          <Button onClick={prevStep} className='bg-accent hover:bg-accent/80 cursor-pointer'>Anterior</Button>
+          <Button onClick={handleNext} className='cursor-pointer'>Siguiente</Button>
         </div>
       </div>
     </motion.div>

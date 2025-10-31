@@ -46,7 +46,7 @@ export default function CandidateProfile({ profile }: { profile: ProfileData }) 
                             </div>
 
                             <Link href="/employer/jobs">
-                                <Button variant="outline" className="font-medium border-2 hover:bg-accent/5 hover:border-primary bg-transparent">
+                                <Button className="font-medium border-2 bg-accent hover:bg-accent/80 cursor-pointer">
                                     Volver
                                 </Button>
                             </Link>
