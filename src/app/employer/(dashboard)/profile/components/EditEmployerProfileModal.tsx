@@ -29,6 +29,8 @@ const profileSchema = z.object({
   foundation_date: z.string().optional(),
   industry: z.string().optional(),
   size: z.string().optional(),
+  email: z.email("El email es requerido."),
+  dedication: z.string().optional(),
   description: z.string().optional(),
   address: z.string().optional(),
 })
@@ -57,15 +59,37 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
       size: profile.size || "",
       description: profile.description || "",
       address: profile.address || "",
+      email: profile.email || "",
+      dedication: profile.dedication || "",
     },
   })
 
   useEffect(() => {
-    form.reset(profile)
+    if (profile) {
+      form.reset({
+        company_name: profile.company_name || "",
+        website: profile.website || "",
+        phone_number: profile.phone_number || "",
+        country: profile.country || "",
+        foundation_date: profile.foundation_date
+          ? profile.foundation_date.split("T")[0]
+          : "",
+        industry: profile.industry || "",
+        size: profile.size || "",
+        description: profile.description || "",
+        address: profile.address || "",
+        email: profile.email || "",
+        dedication: profile.dedication || "",
+      })
+    }
   }, [profile, form])
 
+
   const onSubmit = (values: ProfileFormValues) => {
-    updateProfile(values, {
+    updateProfile({
+      ...values,
+      foundation_date: values.foundation_date ? new Date(values.foundation_date).toISOString() : undefined,
+    }, {
       onSuccess: () => {
         if (logoFile) {
           uploadLogo(
@@ -114,12 +138,38 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
                 />
                 <FormField
                   control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem className="md:col-span-2">
+                      <FormLabel className="text-sm font-normal text-foreground">Email</FormLabel>
+                      <FormControl>
+                        <Input className="h-11 border-primary" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
                   name="industry"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-sm font-normal text-foreground">Industria</FormLabel>
                       <FormControl>
                         <Input className="h-11 border-primary" placeholder="Ej: Tecnología" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="dedication"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-normal text-foreground">Dedicación</FormLabel>
+                      <FormControl>
+                        <Input className="h-11 border-primary" placeholder="Ej: Sistemas embebidos" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -236,10 +286,10 @@ export default function EditEmployerProfileModal({ isOpen, onClose, profile }: E
             </div>
 
             <DialogFooter className="pt-6 border-t gap-3">
-              <Button type="button" variant="outline" onClick={onClose} className="h-11 px-6 bg-transparent">
+              <Button type="button" variant="outline" onClick={onClose} className="h-11 px-6 bg-transparent cursor-pointer">
                 Cancelar
               </Button>
-              <Button type="submit" disabled={isUpdating || isUploading} className="h-11 px-6">
+              <Button type="submit" disabled={isUpdating || isUploading} className="h-11 px-6 cursor-pointer">
                 {(isUpdating || isUploading) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Guardar Cambios
               </Button>
