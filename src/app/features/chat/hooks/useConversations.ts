@@ -27,5 +27,7 @@ export const useConversations = () => {
         },
     });
 
-    return { conversations, isLoading, openConversation, markAsRead };
+    const totalUnreadCount = conversations?.reduce((sum, conv) => sum + (conv.unread_count || 0), 0) || 0;
+
+    return { conversations, isLoading, openConversation, markAsRead, totalUnreadCount };
 };

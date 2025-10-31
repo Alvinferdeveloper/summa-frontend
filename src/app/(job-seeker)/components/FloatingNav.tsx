@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { Briefcase, UserCircle, Heart, LogOut, MessageSquare } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import NotificationBell from '@/app/components/layout/NotificationBell';
+import { useConversations } from '@/app/features/chat/hooks/useConversations';
 
 const navItems = [
   { name: 'Empleos', href: '/jobs', icon: <Briefcase className="h-5 w-5" /> },
@@ -17,6 +18,7 @@ const navItems = [
 
 export default function FloatingNav() {
   const pathname = usePathname();
+  const { totalUnreadCount } = useConversations();
 
   return (
     <motion.div
@@ -46,6 +48,11 @@ export default function FloatingNav() {
               )}
               <span className="relative z-10">{item.icon}</span>
               <span className="relative z-10 hidden sm:inline">{item.name}</span>
+              {item.name === 'Mensajes' && totalUnreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                  {totalUnreadCount}
+                </span>
+              )}
             </Link>
           );
         })}
