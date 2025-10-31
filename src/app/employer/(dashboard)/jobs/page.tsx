@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState, useEffect } from "react"
@@ -6,7 +5,7 @@ import { useEmployerJobPosts } from "../dashboard/hooks/useEmployerJobPosts"
 import { useJobApplicants } from "./hooks/useJobApplicants"
 import { CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Loader2, Users, Briefcase, FileText, MoreHorizontal, Check, X, Eye, CalendarPlus, MessageSquareQuote, CheckCircle, XCircle } from "lucide-react"
+import { Loader2, Users, Briefcase, FileText, MoreHorizontal, Check, X, Eye, CalendarPlus, UserCircle2, Mail, MessageSquareQuote, CheckCircle, XCircle } from "lucide-react"
 import Link from "next/link"
 import EmployerJobListItem from "./components/EmployerJobListItem"
 import { Button } from "@/components/ui/button"
@@ -17,6 +16,7 @@ import clsx from "clsx"
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationNext } from "@/components/ui/pagination";
 import ScheduleInterviewModal from './components/ScheduleInterviewModal';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { useDownloadICS } from "@/app/hooks/useDownloadICS";
 
 const timeAgo = (dateString: string) => {
   const date = new Date(dateString)
@@ -60,6 +60,7 @@ export default function MyJobsPage() {
   const { data: jobPosts, isLoading: isLoadingJobs, error: jobsError } = useEmployerJobPosts()
   const { data: applicantsData, isLoading: isLoadingApplicants, error: applicantsError } = useJobApplicants(selectedJobId!, currentPage, APPLICANTS_PER_PAGE)
   const { mutate: updateStatus } = useUpdateApplicationStatus(selectedJobId!)
+  const { download: downloadICS } = useDownloadICS();
 
   useEffect(() => {
     if (!selectedJobId && jobPosts && jobPosts.length > 0) {
@@ -92,7 +93,7 @@ export default function MyJobsPage() {
     setSelectedJobTitleForInterview(jobTitle);
     setIsScheduleModalOpen(true);
   };
-
+console.log(applicants)
   return (
     <>
       <ScheduleInterviewModal
@@ -199,14 +200,12 @@ export default function MyJobsPage() {
                         {totalApplicants}
                       </div>
                     </div>
-
+                    
                     {selectedJob ? (
                       <div>
                         <p className="text-sm text-white">{selectedJob.title}</p>
-                        <Link href={`/employer/jobs/${selectedJob.id}/pipeline`}>
-                          <Button variant="secondary" size="sm" className="mt-2">Ver Pipeline</Button>
-                        </Link>
-                      </div>) : (
+                      </div>
+                    ) : (
                       <p className="text-sm text-white">Selecciona una oferta para ver los postulantes</p>
                     )}
                   </div>
@@ -291,7 +290,7 @@ export default function MyJobsPage() {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end" className="w-48">
-                                {(app.status === "Postulado" || app.status === "En revisión") && (
+                                {app.status === "Postulado" && (
                                   <DropdownMenuItem
                                     onClick={(e) => {
                                       e.preventDefault();
@@ -325,13 +324,6 @@ export default function MyJobsPage() {
                                   <Eye className="mr-2 h-4 w-4 text-blue-600" />
                                   <span className="font-medium">En revisión</span>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  onClick={() => handleStatusChange(app.id, "Postulado")}
-                                  className="cursor-pointer"
-                                >
-                                  <Eye className="mr-2 h-4 w-4 text-blue-600" />
-                                  <span className="font-medium">Postulado</span>
-                                </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </div>
@@ -363,6 +355,9 @@ export default function MyJobsPage() {
                                   </Tooltip>
                                 </TooltipProvider>
                               )}
+                              <Button variant="secondary" size="sm" className="h-9 px-3 cursor-pointer" onClick={() => downloadICS(Number(app.interview?.id))}>
+                                <CalendarPlus className="mr-1 h-4 w-4 text-primary" /> Calendario
+                              </Button>
                             </div>
                           </div>
                         )}
