@@ -7,6 +7,7 @@ export interface Candidate {
   id: string;
   first_name: string;
   last_name: string;
+  profile_id: number;
   phone_number: string;
   profile_picture_url: string;
   country: string;

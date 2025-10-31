@@ -16,7 +16,7 @@ export default function CandidateCard({ candidate }: CandidateCardProps) {
   const { openConversation } = useConversations()
 
   const handleCardClick = () => {
-    router.push(`candidates/${candidate.id}`)
+    router.push(`candidates/${candidate.profile_id.toString()}`)
   }
 
   const handleChatClick = (e: React.MouseEvent) => {
