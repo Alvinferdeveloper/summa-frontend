@@ -6,7 +6,7 @@ import { useEmployerJobPosts } from "../dashboard/hooks/useEmployerJobPosts"
 import { useJobApplicants } from "./hooks/useJobApplicants"
 import { CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Loader2, Users, Briefcase, FileText, MoreHorizontal, Check, X, Eye, CalendarPlus, UserCircle2, Mail, MessageSquareQuote, CheckCircle, XCircle } from "lucide-react"
+import { Loader2, Users, Briefcase, FileText, MoreHorizontal, Check, X, Eye, CalendarPlus, MessageSquareQuote, CheckCircle, XCircle } from "lucide-react"
 import Link from "next/link"
 import EmployerJobListItem from "./components/EmployerJobListItem"
 import { Button } from "@/components/ui/button"
@@ -203,8 +203,10 @@ export default function MyJobsPage() {
                     {selectedJob ? (
                       <div>
                         <p className="text-sm text-white">{selectedJob.title}</p>
-                      </div>
-                    ) : (
+                        <Link href={`/employer/jobs/${selectedJob.id}/pipeline`}>
+                          <Button variant="secondary" size="sm" className="mt-2">Ver Pipeline</Button>
+                        </Link>
+                      </div>) : (
                       <p className="text-sm text-white">Selecciona una oferta para ver los postulantes</p>
                     )}
                   </div>
