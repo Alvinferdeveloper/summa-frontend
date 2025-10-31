@@ -20,3 +20,7 @@ export const createConversation = async (participantId: string): Promise<Convers
     const { data } = await api.post(`v1/chat/conversations/with/${participantId}`);
     return data.data;
 };
+
+export const markConversationAsRead = async (conversationId: number): Promise<void> => {
+    await api.post(`v1/chat/conversations/${conversationId}/mark-as-read`);
+};

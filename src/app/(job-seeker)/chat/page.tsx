@@ -10,7 +10,7 @@ import { MessageSquare } from "lucide-react"
 
 function ChatPageContent() {
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(null)
-  const { conversations, isLoading } = useConversations()
+  const { conversations, isLoading, markAsRead } = useConversations()
   const searchParams = useSearchParams()
   const conversationToOpen = searchParams.get("open")
 
@@ -19,9 +19,19 @@ function ChatPageContent() {
       const foundConversation = conversations.find((c) => c.id.toString() === conversationToOpen)
       if (foundConversation) {
         setActiveConversation(foundConversation)
+        if (foundConversation.unread_count > 0) {
+          markAsRead(foundConversation.id)
+        }
       }
     }
-  }, [conversationToOpen, conversations, isLoading])
+  }, [conversationToOpen, conversations, isLoading, markAsRead])
+
+  const handleSetActiveConversation = (conversation: Conversation) => {
+    setActiveConversation(conversation);
+    if (conversation.unread_count > 0) {
+      markAsRead(conversation.id);
+    }
+  }
 
   return (
     <div className="h-[calc(100vh-7rem)] flex flex-col overflow-hidden bg-background border-2 rounded-md">
@@ -30,7 +40,7 @@ function ChatPageContent() {
           <ConversationList
             conversations={conversations}
             isLoading={isLoading}
-            setActiveConversation={setActiveConversation}
+            setActiveConversation={handleSetActiveConversation}
             activeConversation={activeConversation}
           />
         </div>

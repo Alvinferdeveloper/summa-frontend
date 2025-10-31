@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { Loader2 } from "lucide-react"
 import { useSession } from "next-auth/react"
 import type { Conversation } from "@/app/features/chat/types"
+import { Badge } from "@/components/ui/badge"
 
 interface ConversationListProps {
   conversations: Conversation[] | undefined
@@ -82,14 +83,19 @@ export default function ConversationList({
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <p
-                      className={cn(
-                        "font-semibold truncate text-sm transition-colors duration-200",
-                        isActive ? "text-primary" : "text-foreground",
+                    <div className="flex justify-between items-center">
+                      <p
+                        className={cn(
+                          "font-semibold truncate text-sm transition-colors duration-200",
+                          isActive ? "text-primary" : "text-foreground",
+                        )}
+                      >
+                        {otherParticipantName}
+                      </p>
+                      {conv.unread_count > 0 && (
+                        <Badge className="h-5 px-2 text-xs font-semibold">{conv.unread_count}</Badge>
                       )}
-                    >
-                      {otherParticipantName}
-                    </p>
+                    </div>
                     <p className="text-xs text-muted-foreground truncate">Toca para abrir el chat</p>
                   </div>
 

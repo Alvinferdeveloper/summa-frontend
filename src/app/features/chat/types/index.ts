@@ -25,6 +25,7 @@ export interface Conversation {
     employer_id: number;
     user: User;
     employer: Employer;
+    unread_count: number;
     created_at: string;
     updated_at: string;
 }

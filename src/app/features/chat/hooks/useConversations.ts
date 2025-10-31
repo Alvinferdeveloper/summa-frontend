@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getConversations, createConversation } from '@/app/features/chat/services/chatApi';
+import { getConversations, createConversation, markConversationAsRead } from '@/app/features/chat/services/chatApi';
 import { useRouter } from 'next/navigation';
 import { Conversation } from '@/app/features/chat/types';
 
@@ -20,5 +20,12 @@ export const useConversations = () => {
         },
     });
 
-    return { conversations, isLoading, openConversation };
+    const { mutate: markAsRead } = useMutation<void, Error, number>({
+        mutationFn: markConversationAsRead,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['conversations'] });
+        },
+    });
+
+    return { conversations, isLoading, openConversation, markAsRead };
 };
