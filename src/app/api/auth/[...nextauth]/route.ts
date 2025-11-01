@@ -42,11 +42,14 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
+        userType: { label: "User Type", type: "text" },
       },
       async authorize(credentials, req) {
+        const userType = (credentials as { userType?: string } | undefined)?.userType ?? "employer";
+        const path = userType === 'admin' ? '/v1/admin/login' : '/v1/employer/login';
         try {
           const response = await axios.post<BackendTokenResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}/v1/employer/login`,
+            `${process.env.NEXT_PUBLIC_API_URL}${path}`,
             {
               email: credentials?.email,
               password: credentials?.password,

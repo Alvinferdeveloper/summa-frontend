@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
@@ -8,28 +7,49 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const signInUrl = new URL('/auth/signin', req.url);
-  const profileUrl = new URL('/profile', req.url);
+  const jobsUrl = new URL('/jobs', req.url);
   const employerDashboardUrl = new URL('/employer/dashboard', req.url);
+  const adminLoginUrl = new URL('/admin/login', req.url);
+  const adminDashboardUrl = new URL('/admin/dashboard', req.url);
   const homeUrl = new URL('/', req.url);
 
-  const isAuthPage = pathname.startsWith('/auth/signin') || pathname.startsWith('/employer/login') || pathname.startsWith('/employer/register');
-
+  const isAuthPage = pathname.startsWith('/auth/signin') || pathname.startsWith('/employer/login') || pathname.startsWith('/employer/register') || pathname.startsWith('/admin/login');
+  console.log(token,isAuthPage)
   if (!token) {
     if (!isAuthPage) {
       return NextResponse.redirect(signInUrl);
     }
+    console.log("no token")
     return NextResponse.next();
   }
+
   const { role } = token;
 
   if (isAuthPage) {
     if (role === 'job_seeker') {
-      return NextResponse.redirect(profileUrl);
+      return NextResponse.redirect(jobsUrl);
     }
     if (role === 'employer') {
       return NextResponse.redirect(employerDashboardUrl);
     }
+    if (role === 'admin' && pathname !== '/admin/login') {
+      return NextResponse.redirect(adminDashboardUrl);
+    }
   }
+
+  if (pathname.startsWith('/admin')) {
+    if (pathname === '/admin/login') {
+      if (token && token.role === 'admin') {
+        return NextResponse.redirect(adminDashboardUrl);
+      }
+      return NextResponse.next();
+    }
+    if (!token || token.role !== 'admin') {
+      return NextResponse.redirect(adminLoginUrl);
+    }
+    return NextResponse.next();
+  }
+
 
   if (pathname.startsWith('/profile') && role !== 'job_seeker') {
     return NextResponse.redirect(homeUrl);
@@ -38,6 +58,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(homeUrl);
   }
 
+  console.log("jjaja")
   return NextResponse.next();
 }
 
@@ -45,8 +66,8 @@ export const config = {
   matcher: [
     '/profile/:path*',
     '/employer/dashboard/:path*',
+    '/employer/:path*',
     '/auth/signin',
-    '/employer/login',
-    '/employer/register',
+    '/admin/:path*',
   ],
 };
