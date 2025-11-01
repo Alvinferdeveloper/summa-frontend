@@ -4,7 +4,7 @@
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { 
+import {
   Loader2,
   LayoutDashboard,
   Users,
@@ -30,18 +30,18 @@ interface AdminLayoutProps {
 
 const adminNavItems = [
   { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-  { name: 'Usuarios', href: '/admin/users', icon: Users },
-  { name: 'Empleadores', href: '/admin/employers', icon: Building2 },
-  { name: 'Empleos', href: '/admin/job-posts', icon: Briefcase },
-  { name: 'Discapacidades', href: '/admin/disability-types', icon: Accessibility },
-  { name: 'Necesidades Acc.', href: '/admin/accessibility-needs', icon: Tag },
-  { name: 'Categorías', href: '/admin/categories', icon: FileText },
-  { name: 'Universidades', href: '/admin/universities', icon: GraduationCap },
-  { name: 'Tipos Contrato', href: '/admin/contract-types', icon: Briefcase },
-  { name: 'Niveles Exp.', href: '/admin/experience-levels', icon: Star },
-  { name: 'Modelos Trabajo', href: '/admin/work-models', icon: Briefcase },
-  { name: 'Jornadas', href: '/admin/work-schedules', icon: Clock },
-  { name: 'Utilidades', href: '/admin/utilities', icon: Settings },
+  { name: 'Usuarios', href: '/admin/dashboard/users', icon: Users },
+  { name: 'Empleadores', href: '/admin/dashboard/employers', icon: Building2 },
+  { name: 'Empleos', href: '/admin/dashboard/job-posts', icon: Briefcase },
+  { name: 'Discapacidades', href: '/admin/dashboard/disability-types', icon: Accessibility },
+  { name: 'Necesidades Acc.', href: '/admin/dashboard/accessibility-needs', icon: Tag },
+  { name: 'Categorías', href: '/admin/dashboard/categories', icon: FileText },
+  { name: 'Universidades', href: '/admin/dashboard/universities', icon: GraduationCap },
+  { name: 'Tipos Contrato', href: '/admin/dashboard/contract-types', icon: Briefcase },
+  { name: 'Niveles Exp.', href: '/admin/dashboard/experience-levels', icon: Star },
+  { name: 'Modelos Trabajo', href: '/admin/dashboard/work-models', icon: Briefcase },
+  { name: 'Jornadas', href: '/admin/dashboard/work-schedules', icon: Clock },
+  { name: 'Utilidades', href: '/admin/dashboard/utilities', icon: Settings },
 ];
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
@@ -50,10 +50,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (status === 'loading') return; 
+    if (status === 'loading') return;
 
     if (!session || session.role !== 'admin') {
-      router.push('/'); 
+      router.push('/');
     }
   }, [session, status, router]);
 
