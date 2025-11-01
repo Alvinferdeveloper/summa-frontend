@@ -1,7 +1,8 @@
-"use client"
+'use client';
 
 import { useJobCompatibility } from '../hooks/useJobCompatibility';
 import CompatibilityScore from './CompatibilityScore';
+import JobExplainer from '@/app/(job-seeker)/jobs/components/JobExplainer';
 
 import { useState } from "react"
 import type { Job } from "./JobListItem"
@@ -38,6 +39,20 @@ export default function JobDetails({ job, isAppliable = true }: JobDetailsProps)
       </div>
     )
   }
+
+  const fullJobDescription = `
+    Título del Puesto: ${job.title}
+
+    Descripción: ${job.description}
+
+    Responsabilidades: ${job.responsibilities}
+
+    Requisitos: ${job.requirements}
+
+    Características de Accesibilidad Ofrecidas: ${job.accessibility_needs?.map(n => n.name).join(', ') || 'No especificadas'}
+
+    Esta oferta puede ser de especial interés para personas con las siguientes discapacidades: ${job.disability_types?.map(t => t.name).join(', ') || 'No especificadas'}
+  `;
 
   return (
     <>
@@ -118,6 +133,9 @@ export default function JobDetails({ job, isAppliable = true }: JobDetailsProps)
 
           {/* Content Section */}
           <div className="p-6 lg:p-8 space-y-6">
+            {/* AI Explainer Section */}
+            <JobExplainer jobDescription={fullJobDescription} />
+
             {/* Compatibility Section */}
             {compatibility && compatibility.total_candidate_needs > 0 && (
               <Card className="p-6 bg-gradient-to-br from-blue-50 to-transparent">
