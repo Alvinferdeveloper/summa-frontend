@@ -6,9 +6,9 @@ import { MoreHorizontal, ArrowUpDown, PlusCircle, Loader2, Trash2 } from "lucide
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { DataTable } from "./components/data-table"
+import { DataTable } from "../components/data-table"
 import DisabilityTypeForm from "./components/DisabilityTypeForm"
-import DeleteConfirmationModal from "./components/DeleteConfirmationModal";
+import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 import {
   useAdminDisabilityTypes,
   useCreateDisabilityType,
