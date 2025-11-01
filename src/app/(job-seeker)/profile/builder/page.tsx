@@ -12,14 +12,16 @@ import EducationList from '../edit/components/EducationList';
 import SkillsList from '../edit/components/SkillsList';
 import DisabilityInfoForm from '../edit/components/DisabilityInfoForm';
 import CVPreview from './components/CVPreview';
+import DescriptionForm from '../edit/components/DescriptionForm';
 
 const steps = [
   { id: 1, name: 'Información Personal' },
-  { id: 2, name: 'Experiencia' },
-  { id: 3, name: 'Educación' },
-  { id: 4, name: 'Habilidades' },
-  { id: 5, name: 'Accesibilidad' },
-  { id: 6, name: 'Revisar y Generar CV' },
+  { id: 2, name: 'Descripción Personal' },
+  { id: 3, name: 'Experiencia' },
+  { id: 4, name: 'Educación' },
+  { id: 5, name: 'Habilidades' },
+  { id: 6, name: 'Accesibilidad' },
+  { id: 7, name: 'Revisar y Generar CV' },
 ];
 
 export default function ProfileBuilderPage() {
@@ -53,20 +55,20 @@ export default function ProfileBuilderPage() {
       <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
         <AnimatePresence mode="wait">
           {currentStep === 1 && <PersonalInfoForm profile={profile} onSave={nextStep} />}
-          {currentStep === 2 && <ExperienceList profile={profile} />}
-          {currentStep === 3 && <EducationList profile={profile} />}
-          {currentStep === 4 && <SkillsList profile={profile} />}
-          {currentStep === 5 && <DisabilityInfoForm profile={profile} onSave={nextStep} />}
-          {currentStep === 6 && <CVPreview profile={profile} prevStep={prevStep} />}
+          {currentStep === 2 && <DescriptionForm profile={profile} onSave={nextStep} />}
+          {currentStep === 3 && <ExperienceList profile={profile} />}
+          {currentStep === 4 && <EducationList profile={profile} />}
+          {currentStep === 5 && <SkillsList profile={profile} />}
+          {currentStep === 6 && <DisabilityInfoForm profile={profile} onSave={nextStep} />}
+          {currentStep === 7 && <CVPreview profile={profile} prevStep={prevStep} />}
         </AnimatePresence>
 
         {/* Navigation (Only for sections that do not have their own save/next button) */}
-        {(currentStep === 2 || currentStep === 3 || currentStep === 4) && (
           <div className="flex justify-between mt-8">
-            <Button onClick={prevStep} variant="outline">Anterior</Button>
-            <Button onClick={nextStep}>Siguiente</Button>
+            {currentStep > 1 && <Button onClick={prevStep} className='bg-accent hover:bg-accent/80 cursor-pointer'>Anterior</Button>}
+            {currentStep < steps.length && <Button onClick={nextStep} className='bg-primary hover:bg-primary/80 cursor-pointer'>Siguiente</Button>}
           </div>
-        )}
+      
       </div>
     </div>
   );

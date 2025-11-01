@@ -33,7 +33,6 @@ export default function CVPreview({ profile, prevStep }: CVPreviewProps) {
         </div>
 
         <div className="flex justify-between mt-8">
-          <Button onClick={prevStep} variant="outline">Anterior</Button>
           <PDFDownloadLink document={<CVDocument profile={profile} />} fileName="CV.pdf">
             {({ blob, url, loading, error }) =>
               loading ? 'Generando PDF...' : <Button onClick={() => router.push('/profile')}>Descargar CV en PDF</Button>
