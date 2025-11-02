@@ -7,7 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Mic, Send, Volume2, Loader2 } from 'lucide-react';
 import { useWebSpeechSearch } from '@/app/hooks/useWebSpeechSearch';
 import { useEffect, useState } from 'react';
-import { DefaultChatTransport } from 'ai';
+import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 
 interface JobChatAgentProps {
   onFiltersApplied: (filters: any) => void;
@@ -16,6 +16,7 @@ interface JobChatAgentProps {
 export default function JobChatAgent({ onFiltersApplied }: JobChatAgentProps) {
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: '/api/job-agent', }),
+    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     onToolCall: ({ toolCall }) => {
       if (toolCall.toolName === 'searchJobs') {
         onFiltersApplied(toolCall.input);
@@ -56,6 +57,7 @@ export default function JobChatAgent({ onFiltersApplied }: JobChatAgentProps) {
     setIsSpeaking(true);
   };
 
+  console.log(messages);
 
   return (
     <div className="flex flex-col h-full bg-card">
@@ -68,7 +70,7 @@ export default function JobChatAgent({ onFiltersApplied }: JobChatAgentProps) {
                   m.parts.map((part, partIndex) => {
                     if (part.type === "text") {
                       return (
-                        <div className="flex justify-between items-center mb-2">
+                        <div key={partIndex} className="flex justify-between items-center mb-2">
                           <p className="text-xs font-bold">Asistente Summa</p>
                           <Button variant="ghost" size="icon" onClick={() => handleTextToSpeech(part.text)} className="h-6 w-6">
                             <Volume2 className="h-4 w-4" />
