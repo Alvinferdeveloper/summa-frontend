@@ -20,7 +20,10 @@ import { useWorkModels } from '@/app/employer/(dashboard)/jobs/create/hooks/useW
 import { useCategories } from '@/app/employer/(dashboard)/jobs/create/hooks/useCategories';
 import { useDisabilityTypes } from './hooks/useDisabilityTypes';
 import dynamic from 'next/dynamic';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import JobChatAgent from './components/JobChatAgent';
+import { MessageSquare } from 'lucide-react';
 
 interface JobsApiResponse {
   data: Job[];
@@ -49,6 +52,7 @@ export default function JobsPage() {
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [selectedDateFilter, setSelectedDateFilter] = useState<string>("");
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const JobsMap = useMemo(() => dynamic(() => import('./components/JobsMap'), { ssr: false }), []);
 
@@ -58,6 +62,10 @@ export default function JobsPage() {
   const { data: workModels = [] } = useWorkModels();
   const { data: categories = [] } = useCategories();
   const { data: disabilityTypes = [] } = useDisabilityTypes();
+
+  const handleAgentFiltersApplied = useCallback((agentFilters: any) => {
+    setFilters(agentFilters);
+  }, []);
 
   const {
     data,
@@ -126,6 +134,21 @@ export default function JobsPage() {
 
   return (
     <>
+      <Sheet open={isChatOpen} onOpenChange={setIsChatOpen}>
+        <SheetContent className="w-[400px] sm:w-[540px] p-0 flex flex-col">
+          <SheetHeader className="p-6">
+            <SheetTitle>Asistente de Búsqueda</SheetTitle>
+          </SheetHeader>
+          <JobChatAgent onFiltersApplied={handleAgentFiltersApplied} />
+        </SheetContent>
+      </Sheet>
+
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button onClick={() => setIsChatOpen(true)} size="lg" className="rounded-full w-16 h-16 shadow-lg">
+          <MessageSquare className="h-6 w-6" />
+        </Button>
+      </div>
+
       <div className="flex-shrink-0 p-4 border-b border-gray-200">
         <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2">
           <FilterButton title="Jornada" icon={<Clock className="h-4 w-4" />} className={filters.work_schedule_id ? 'bg-blue-100' : ''}>
