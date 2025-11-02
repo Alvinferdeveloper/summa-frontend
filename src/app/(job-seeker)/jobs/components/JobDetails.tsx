@@ -41,8 +41,12 @@ export default function JobDetails({ job, isAppliable = true }: JobDetailsProps)
   }
 
   const fullJobDescription = `
+    Empresa: ${job.employer.company_name}
     Título del Puesto: ${job.title}
-
+    Ubicación: ${job.location}
+    Contrato: ${job.contract_type.name}
+    Horario: ${job.work_schedule.name}
+    Salario: ${job.salary}
     Descripción: ${job.description}
 
     Responsabilidades: ${job.responsibilities}
