@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -9,10 +8,12 @@ import { useCreateExperience } from '../hooks/useCreateExperience';
 
 import { EmployerCombobox, EmployerOption } from './EmployerCombobox';
 import AddNewEmployerModal from './AddNewEmployerModal';
+import AiRewriteModal from '@/app/(job-seeker)/cv-builder/components/AiRewriteModal';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Sparkles } from 'lucide-react';
 
 const experienceSchema = z.object({
   job_title: z.string().min(3, "El título del puesto es requerido."),
@@ -37,7 +38,8 @@ interface ExperienceFormProps {
 
 export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
   const [selectedEmployer, setSelectedEmployer] = useState<EmployerOption | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNewEmployerModalOpen, setIsNewEmployerModalOpen] = useState(false);
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
 
   const form = useForm<ExperienceSchema>({
     resolver: zodResolver(experienceSchema),
@@ -50,6 +52,11 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
     setSelectedEmployer({ ...newEmployer, isNew: true });
   };
 
+  const handleAiRewriteConfirm = (newText: string) => {
+    form.setValue('description', newText);
+    setIsAiModalOpen(false);
+  };
+
   function onSubmit(values: ExperienceSchema) {
     if (!selectedEmployer) {
       alert("Por favor, selecciona o añade una empresa.");
@@ -59,8 +66,7 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
     const payload: CreateExperiencePayload = { ...values };
     if (selectedEmployer.isNew) {
       payload.new_employer_id = selectedEmployer.id;
-    }
-    else {
+    } else {
       payload.employer_id = selectedEmployer.id;
     }
     mutate(payload, { onSuccess });
@@ -69,9 +75,16 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
   return (
     <>
       <AddNewEmployerModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isNewEmployerModalOpen}
+        onClose={() => setIsNewEmployerModalOpen(false)}
         onSuccess={handleNewEmployerSuccess}
+      />
+      <AiRewriteModal
+        isOpen={isAiModalOpen}
+        onClose={() => setIsAiModalOpen(false)}
+        onConfirm={handleAiRewriteConfirm}
+        title="Reescribir Descripción de Experiencia"
+        description="Describe de forma sencilla tus tareas y logros en este puesto, y la IA los convertirá en una descripción profesional."
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-4 border rounded-sm">
@@ -81,7 +94,7 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
             <EmployerCombobox
               selectedEmployer={selectedEmployer}
               onSelect={setSelectedEmployer}
-              onAddNew={() => setIsModalOpen(true)}
+              onAddNew={() => setIsNewEmployerModalOpen(true)}
             />
           </FormItem>
 
@@ -127,8 +140,14 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Descripción</FormLabel>
-                <FormControl><Textarea placeholder="Describe tus responsabilidades..." {...field} className="border-primary" /></FormControl>
+                <div className="flex justify-between items-center">
+                  <FormLabel>Descripción</FormLabel>
+                  <Button type="button" size="sm" onClick={() => setIsAiModalOpen(true)} className='bg-accent hover:bg-accent/80 cursor-pointer'>
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Ayúdame a escribir
+                  </Button>
+                </div>
+                <FormControl><Textarea rows={4} placeholder="Describe tus responsabilidades y logros..." {...field} className="border-primary" /></FormControl>
                 <FormMessage />
               </FormItem>
             )}
