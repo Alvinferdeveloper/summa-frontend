@@ -135,16 +135,16 @@ export default function JobsPage() {
   return (
     <>
       <Sheet open={isChatOpen} onOpenChange={setIsChatOpen}>
-        <SheetContent className="w-[400px] sm:w-[540px] p-0 flex flex-col">
-          <SheetHeader className="p-6">
-            <SheetTitle>Asistente de Búsqueda</SheetTitle>
+        <SheetContent className="w-[400px] h-[100vh] sm:w-[540px] p-0 flex flex-col border shadow-xl border-primary/60 bg-black/60" >
+          <SheetHeader className="pt-6">
+            <SheetTitle className='text-white font-bold text-2xl'>Asistente de Búsqueda</SheetTitle>
           </SheetHeader>
           <JobChatAgent onFiltersApplied={handleAgentFiltersApplied} />
         </SheetContent>
       </Sheet>
 
       <div className="fixed bottom-6 right-6 z-50">
-        <Button onClick={() => setIsChatOpen(true)} size="lg" className="rounded-full w-16 h-16 shadow-lg">
+        <Button onClick={() => setIsChatOpen(true)} size="lg" className="rounded-full w-16 h-16 shadow-lg cursor-pointer">
           <MessageSquare className="h-6 w-6" />
         </Button>
       </div>
