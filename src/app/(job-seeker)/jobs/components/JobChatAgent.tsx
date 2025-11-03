@@ -29,15 +29,9 @@ export default function JobChatAgent({ onFiltersApplied }: JobChatAgentProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   useEffect(() => {
-    // ⚠️ La ScrollArea de Shadcn/Radix no es el elemento que se desplaza.
-    // Necesitas acceder al viewport o al contenedor interno que se desplaza.
-    // En la implementación de Shadcn/Radix, el elemento que se desplaza
-    // es un <div> que está justo dentro de la ScrollArea.
-
     const viewport = scrollRef.current?.querySelector('[data-radix-scroll-area-viewport]') as HTMLDivElement;
 
     if (viewport) {
-      // Hacemos scroll hasta la parte inferior.
       viewport.scrollTop = viewport.scrollHeight;
     }
   }, [messages]);
@@ -51,8 +45,8 @@ export default function JobChatAgent({ onFiltersApplied }: JobChatAgentProps) {
     handleSubmit(e);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
     if (input.trim() !== '') {
       sendMessage({ text: input.trim() });
       setInput('');
