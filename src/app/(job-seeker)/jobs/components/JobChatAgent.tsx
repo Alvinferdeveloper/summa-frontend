@@ -99,10 +99,10 @@ export default function JobChatAgent({ onFiltersApplied }: JobChatAgentProps) {
               </div>
             </div>
           ))}
-          {status === "streaming" && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
+          {status === "submitted" && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
             <div className="flex justify-start">
-              <div className="p-3 rounded-lg bg-muted flex items-center">
-                <Loader2 className="h-5 w-5 animate-spin" />
+              <div className="p-3 rounded-lg bg-transparent flex items-center">
+                <Loader2 className="h-6 w-6 animate-spin text-white" />
               </div>
             </div>
           )}
