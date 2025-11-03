@@ -61,9 +61,9 @@ export default function JobChatAgent({ onFiltersApplied }: JobChatAgentProps) {
     }
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'es-ES';
+    utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => setIsSpeaking(false);
     window.speechSynthesis.speak(utterance);
-    setIsSpeaking(true);
   };
 
   return (
