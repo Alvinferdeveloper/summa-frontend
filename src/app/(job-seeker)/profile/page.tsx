@@ -62,16 +62,16 @@ export default function ProfilePage() {
           paramName="banner"
           queryToInvalidate="myProfile"
           title="Banner del Perfil"
-          className="w-3/4 mx-auto"
+          className="w-full"
         >
-          <div className="h-48 relative sm:h-60 flex justify-center rounded-md rounded-tr-lg border-b border-border">
+          <div className="h-60 md:h-80 relative flex justify-center border-b border-border">
             <img
               src={profile?.banner_url || "/banner_placeholder.png"}
               alt="Profile Banner"
-              className="w-full h-full object-cover rounded-tr-lg rounded-tl-lg" />
+              className="w-full h-full object-cover rounded-2xl shadow-md" />
           </div>
         </ImageEdit>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative -mt-20 sm:-mt-24 pb-6">
             <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-end">
               <ImageEdit
@@ -95,20 +95,22 @@ export default function ProfilePage() {
                 <p className="text-base text-muted-foreground">{session?.user?.email}</p>
               </div>
 
-              <Link href="/profile/edit" className="sm:pb-2">
-                <Button
-                  className="font-medium hover:bg-accent/80 bg-accent cursor-pointer"
-                >
-                  Editar Perfil
-                </Button>
-              </Link>
-              <Link href="/profile/builder" className="sm:pb-2">
-                <Button
-                  className="font-medium hover:bg-accent/80 bg-accent cursor-pointer"
-                >
-                  Construir CV
-                </Button>
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Link href="/profile/edit" className="sm:pb-2">
+                  <Button
+                    className="font-medium hover:bg-accent/80 bg-accent cursor-pointer w-full sm:w-auto"
+                  >
+                    Editar Perfil
+                  </Button>
+                </Link>
+                <Link href="/profile/builder" className="sm:pb-2">
+                  <Button
+                    className="font-medium hover:bg-accent/80 bg-accent cursor-pointer w-full sm:w-auto"
+                  >
+                    Construir CV
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
