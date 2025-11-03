@@ -62,7 +62,7 @@ export default function JobDetails({ job, isAppliable = true }: JobDetailsProps)
     <>
       {isAppliable && <ApplyModal isOpen={isApplyModalOpen} onClose={() => setIsApplyModalOpen(false)} job={job} />}
       <div className="h-full bg-card border border-border rounded-lg shadow-sm overflow-hidden">
-        <ScrollArea className="h-full">
+        <ScrollArea className="md:h-full h-[70vh]">
           {/* Header Section */}
           <div className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-b border-border p-6 lg:p-8">
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />

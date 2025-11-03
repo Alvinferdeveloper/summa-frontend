@@ -132,6 +132,15 @@ export default function JobsPage() {
 
   const allJobs = data?.pages.flatMap(page => page.data) || [];
 
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  const handleJobSelect = (job: Job) => {
+    setSelectedJob(job);
+    if (window.innerWidth < 1024) {
+      setIsSheetOpen(true);
+    }
+  };
+
   return (
     <>
       <Sheet open={isChatOpen} onOpenChange={setIsChatOpen}>
@@ -321,35 +330,32 @@ export default function JobsPage() {
       </div>
 
       {viewMode === 'list' ? (
-        <div className="h-[calc(100vh-5rem)] grid grid-cols-1 lg:grid-cols-5 gap-2 px-32">
-          <div className=" rounded-lg col-span-2">
-            <ScrollArea className="h-[calc(100vh-6rem)]">
-              {status === 'pending' ? (
-                <div className="flex justify-center items-center h-full">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <div className="h-[calc(100vh-5rem)] grid grid-cols-1 lg:grid-cols-5 gap-2 px-4 lg:px-32">
+          <div className="lg:col-span-2 h-full overflow-y-auto">
+            {status === 'pending' ? (
+              <div className="flex justify-center items-center h-full">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : status === 'error' ? (
+              <div className="p-4 text-center text-red-500">Error: {error.message}</div>
+            ) : (
+              <div>
+                {data.pages.map((page) =>
+                  page.data?.map((job) => (
+                    <JobListItem
+                      key={job.id}
+                      job={job}
+                      isActive={selectedJob?.id === job.id}
+                      onClick={() => handleJobSelect(job)}
+                    />
+                  ))
+                )}
+                <div ref={ref} className="flex justify-center items-center h-24">
+                  {isFetchingNextPage && <Loader2 className="h-6 w-6 animate-spin text-primary" />}
+                  {!hasNextPage && data.pages.length > 0 && <p className="text-sm text-muted-foreground">No hay más empleos</p>}
                 </div>
-              ) : status === 'error' ? (
-                <div className="p-4 text-center text-red-500">Error: {error.message}</div>
-              ) : (
-                <div>
-                  {data.pages.map((page) =>
-                    page.data?.map((job) => (
-                      <JobListItem
-                        key={job.id}
-                        job={job}
-                        isActive={selectedJob?.id === job.id}
-                        onClick={() => setSelectedJob(job)}
-                      />
-                    ))
-                  )}
-                  <div ref={ref} className="flex justify-center items-center h-24">
-                    {isFetchingNextPage && <Loader2 className="h-6 w-6 animate-spin text-primary" />}
-                    {!hasNextPage && data.pages.length > 0 && <p className="text-sm text-muted-foreground">No hay más empleos</p>}
-                  </div>
-                </div>
-              )}
-              <ScrollBar orientation="vertical" className="w-3" />
-            </ScrollArea>
+              </div>
+            )}
           </div>
           <div className="hidden lg:block lg:col-span-3">
             <ScrollArea className="h-[calc(100vh-6rem)]">
@@ -362,6 +368,16 @@ export default function JobsPage() {
           <JobsMap jobs={allJobs} />
         </div>
       )}
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SheetContent className="w-full h-5/6 sm:w-full p-0 flex flex-col" side="bottom">
+          <SheetHeader className="p-4 border-b">
+            <SheetTitle>Detalles del Trabajo</SheetTitle>
+          </SheetHeader>
+          <ScrollArea className="flex-grow">
+            <JobDetails job={selectedJob} />
+          </ScrollArea>
+        </SheetContent>
+      </Sheet>
     </>
   );
 }
