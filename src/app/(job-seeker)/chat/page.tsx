@@ -48,7 +48,7 @@ function ChatPageContent() {
   }
 
   return (
-    <div className="h-[calc(100vh-7rem)] flex flex-col overflow-hidden bg-background border-2 rounded-md">
+    <div className="h-[calc(100dvh-8rem)] flex flex-col overflow-hidden bg-background border-2 rounded-md">
       <div className="flex-1 flex overflow-hidden min-h-0">
         <div className={`w-full md:w-80 lg:w-96 border-r flex-col bg-card overflow-hidden ${isMobileView && activeConversation ? 'hidden' : 'flex'}`}>
           <ConversationList

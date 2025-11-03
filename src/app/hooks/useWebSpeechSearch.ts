@@ -27,6 +27,7 @@ export const useWebSpeechSearch = () => {
         let interimTranscript = '';
         let finalTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; ++i) {
+          console.log(event.results[i]< "algo");
           if (event.results[i].isFinal) {
             finalTranscript += event.results[i][0].transcript;
           } else {

@@ -20,7 +20,7 @@ interface WebSocketContextType {
 
 const WebSocketContext = createContext<WebSocketContextType | null>(null);
 
-const WEBSOCKET_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8080/api/v1/ws/chat';
+const WEBSOCKET_URL = process.env.NEXT_PUBLIC_API_URL + '/v1/ws/chat' || 'ws://localhost:8080/api/v1/ws/chat';
 
 export const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
     const webSocket = useRef<WebSocket | null>(null);

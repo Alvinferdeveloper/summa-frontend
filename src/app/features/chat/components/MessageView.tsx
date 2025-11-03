@@ -55,6 +55,8 @@ export default function MessageView({ conversation, onBack }: MessageViewProps) 
     setNewMessage("")
   }
 
+  console.log(allMessages)
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-full bg-muted/5">
@@ -110,7 +112,7 @@ export default function MessageView({ conversation, onBack }: MessageViewProps) 
         <div
           className="absolute inset-0 bg-[url('/chat_background.png')] bg-no-repeat bg-center bg-contain opacity-90"
           style={{
-            backgroundSize: onBack ? "230%" : "100%",
+            backgroundSize: onBack ? "350%" : "100%",
           }}
         ></div>
         <div className="absolute inset-0 bg-white/30 pointer-events-none"></div>
