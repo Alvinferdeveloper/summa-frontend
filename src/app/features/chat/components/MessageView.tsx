@@ -9,16 +9,17 @@ import { useSession } from "next-auth/react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Send, Loader2, MoreVertical } from "lucide-react"
+import { ArrowLeft, Send, Loader2, MoreVertical } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Conversation, NewMessagePayload } from "@/app/features/chat/types"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface MessageViewProps {
   conversation: Conversation
+  onBack?: () => void;
 }
 
-export default function MessageView({ conversation }: MessageViewProps) {
+export default function MessageView({ conversation, onBack }: MessageViewProps) {
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useMessages(conversation.id)
   const { sendMessage } = useWebSocket()
   const { data: session } = useSession()
@@ -80,6 +81,11 @@ export default function MessageView({ conversation }: MessageViewProps) {
       <div className="flex-shrink-0 p-4 border-b bg-card shadow-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
+            {onBack && (
+              <Button onClick={onBack} variant="ghost" size="icon" className="md:hidden mr-2">
+                <ArrowLeft className="h-6 w-6" />
+              </Button>
+            )}
             <div className="relative">
               <Avatar className="h-11 w-11 ring-2 ring-primary/10">
                 <AvatarImage src={otherParticipantImage} alt={otherParticipantName} />
@@ -104,7 +110,7 @@ export default function MessageView({ conversation }: MessageViewProps) {
         <div
           className="absolute inset-0 bg-[url('/chat_background.png')] bg-no-repeat bg-center bg-contain opacity-90"
           style={{
-            backgroundSize: "100%",
+            backgroundSize: onBack ? "230%" : "100%",
           }}
         ></div>
         <div className="absolute inset-0 bg-white/30 pointer-events-none"></div>

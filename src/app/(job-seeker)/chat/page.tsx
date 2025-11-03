@@ -10,6 +10,7 @@ import { MessageSquare } from "lucide-react"
 
 function ChatPageContent() {
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(null)
+  const [isMobileView, setIsMobileView] = useState(false);
   const { conversations, isLoading, markAsRead } = useConversations()
   const searchParams = useSearchParams()
   const conversationToOpen = searchParams.get("open")
@@ -26,6 +27,15 @@ function ChatPageContent() {
     }
   }, [conversationToOpen, conversations, isLoading, markAsRead])
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobileView(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const handleSetActiveConversation = (conversation: Conversation) => {
     setActiveConversation(conversation);
     if (conversation.unread_count > 0) {
@@ -33,10 +43,14 @@ function ChatPageContent() {
     }
   }
 
+  const handleBack = () => {
+    setActiveConversation(null);
+  }
+
   return (
     <div className="h-[calc(100vh-7rem)] flex flex-col overflow-hidden bg-background border-2 rounded-md">
       <div className="flex-1 flex overflow-hidden min-h-0">
-        <div className="w-full md:w-80 lg:w-96 border-r flex flex-col bg-card overflow-hidden">
+        <div className={`w-full md:w-80 lg:w-96 border-r flex-col bg-card overflow-hidden ${isMobileView && activeConversation ? 'hidden' : 'flex'}`}>
           <ConversationList
             conversations={conversations}
             isLoading={isLoading}
@@ -45,9 +59,9 @@ function ChatPageContent() {
           />
         </div>
 
-        <div className="flex-1 flex flex-col overflow-hidden min-h-0">
+        <div className={`flex-1 flex-col overflow-hidden min-h-0 ${isMobileView && !activeConversation ? 'hidden' : 'flex'}`}>
           {activeConversation ? (
-            <MessageView conversation={activeConversation} />
+            <MessageView conversation={activeConversation} onBack={isMobileView ? handleBack : undefined} />
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-muted-foreground bg-muted/5">
               <MessageSquare className="h-20 w-20 text-primary/30 mb-4" strokeWidth={1.5} />
