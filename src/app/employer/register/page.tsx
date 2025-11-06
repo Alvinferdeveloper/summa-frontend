@@ -28,12 +28,12 @@ import api from "@/lib/api"
 
 const fetchInfrastructures = async () => {
     const { data } = await api.get<{ id: number; name: string }[]>("/v1/infrastructures");
-    return data.map(item => ({ ...item, id: String(item.id) }));
+    return data;
 };
 
 const fetchPrograms = async () => {
     const { data } = await api.get<{ id: number; name: string }[]>("/v1/programs");
-    return data.map(item => ({ ...item, id: String(item.id) }));
+    return data;
 };
 
 export default function EmployerRegister() {
@@ -108,18 +108,7 @@ export default function EmployerRegister() {
             <WelcomeModal isOpen={showWelcomeModal} onClose={() => setShowWelcomeModal(false)} />
             <div className="min-h-screen p-4 py-12 md:p-8 md:py-16">
                 <div className="mx-auto w-full max-w-6xl">
-                    <div className="mb-12 text-center">
-                        <div className="mb-6 flex justify-center">
-                            <div className="relative">
-                                <Image
-                                    src="/logo3.png"
-                                    alt="logo"
-                                    width={300}
-                                    height={300}
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     {/* Main Form Card */}
                     <Card className="overflow-hidden border-2 border-border shadow-xl rounded-sm">

@@ -10,7 +10,7 @@ interface Option {
 }
 
 interface CheckboxGroupProps<T extends FieldValues> {
-    control: Control<T>;
+    control?: Control<T>;
     name: Path<T>;
     options: readonly Option[];
     label: string;
@@ -21,46 +21,38 @@ export default function CheckboxGroup<T extends FieldValues>({ control, name, op
         <FormField
             control={control}
             name={name}
-            render={() => (
+            render={({ field }) => (
                 <FormItem className="md:col-span-3">
                     <div className="mb-4">
                         <FormLabel className="text-base font-medium">{label}</FormLabel>
                     </div>
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
                         {options.map((item) => (
-                            <FormField
+                            <FormItem
                                 key={item.id}
-                                control={control}
-                                name={name}
-                                render={({ field }) => {
-                                    return (
-                                        <FormItem
-                                            key={item.id}
-                                            className="flex flex-row items-start space-x-3 space-y-0"
-                                        >
-                                            <FormControl>
-                                                <Checkbox
-                                                    className="border-primary"
-                                                    checked={field.value?.includes(item.id)}
-                                                    onCheckedChange={(checked) => {
-                                                        const currentValue = Array.isArray(field.value) ? field.value : [];
-                                                        return checked
-                                                            ? field.onChange([...currentValue, item.id])
-                                                            : field.onChange(
-                                                                currentValue.filter(
-                                                                    (value) => value !== item.id
-                                                                )
-                                                            )
-                                                    }}
-                                                />
-                                            </FormControl>
-                                            <FormLabel className="font-normal">
-                                                {item.name}
-                                            </FormLabel>
-                                        </FormItem>
-                                    )
-                                }}
-                            />
+                                className="flex flex-row items-start space-x-3 space-y-0"
+                            >
+                                <FormControl>
+                                    <Checkbox
+                                        className="border-primary"
+                                        checked={Array.isArray(field.value) ? field.value.includes(item.id) : false}
+                                        onCheckedChange={(checked) => {
+                                            const currentValue = Array.isArray(field.value) ? field.value : [];
+                                            if (checked) {
+                                                field.onChange([...currentValue, item.id]);
+                                            } else {
+                                                field.onChange(currentValue.filter((value: number) => value !== item.id));
+                                            }
+                                        }}
+                                        onBlur={field.onBlur}
+                                        name={field.name}
+                                        ref={field.ref}
+                                    />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                    {item.name}
+                                </FormLabel>
+                            </FormItem>
                         ))}
                     </div>
                     <FormMessage />

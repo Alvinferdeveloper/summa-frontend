@@ -1,4 +1,3 @@
-
 import { z } from 'zod';
 
 const passwordValidation = new RegExp(
@@ -27,8 +26,8 @@ export const employerRegisterSchema = z.object({
   description: z.string().optional(),
   website: z.string().url({ message: "Por favor, introduce una URL válida." }).optional().or(z.literal('')),
   logo: z.any().optional(),
-  accessible_infrastructure_ids: z.array(z.string()).optional(),
-  inclusive_program_ids: z.array(z.string()).optional(),
+  accessible_infrastructure_ids: z.array(z.number()).optional(),
+  inclusive_program_ids: z.array(z.number()).optional(),
 });
 
 export type EmployerRegisterSchema = z.infer<typeof employerRegisterSchema>;
