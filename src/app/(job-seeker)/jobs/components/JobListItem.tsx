@@ -77,7 +77,7 @@ export default function JobListItem({ job, isActive, onClick }: JobListItemProps
           {job.is_urgent && (
             <span className="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">Se precisa Urgente</span>
           )}
-          {compatibility && (
+          {compatibility && compatibility.total_candidate_needs > 0 && (
             <div className="flex items-center gap-1.5 text-xs font-medium">
               <div className={`w-2 h-2 rounded-full ${getScoreColor(compatibility.score)}`} />
               <span>Compatibilidad: {Math.round(compatibility.score)}%</span>

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { signIn, useSession } from "next-auth/react"
 import { Mail, Lock, AlertCircle } from "lucide-react"
 import Image from "next/image"
-import { changaOne } from "@/fonts/fonts"
+import Link from "next/link"
 
 export default function EmployerLoginPage() {
   const [email, setEmail] = useState("")
@@ -56,13 +56,12 @@ export default function EmployerLoginPage() {
   return (
     <div className="min-h-screen">
       <div className="absolute top-6 left-6 flex items-center gap-2">
-        <div className={`bg-blue-600 text-white px-2 text-2xl py-1 rounded-sm ${changaOne.className}`}>SUMMA</div>
-        <Image
-          src="/logo.png"
-          alt="logo"
-          width={70}
-          height={70}
-        />
+        <Link href="/" className="flex items-center gap-2">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+            <span className="text-xl font-bold text-primary-foreground">S</span>
+          </div>
+          <span className="text-xl font-bold text-foreground">Summa</span>
+        </Link>
       </div>
 
       <div className="flex-1 flex items-center justify-center px-4 py-12">

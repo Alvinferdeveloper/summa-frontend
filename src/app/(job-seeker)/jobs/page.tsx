@@ -86,6 +86,7 @@ export default function JobsPage() {
     initialPageParam: 1,
   });
 
+  
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
@@ -97,6 +98,17 @@ export default function JobsPage() {
       setSelectedJob(data.pages[0].data[0]);
     }
   }, [data, selectedJob]);
+
+  useEffect(() => {
+    if (selectedJob && data) {
+      const allJobs = data.pages.flatMap(page => page.data);
+      const updatedJob = allJobs.find(job => job.id === selectedJob.id);
+      if (updatedJob) {
+        setSelectedJob(updatedJob);
+      }
+    }
+  }, [data, selectedJob?.id]);
+
 
   const dateOptions = ["Hoy", "Semana", "Mes", "Año"];
 

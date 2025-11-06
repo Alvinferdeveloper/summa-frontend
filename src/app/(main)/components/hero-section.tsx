@@ -53,10 +53,10 @@ export function HeroSection() {
           </div>
 
           <div className="relative">
-            <div className="relative md:h-[600px] mx-7 aspect-square rounded-2xl bg-gradient-to-br from-primary/20 via-accent/20 to-primary/10 p-8">
+            <div className="relative md:h-[600px] mx-7 aspect-square rounded-2xl bg-gradient-to-br from-primary/20 via-accent/20 to-primary/10 p-4">
               <div className="absolute inset-0 rounded-2xl bg-grid-pattern opacity-10 " />
               <img
-                src="/diverse-team-of-professionals-working-together-in-.png"
+                src="/inclusividad.png"
                 alt="Equipo diverso trabajando juntos"
                 className="relative z-10 h-full  w-full rounded-xl object-cover shadow-2xl"
               />

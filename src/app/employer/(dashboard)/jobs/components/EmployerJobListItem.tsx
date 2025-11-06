@@ -23,6 +23,8 @@ export default function EmployerJobListItem({ job, isActive, onClick }: Employer
     updateStatus({ jobId: job.id.toString(), status: newStatus });
   };
 
+  console.log(job)
+
   return (
     <div
       onClick={onClick}
